@@ -25,7 +25,7 @@ class SignUpCheck : AppCompatActivity() {
     }
 
     fun onClick(v: View) {
-        val intent = Intent(application, LoginActivity::class.java)
-        startActivity(intent)
+        val loginIntent = Intent(application, LoginActivity::class.java)
+        startActivity(loginIntent)
     }
 }

@@ -1,18 +1,15 @@
 package com.example.g015c1153.aid
 
-import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
 import android.content.Intent
 import android.os.Handler
-import android.widget.TextView
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.*
-import org.json.JSONException
 import java.io.IOException
 
 /**
@@ -24,9 +21,9 @@ class LoginActivity : AppCompatActivity() {
      */
    // private var mAuthTask: UserLoginTask? = null
 
-    val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    val adapter = moshi.adapter(LoginData::class.java)
-    var client = OkHttpClient()
+    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
+    private val loginAdapter = moshi.adapter(LoginData::class.java)!!
+    private var client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,46 +38,47 @@ class LoginActivity : AppCompatActivity() {
             false
         })*/
 
-        testButton.setOnClickListener {
-            /*val url = "http://www.google.com"
-            val request = Request.Builder().url(url).build()
-            val response = this.client.newCall(request).execute()
-            testText.text = response.body()!!.string()*/
-            val handler = Handler()
-            run("https://www.google.co.jp/", handler, testText)
-        }
-
+        //サインインボタン処理
         sign_in_button.setOnClickListener {
             val userID  = userName.text.toString()
             val userPW = password.text.toString()
 
             if(userID == "user" && userPW == "password"){
-                val loginData = LoginData(
-                        id = userID,
-                        password = userPW)
-                val json = adapter.toJson(loginData)
+//                val loginData = LoginData(
+//                        id = userID,
+//                        password = userPW)
+//                val loginJson = loginAdapter.toJson(loginData)
+//                val url = "https://toridge.com/post_json.php"
+//                val handler = Handler()
+//                run(url, handler, loginJson)
                 val topIntent = Intent(this, TopActivity::class.java)
+                topIntent.putExtra("switch",true)
                 startActivity(topIntent)
             }
         }
+
+        //サインアップ(新規登録)ボタン処理
         sign_up_button.setOnClickListener {
             val formIntent = Intent(this, SignUpForm::class.java)
             startActivity(formIntent)
         }
     }
 
-    private fun run(url:String, handler: Handler, textView: TextView){
+    private fun run(url:String, handler: Handler, json: String){
+
+        val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString())
         val request = Request.Builder()
                 .addHeader("Content-Type", "text/plain; charset=utf-8")
                 .url(url)
+                .post(postBody)
                 .build()
 
         OkHttpClient().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
-            override fun onResponse(call: Call, response: Response) {
+            override fun onResponse(call: Call, response: Response){
                 val responseText: String? = response.body()?.string()
                 handler.post {
-                    textView.text = responseText
+                    testText.text = responseText
                 }
             }
         })
