@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/menu_main"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/team1"
+            android:title="チーム選択" />
+        <item
+            android:id="@+id/teamAdd"
+            android:title="＋　チーム作成" />
+    </group>
+
+    <group
+        android:id="@+id/menu_other"
+        android:visible="true"
+        android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/signUp"
+                android:title="新規作成" />
+            <item
+                android:id="@+id/login"
+                android:title="ログイン" />
+    </group>
+    <group
+        android:id="@+id/my_page"
+        android:visible="false"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/myPage"
+            android:title="マイページ" />
+
+    </group>
+
+</menu>

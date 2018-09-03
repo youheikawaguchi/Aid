@@ -44,13 +44,13 @@ class LoginActivity : AppCompatActivity() {
             val userPW = password.text.toString()
 
             if(userID == "user" && userPW == "password"){
-//                val loginData = LoginData(
-//                        id = userID,
-//                        password = userPW)
-//                val loginJson = loginAdapter.toJson(loginData)
-//                val url = "https://toridge.com/post_json.php"
-//                val handler = Handler()
-//                run(url, handler, loginJson)
+                val loginData = LoginData(
+                        id = userID,
+                        password = userPW)
+                val loginJson = loginAdapter.toJson(loginData)
+                val url = "https://toridge.com/post_json.php"
+                val handler = Handler()
+                run(url, handler, loginJson)
                 val topIntent = Intent(this, TopActivity::class.java)
                 topIntent.putExtra("switch",true)
                 startActivity(topIntent)

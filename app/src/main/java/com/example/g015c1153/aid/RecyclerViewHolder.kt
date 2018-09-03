@@ -1,0 +1,23 @@
+package com.example.g015c1153.aid
+
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import kotlinx.android.synthetic.main.card_view_layout.*
+import kotlinx.android.synthetic.main.card_view_layout.view.*
+
+class RecyclerViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+
+    interface ItemClickeListener{
+        fun onItemClick(view: View, position:Int)
+    }
+
+    val itemImageView : ImageView = view.cardImage
+    val itemTextView : TextView = view.cardTitle
+
+    init {
+
+    }
+
+}
