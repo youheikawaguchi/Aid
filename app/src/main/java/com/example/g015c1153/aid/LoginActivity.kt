@@ -2,12 +2,10 @@ package com.example.g015c1153.aid
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-
 import android.content.Intent
 import android.os.Handler
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
-
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.*
 import java.io.IOException
@@ -19,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-   // private var mAuthTask: UserLoginTask? = null
+    // private var mAuthTask: UserLoginTask? = null
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val loginAdapter = moshi.adapter(LoginData::class.java)!!
@@ -29,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
-       // populateAutoComplete()
+        // populateAutoComplete()
         /*password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                attemptLogin()
@@ -40,10 +38,10 @@ class LoginActivity : AppCompatActivity() {
 
         //サインインボタン処理
         sign_in_button.setOnClickListener {
-            val userID  = userName.text.toString()
+            val userID = userName.text.toString()
             val userPW = password.text.toString()
 
-            if(userID == "user" && userPW == "password"){
+            if (userID == "user" && userPW == "password") {
                 val loginData = LoginData(
                         id = userID,
                         password = userPW)
@@ -52,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                 val handler = Handler()
                 run(url, handler, loginJson)
                 val topIntent = Intent(this, TopActivity::class.java)
-                topIntent.putExtra("switch",true)
+                topIntent.putExtra("switch", true)
                 startActivity(topIntent)
             }
         }
@@ -64,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun run(url:String, handler: Handler, json: String){
+    private fun run(url: String, handler: Handler, json: String) {
 
         val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString())
         val request = Request.Builder()
@@ -75,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
         OkHttpClient().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
-            override fun onResponse(call: Call, response: Response){
+            override fun onResponse(call: Call, response: Response) {
                 val responseText: String? = response.body()?.string()
                 handler.post {
                     testText.text = responseText

@@ -7,18 +7,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.RadioButton
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_sign_up_form.*
 import java.util.*
 import java.util.regex.Pattern
 
 class SignUpForm : AppCompatActivity() {
-    val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    val adapter = moshi.adapter(LoginData::class.java)
     var strPW = ""
     var strPWRe = ""
-    var passMatch= false
+    var passMatch = false
     private val valueResponse = ValueResponse()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +22,7 @@ class SignUpForm : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up_form)
 
         editPWRe.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 strPW = editPW.text.toString()
                 strPWRe = editPWRe.text.toString()
                 var result = ""
@@ -45,14 +41,14 @@ class SignUpForm : AppCompatActivity() {
         }
     }
 
-    fun onClick(v:View){
+    fun onClick(v: View) {
         val strFN = editFirstName.text.toString()
         val strSN = editSecondName.text.toString()
         val strBD = editBirthDay.text.toString()
         var count = 0
-        val flag = arrayOf(true,true,true,true,true,false)
+        val flag = arrayOf(true, true, true, true, true, false)
 
-        if(editPW.length() > 0 || editFirstName.length() > 0 || editSecondName.length() > 0) {
+        if (editPW.length() > 0 || editFirstName.length() > 0 || editSecondName.length() > 0) {
             val englishNumber = Pattern.compile("^[0-9a-zA-Z]+$")
             val english = Pattern.compile("^[^0-9]+$")
             val password = englishNumber.matcher(strPW)
@@ -70,17 +66,17 @@ class SignUpForm : AppCompatActivity() {
             }
             if (strFN.equals("") || fn.equals(false)) {
                 flag[1] = false
-                if(strFN.equals("")) {
+                if (strFN.equals("")) {
                     editFirstName.error = valueResponse.errorNoValue
-                }else{
+                } else {
                     editFirstName.error = valueResponse.errorNumber
                 }
             }
             if (strSN.equals("") || sn.equals(false)) {
                 flag[2] = false
-                if(strSN.equals("")){
+                if (strSN.equals("")) {
                     editSecondName.error = valueResponse.errorNoValue
-                }else {
+                } else {
                     editSecondName.error = valueResponse.errorNumber
                 }
             }

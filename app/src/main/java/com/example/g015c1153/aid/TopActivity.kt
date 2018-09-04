@@ -24,9 +24,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         //val hoges = resources.getStringArray(R.array.hoges).toMutableList()
 
-        val list = mutableListOf("1","2","3","4")
+        val list = mutableListOf("1", "2", "3", "4")
 
-        topRecyclerView.adapter = CardAdapter(this,this,list)
+        topRecyclerView.adapter = CardAdapter(this, this, list)
         topRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 //        fab.setOnClickListener { view ->
@@ -35,8 +35,8 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 //        }
 
         //ログインからのインテントを受け取る(ログインしたかどうか)
-        val visible = intent.getBooleanExtra("switch",false)
-        when(visible){
+        val visible = intent.getBooleanExtra("switch", false)
+        when (visible) {
             //ログインしていれば、マイページを表示
             true -> {
                 nav_view.menu.setGroupVisible(R.id.menu_other, false)
@@ -79,20 +79,20 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.signUp ->{
+            R.id.signUp -> {
                 val formIntent = Intent(this, SignUpForm::class.java)
                 startActivity(formIntent)
             }
-            R.id.login ->{
+            R.id.login -> {
                 val loginIntent = Intent(application, LoginActivity::class.java)
                 startActivity(loginIntent)
             }
