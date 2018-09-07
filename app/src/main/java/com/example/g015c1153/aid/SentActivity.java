@@ -3,6 +3,7 @@ package com.example.g015c1153.aid;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class SentActivity extends AppCompatActivity {
@@ -18,5 +19,9 @@ public class SentActivity extends AppCompatActivity {
         String Data2 = intent.getStringExtra("data2");
         text.setText(Data1);
         text2.setText(Data2);
+    }
+    public void onClick(View v){
+        Intent singUpIntent = new Intent(this,SignUpForm.class);
+        startActivity(singUpIntent);
     }
 }

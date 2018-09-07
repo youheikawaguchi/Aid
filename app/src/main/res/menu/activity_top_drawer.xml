@@ -21,7 +21,7 @@
         android:checkableBehavior="single">
 
             <item
-                android:id="@+id/signUp"
+                android:id="@+id/send"
                 android:title="新規作成" />
             <item
                 android:id="@+id/login"

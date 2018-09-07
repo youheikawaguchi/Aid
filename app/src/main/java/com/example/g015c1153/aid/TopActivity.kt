@@ -88,9 +88,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.signUp -> {
-                val formIntent = Intent(this, SignUpForm::class.java)
-                startActivity(formIntent)
+            R.id.send -> {
+                val sendIntent = Intent(this, SendActivity::class.java)
+                startActivity(sendIntent)
             }
             R.id.login -> {
                 val loginIntent = Intent(application, LoginActivity::class.java)

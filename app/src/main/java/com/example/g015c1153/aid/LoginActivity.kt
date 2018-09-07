@@ -21,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val loginAdapter = moshi.adapter(LoginData::class.java)!!
-    private var client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun run(url: String, handler: Handler, json: String) {
 
-        val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString())
+        val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         val request = Request.Builder()
                 .addHeader("Content-Type", "text/plain; charset=utf-8")
                 .url(url)
