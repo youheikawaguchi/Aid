@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
-class CardAdapter(private val context: Context, private val itemClickListener: RecyclerViewHolder.ItemClickeListener, private val itemList: List<String>) : RecyclerView.Adapter<RecyclerViewHolder>() {
+
+//カードビューに対する処理。現状俺もよくわかってない。
+class CardAdapter(private val context: Context, private val itemClickListener: RecyclerViewHolder.ItemClickListener, private val itemList: List<String>) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
     private var mRecyclerView: RecyclerView? = null
 

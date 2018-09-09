@@ -13,17 +13,20 @@ class SignUpCheck : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_check)
 
-        val textViews = arrayOf<TextView>(textPW, textPWRe, textFirstName, textSecondName, textBirthDay, textSex)
-        val formString = arrayOf("PW", "PWRe", "FirstName", "SecondName", "BirthDay", "Sex")
-        val intentString = arrayOfNulls<String>(formString.size)
+        val textViews = arrayOf<TextView>(textPW, textPWRe, textFirstName, textSecondName, textBirthDay, textSex)   //各テキストビューをリストで取得
+        val formString = arrayOf("PW", "PWRe", "FirstName", "SecondName", "BirthDay", "Sex")                        //インテントのキー値のリスト
+        val intentString = arrayOfNulls<String>(formString.size)        //インテントの値を受け取る用のリスト
 
         val intent = intent
+
+        //中身を取り出して画面に表示
         for (i in formString.indices) {
             intentString[i] = intent.getStringExtra(formString[i])
             textViews[i].text = intentString[i]
         }
     }
 
+    //画面遷移
     fun onClick(v: View) {
         val loginIntent = Intent(application, LoginActivity::class.java)
         startActivity(loginIntent)

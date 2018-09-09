@@ -12,9 +12,9 @@ import java.util.*
 import java.util.regex.Pattern
 
 class SignUpForm : AppCompatActivity() {
-    var strPW = ""
-    var strPWRe = ""
-    var passMatch = false
+    var strPW = ""              //入力PW格納用
+    var strPWRe = ""            //入力PW再入力格納用
+    var passMatch = false       //PWとPW再入力の一致判定用
     private val valueResponse = ValueResponse()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,44 +22,42 @@ class SignUpForm : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up_form)
 
         editPWRe.setOnFocusChangeListener { v, hasFocus ->
+            //PW再入力のフォームからフォーカスが外れた時に発動
             if (!hasFocus) {
                 strPW = editPW.text.toString()
                 strPWRe = editPWRe.text.toString()
-                var result = ""
 
-                if (strPW != strPWRe) {
-                    result = valueResponse.errorPasswordMismatch
-                    editPW.error = result
-                    editPWRe.error = result
+                if (strPW != strPWRe) {     //PWとPW再入力の一致を判定
+                    editPW.error = valueResponse.errorPasswordMismatch  //エラー文の代入
+                    editPW.error = valueResponse.errorPasswordMismatch
                     passMatch = false
-                } else if (editPW.length() > 0 && editPWRe.length() > 0) {
-                    result = valueResponse.complete
+                } else if (!editPW.equals("") && !editPWRe.equals("")) {    //空文字じゃないかの判定
                     passMatch = true
                 }
-                visibility(result)
             }
         }
     }
 
     fun onClick(v: View) {
-        val strFN = editFirstName.text.toString()
-        val strSN = editSecondName.text.toString()
-        val strBD = editBirthDay.text.toString()
-        var count = 0
-        val flag = arrayOf(true, true, true, true, true, false)
+        val strFN = editFirstName.text.toString()   //姓の格納用
+        val strSN = editSecondName.text.toString()  //名の格納用
+        val strBD = editBirthDay.text.toString()    //生年月日の格納用
+        val flag = arrayOf(true, true, true, true, true)    //各項目が正しく入力されているかの判定用
+        var lastFlag = false                        //画面遷移させるかの判断用
 
-        if (editPW.length() > 0 || editFirstName.length() > 0 || editSecondName.length() > 0) {
-            val englishNumber = Pattern.compile("^[0-9a-zA-Z]+$")
-            val english = Pattern.compile("^[^0-9]+$")
+        if (editPW.equals("") || editFirstName.equals("") || editSecondName.equals("")) {   //空文字判定
+            val englishNumber = Pattern.compile("^[0-9a-zA-Z]+$")   //英数文字列のみ
+            val notNumber = Pattern.compile("^[^0-9]+$")            //数字以外
             val password = englishNumber.matcher(strPW)
-            val fn = english.matcher(strFN)
-            val sn = english.matcher(strSN)
+            val fn = notNumber.matcher(strFN)
+            val sn = notNumber.matcher(strSN)
 
-            val id = RadioGroupSex.checkedRadioButtonId
-            val radioButton = findViewById<View>(id) as RadioButton
-            val strSex = radioButton.text.toString()
+            val id = RadioGroupSex.checkedRadioButtonId     //チェックされたラジオボタンのIDを取得
+            val radioButton = findViewById<View>(id) as RadioButton     //↑のIDをもとにRadioButtonのインスタンス化
+            val strSex = radioButton.text.toString()                    //ラジオボタンのvalueを取得
 
-            if (!passMatch || password.equals(false) || strPW == "") {
+            //以下文字列チェックとエラー文の表示
+            if (!passMatch || strPW.equals("") || password.equals(false)) {
                 flag[0] = false
                 textPW.setTextColor(Color.RED)
                 textPWRe.setTextColor(Color.RED)
@@ -89,16 +87,13 @@ class SignUpForm : AppCompatActivity() {
                 radioButton.error = valueResponse.errorNoValue
             }
 
-            for (lastFrag in flag) {
-                if (lastFrag) {
-                    count++
-                }
+            //各項目に間違いがあればフラグをlastFalseに
+            for (i in flag) {
+                if(!i)lastFlag = false
             }
 
-            if (count == 5) {
-                flag[5] = true
-            }
-            if (flag[5]) {
+            //正しく入力されていれば、画面遷移
+            if (lastFlag) {
                 //インテント生成
                 val intent = Intent(application, SignUpCheck::class.java)
 
@@ -115,11 +110,8 @@ class SignUpForm : AppCompatActivity() {
         }
     }
 
-    fun visibility(text: String) {
-        errorPW.visibility = View.VISIBLE
-        errorPW.text = text
-    }
-
+    //生年月日入力時のカレンダー入力用メソッド
+    //(未修整)カレンダー表示ではなくスピナー表示にしたい
     fun showDatePickerDialog(view: View) {
         //現在の日付を取得
         val calendar = Calendar.getInstance()

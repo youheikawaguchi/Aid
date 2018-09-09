@@ -2,6 +2,7 @@ package com.example.g015c1153.aid
 
 import android.graphics.Bitmap
 
+//新規登録用
 data class User(
         val id: String,
         val password: String,
@@ -11,11 +12,13 @@ data class User(
         val Sex: String
 )
 
+//ログイン用
 data class LoginData(
         val id: String,
         val password: String
 )
 
+//TOP画面のチーム情報カード用
 data class CardData(
         val cardImage: Bitmap,
         val cardTitle: String,

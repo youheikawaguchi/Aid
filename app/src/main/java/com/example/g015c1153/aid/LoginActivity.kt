@@ -40,14 +40,21 @@ class LoginActivity : AppCompatActivity() {
             val userID = userName.text.toString()
             val userPW = password.text.toString()
 
+            //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
             if (userID == "user" && userPW == "password") {
+
+                //ログイン用のdataクラスに当てはめている
                 val loginData = LoginData(
                         id = userID,
                         password = userPW)
-                val loginJson = loginAdapter.toJson(loginData)
-                val url = "https://toridge.com/post_json.php"
+
+                val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
+                val url = "https://toridge.com/post_json.php"   //サンプル用URL
+                //172.16.89.--157-- //下岡に送るためのIP(仮)のメモ。４つ目の部分は日によって変わる。
                 val handler = Handler()
-                run(url, handler, loginJson)
+                run(url, handler, loginJson)    //HTTP通信を行う
+
+                //(未修整)DBに接続した結果に従って画面遷移の判定を行う
                 val topIntent = Intent(this, TopActivity::class.java)
                 topIntent.putExtra("switch", true)
                 startActivity(topIntent)
@@ -61,6 +68,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    //HTTP通信処理用メソッド
+    //現状、POST用URLにアクセスし、JSONコードを送り、URL先にJSONコードが記述されるので
+    //Webページのbody部分(JSONコードしか書いてない)を取得して、取得したJSONコード(文字列)を画面に表示している
     private fun run(url: String, handler: Handler, json: String) {
 
         val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)

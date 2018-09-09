@@ -78,12 +78,6 @@
                 android:layout_height="wrap_content"
                 android:text="SIGN UP" />
 
-            <Button
-                android:id="@+id/testButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
             <TextView
                 android:id="@+id/testText"
                 android:layout_width="match_parent"

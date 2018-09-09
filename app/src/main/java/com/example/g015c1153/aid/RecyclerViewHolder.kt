@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.card_view_layout.view.*
 
 class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    interface ItemClickeListener {
+    interface ItemClickListener {
         fun onItemClick(view: View, position: Int)
     }
 

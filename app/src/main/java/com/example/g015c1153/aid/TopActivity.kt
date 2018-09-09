@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.app_bar_top.*
 import kotlinx.android.synthetic.main.content_top.*
 
-class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecyclerViewHolder.ItemClickeListener {
+class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecyclerViewHolder.ItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +24,13 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         //val hoges = resources.getStringArray(R.array.hoges).toMutableList()
 
+        //カードビューの数(現状:固定値)
         val list = mutableListOf("1", "2", "3", "4")
 
-        topRecyclerView.adapter = CardAdapter(this, this, list)
-        topRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        //RecyclerViewに対する処理
+        topRecyclerView.adapter = CardAdapter(this, this, list)     //アダプターにカードビューをセット
+        topRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)  //LinerLayout(縦)に指定
 
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
 
         //ログインからのインテントを受け取る(ログインしたかどうか)
         val visible = intent.getBooleanExtra("switch", false)
@@ -49,6 +47,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             }
         }
 
+        //ドロワーの処理。デフォルトのまま。
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -57,10 +56,12 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         nav_view.setNavigationItemSelectedListener(this)
     }
 
+    //ドロワーのアイテムを押したときの処理？デフォルトのまま
     override fun onItemClick(view: View, position: Int) {
         Toast.makeText(applicationContext, "position $position was tapped", Toast.LENGTH_SHORT).show()
     }
 
+    //戻るボタンを押したときのドロワーに対しての処理。デフォルトのまま
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -69,12 +70,16 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
+    //右上のオプションメニューを表示させる。
+    //今後削除予定
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.top, menu)
         return true
     }
 
+    //オプションメニューのアイテムをクリックしたときの処理
+    //今後削除予定
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -85,6 +90,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
+    //ドロワーのアイテムを押したときの処理。基本的に画面遷移のみ。
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
