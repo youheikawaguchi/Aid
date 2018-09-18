@@ -11,7 +11,7 @@ import okhttp3.*
 import java.io.IOException
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via email/Password.
  */
 class LoginActivity : AppCompatActivity() {
     /**
@@ -21,14 +21,15 @@ class LoginActivity : AppCompatActivity() {
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val loginAdapter = moshi.adapter(LoginData::class.java)!!
+    private var loginData = LoginData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
         // populateAutoComplete()
-        /*password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+        /*Password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
+            if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
                attemptLogin()
                 return@OnEditorActionListener true
             }
@@ -37,16 +38,17 @@ class LoginActivity : AppCompatActivity() {
 
         //サインインボタン処理
         sign_in_button.setOnClickListener {
-            val userID = userName.text.toString()
-            val userPW = password.text.toString()
+            loginData.mailAddress = userName.text.toString()
+            loginData.password = password.text.toString()
 
             //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
-            if (userID == "user" && userPW == "password") {
+            val result = RealmDAO().loginRealm(loginData)
+            if (result != 0) {
 
                 //ログイン用のdataクラスに当てはめている
                 val loginData = LoginData(
-                        id = userID,
-                        password = userPW)
+                        mailAddress = loginData.mailAddress,
+                        password = loginData.password)
 
                 val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
                 val url = "https://toridge.com/post_json.php"   //サンプル用URL
@@ -55,9 +57,15 @@ class LoginActivity : AppCompatActivity() {
                 run(url, handler, loginJson)    //HTTP通信を行う
 
                 //(未修整)DBに接続した結果に従って画面遷移の判定を行う
-                val topIntent = Intent(this, TopActivity::class.java)
-                topIntent.putExtra("switch", true)
-                startActivity(topIntent)
+                if(result == 1) {
+                    val signUpIntent = Intent(this, SignUpForm::class.java)
+                    signUpIntent.putExtra("MailAddress", loginData.mailAddress)
+                    startActivity(signUpIntent)
+                }else if(result == 2){
+                    val topIntent = Intent(this, TopActivity::class.java)
+                    topIntent.putExtra("Switch", true)
+                    startActivity(topIntent)
+                }
             }
         }
 
@@ -141,19 +149,19 @@ class LoginActivity : AppCompatActivity() {
 
         // Reset errors.
         email.error = null
-        password.error = null
+        Password.error = null
 
         // Store values at the time of the login attempt.
         val emailStr = email.text.toString()
-        val passwordStr = password.text.toString()
+        val passwordStr = Password.text.toString()
 
         var cancel = false
         var focusView: View? = null
 
-        // Check for a valid password, if the user entered one.
+        // Check for a valid Password, if the user entered one.
         if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            password.error = getString(R.string.error_invalid_password)
-            focusView = password
+            Password.error = getString(R.string.error_invalid_password)
+            focusView = Password
             cancel = true
         }
 
@@ -186,9 +194,9 @@ class LoginActivity : AppCompatActivity() {
         return email.contains("@")
     }
 
-    private fun isPasswordValid(password: String): Boolean {
+    private fun isPasswordValid(Password: String): Boolean {
         //TODO: Replace this with your own logic
-        return password.length > 4
+        return Password.length > 4
     }
 
     /**
@@ -295,7 +303,7 @@ class LoginActivity : AppCompatActivity() {
                     .map { it.split(":") }
                     .firstOrNull { it[0] == mEmail }
                     ?.let {
-                        // Account exists, return true if the password matches.
+                        // Account exists, return true if the Password matches.
                         it[1] == mPassword
                     }
                     ?: true
@@ -308,8 +316,8 @@ class LoginActivity : AppCompatActivity() {
             if (success!!) {
                 finish()
             } else {
-                password.error = getString(R.string.error_incorrect_password)
-                password.requestFocus()
+                Password.error = getString(R.string.error_incorrect_password)
+                Password.requestFocus()
             }
         }
 

@@ -31,9 +31,8 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         topRecyclerView.adapter = CardAdapter(this, this, list)     //アダプターにカードビューをセット
         topRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)  //LinerLayout(縦)に指定
 
-
         //ログインからのインテントを受け取る(ログインしたかどうか)
-        val visible = intent.getBooleanExtra("switch", false)
+        val visible = intent.getBooleanExtra("Switch", false)
         when (visible) {
             //ログインしていれば、マイページを表示
             true -> {

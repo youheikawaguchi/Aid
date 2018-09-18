@@ -12,16 +12,16 @@ import java.util.*
 import java.util.regex.Pattern
 
 class SignUpForm : AppCompatActivity() {
-    var strPW = ""              //入力PW格納用
-    var strPWRe = ""            //入力PW再入力格納用
-    var passMatch = false       //PWとPW再入力の一致判定用
+    private var strPW = ""              //入力PW格納用
+    private var strPWRe = ""            //入力PW再入力格納用
+    private var passMatch = false       //PWとPW再入力の一致判定用
     private val valueResponse = ValueResponse()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_form)
 
-        editPWRe.setOnFocusChangeListener { v, hasFocus ->
+        editPWRe.setOnFocusChangeListener { _, hasFocus ->
             //PW再入力のフォームからフォーカスが外れた時に発動
             if (!hasFocus) {
                 strPW = editPW.text.toString()
@@ -38,7 +38,7 @@ class SignUpForm : AppCompatActivity() {
         }
     }
 
-    fun onClick(v: View) {
+    fun onClick(v : View) {
         val strFN = editFirstName.text.toString()   //姓の格納用
         val strSN = editSecondName.text.toString()  //名の格納用
         val strBD = editBirthDay.text.toString()    //生年月日の格納用
@@ -52,9 +52,9 @@ class SignUpForm : AppCompatActivity() {
             val fn = notNumber.matcher(strFN)
             val sn = notNumber.matcher(strSN)
 
-            val id = RadioGroupSex.checkedRadioButtonId     //チェックされたラジオボタンのIDを取得
+            val id = RadioGroupGender.checkedRadioButtonId     //チェックされたラジオボタンのIDを取得
             val radioButton = findViewById<View>(id) as RadioButton     //↑のIDをもとにRadioButtonのインスタンス化
-            val strSex = radioButton.text.toString()                    //ラジオボタンのvalueを取得
+            val strGender = radioButton.text.toString()                    //ラジオボタンのvalueを取得
 
             //以下文字列チェックとエラー文の表示
             if (!passMatch || strPW.equals("") || password.equals(false)) {
@@ -82,7 +82,7 @@ class SignUpForm : AppCompatActivity() {
                 flag[3] = false
                 editBirthDay.error = valueResponse.errorNoValue
             }
-            if (strSex.equals("")) {
+            if (strGender.equals("")) {
                 flag[4] = false
                 radioButton.error = valueResponse.errorNoValue
             }
@@ -95,15 +95,16 @@ class SignUpForm : AppCompatActivity() {
             //正しく入力されていれば、画面遷移
             if (lastFlag) {
                 //インテント生成
-                val intent = Intent(application, SignUpCheck::class.java)
 
+                val intent = Intent(application, SignUpCheck::class.java)
                 //EditTextの中身をインテントに格納
+                intent.putExtra("MailAddress", intent.getStringExtra("MailAddress"))
                 intent.putExtra("PW", strPW)
                 intent.putExtra("PWRe", strPWRe)
                 intent.putExtra("FirstName", strFN)
                 intent.putExtra("SecondName", strSN)
                 intent.putExtra("BirthDay", strBD)
-                intent.putExtra("Sex", strSex)
+                intent.putExtra("Gender", strGender)
                 //画面遷移
                 startActivity(intent)
             }
@@ -112,14 +113,14 @@ class SignUpForm : AppCompatActivity() {
 
     //生年月日入力時のカレンダー入力用メソッド
     //(未修整)カレンダー表示ではなくスピナー表示にしたい
-    fun showDatePickerDialog(view: View) {
+    fun showDatePickerDialog(v :View) {
         //現在の日付を取得
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, _, monthOfYear, dayOfMonth ->
             //選択した日付を検出
             val date = year.toString() + "/" + (monthOfYear + 1) + "/" + dayOfMonth
             editBirthDay.setText(date)
