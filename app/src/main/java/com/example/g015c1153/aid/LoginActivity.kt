@@ -57,11 +57,11 @@ class LoginActivity : AppCompatActivity() {
                 run(url, handler, loginJson)    //HTTP通信を行う
 
                 //(未修整)DBに接続した結果に従って画面遷移の判定を行う
-                if(result == 1) {
+                if (result == 1) {
                     val signUpIntent = Intent(this, SignUpForm::class.java)
                     signUpIntent.putExtra("MailAddress", loginData.mailAddress)
                     startActivity(signUpIntent)
-                }else if(result == 2){
+                } else if (result == 2) {
                     val topIntent = Intent(this, TopActivity::class.java)
                     topIntent.putExtra("Switch", true)
                     startActivity(topIntent)

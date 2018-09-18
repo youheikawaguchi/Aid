@@ -9,7 +9,7 @@ data class User(
         var secondName: String = "",
         var birthDay: String = "",
         var gender: String = "",
-        var mailAddress: String ="",
+        var mailAddress: String = "",
         var password: String = ""
 )
 

@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_sign_up_check.*
 
 class SignUpCheck : AppCompatActivity() {
 
-    private val user :User = User()
+    private val user: User = User()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class SignUpCheck : AppCompatActivity() {
         for (i in formString.indices) {
             intentString[i] = intent.getStringExtra(formString[i])
             textViews[i].text = intentString[i]
-            when(formString[i]){
+            when (formString[i]) {
                 "PW" -> user.password = intentString[i].toString()
                 "FirstName" -> user.firstName = intentString[i].toString()
                 "SecondName" -> user.secondName = intentString[i].toString()

@@ -20,12 +20,12 @@
         android:visible="true"
         android:checkableBehavior="single">
 
-            <item
-                android:id="@+id/send"
-                android:title="新規作成" />
-            <item
-                android:id="@+id/login"
-                android:title="ログイン" />
+        <item
+            android:id="@+id/send"
+            android:title="新規作成" />
+        <item
+            android:id="@+id/login"
+            android:title="ログイン" />
     </group>
     <group
         android:id="@+id/my_page"

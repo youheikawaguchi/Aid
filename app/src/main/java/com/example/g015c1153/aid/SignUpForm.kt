@@ -38,7 +38,7 @@ class SignUpForm : AppCompatActivity() {
         }
     }
 
-    fun onClick(v : View) {
+    fun onClick(v: View) {
         val strFN = editFirstName.text.toString()   //姓の格納用
         val strSN = editSecondName.text.toString()  //名の格納用
         val strBD = editBirthDay.text.toString()    //生年月日の格納用
@@ -89,7 +89,7 @@ class SignUpForm : AppCompatActivity() {
 
             //各項目に間違いがあればフラグをlastFalseに
             for (i in flag) {
-                if(!i)lastFlag = false
+                if (!i) lastFlag = false
             }
 
             //正しく入力されていれば、画面遷移
@@ -113,7 +113,7 @@ class SignUpForm : AppCompatActivity() {
 
     //生年月日入力時のカレンダー入力用メソッド
     //(未修整)カレンダー表示ではなくスピナー表示にしたい
-    fun showDatePickerDialog(v :View) {
+    fun showDatePickerDialog(v: View) {
         //現在の日付を取得
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
