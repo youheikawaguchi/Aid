@@ -45,11 +45,6 @@ class LoginActivity : AppCompatActivity() {
             val result = RealmDAO().loginRealm(loginData)
             if (result != 0) {
 
-                //ログイン用のdataクラスに当てはめている
-                val loginData = LoginData(
-                        mailAddress = loginData.mailAddress,
-                        password = loginData.password)
-
                 val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
                 val url = "https://toridge.com/post_json.php"   //サンプル用URL
                 //172.16.89.--157-- //下岡に送るためのIP(仮)のメモ。４つ目の部分は日によって変わる。
@@ -58,13 +53,13 @@ class LoginActivity : AppCompatActivity() {
 
                 //(未修整)DBに接続した結果に従って画面遷移の判定を行う
                 if (result == 1) {
-                    val signUpIntent = Intent(this, SignUpForm::class.java)
-                    signUpIntent.putExtra("MailAddress", loginData.mailAddress)
-                    startActivity(signUpIntent)
-                } else if (result == 2) {
                     val topIntent = Intent(this, TopActivity::class.java)
                     topIntent.putExtra("Switch", true)
                     startActivity(topIntent)
+                } else if (result == 2) {
+                    val signUpIntent = Intent(this, SignUpForm::class.java)
+                    signUpIntent.putExtra("MailAddress", loginData.mailAddress)
+                    startActivity(signUpIntent)
                 }
             }
         }

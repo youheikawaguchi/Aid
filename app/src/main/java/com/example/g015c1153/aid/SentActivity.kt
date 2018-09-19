@@ -34,8 +34,9 @@ class SentActivity : AppCompatActivity() {
             //メールアドレスのアドレスとドメインを一つの文字列に変換
             val mailStr = "$data1@$data2"
             RealmDAO().mailRealmAdd(mailStr)
-            val singUpIntent = Intent(this, SignUpForm::class.java)
-            startActivity(singUpIntent)
+            val signUpIntent = Intent(this, SignUpForm::class.java)
+            signUpIntent.putExtra("MailAddress", mailStr)
+            startActivity(signUpIntent)
         }
     }
 

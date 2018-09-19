@@ -43,9 +43,9 @@ class SignUpForm : AppCompatActivity() {
         val strSN = editSecondName.text.toString()  //名の格納用
         val strBD = editBirthDay.text.toString()    //生年月日の格納用
         val flag = arrayOf(true, true, true, true, true)    //各項目が正しく入力されているかの判定用
-        var lastFlag = false                        //画面遷移させるかの判断用
+        var lastFlag = true                        //画面遷移させるかの判断用
 
-        if (editPW.equals("") || editFirstName.equals("") || editSecondName.equals("")) {   //空文字判定
+        if (!editPW.equals("") || !editFirstName.equals("") || !editSecondName.equals("")) {   //空文字判定
             val englishNumber = Pattern.compile("^[0-9a-zA-Z]+$")   //英数文字列のみ
             val notNumber = Pattern.compile("^[^0-9]+$")            //数字以外
             val password = englishNumber.matcher(strPW)
@@ -89,16 +89,18 @@ class SignUpForm : AppCompatActivity() {
 
             //各項目に間違いがあればフラグをlastFalseに
             for (i in flag) {
-                if (!i) lastFlag = false
+                if (!i){
+                    lastFlag = false
+                }
             }
 
             //正しく入力されていれば、画面遷移
             if (lastFlag) {
                 //インテント生成
-
+                val mailIntent = intent
                 val intent = Intent(application, SignUpCheck::class.java)
                 //EditTextの中身をインテントに格納
-                intent.putExtra("MailAddress", intent.getStringExtra("MailAddress"))
+                intent.putExtra("MailAddress", mailIntent.getStringExtra("MailAddress"))
                 intent.putExtra("PW", strPW)
                 intent.putExtra("PWRe", strPWRe)
                 intent.putExtra("FirstName", strFN)

@@ -27,17 +27,16 @@ class RealmDAO {
 
             //IDを生成
             // 初期化
-            var nextUserId: Int? = 1
+            var nextUserId = 1
             // userIdの最大値を取得
-            val maxUserId = mRealm.where(UserProvisional::class.java).max("userId")
+            val maxUserId = mRealm.where(UserProvisional::class.java).max("Id")
             // 1度もデータが作成されていない場合はNULLが返ってくるため、NULLチェックをする
             if (maxUserId != null) {
                 nextUserId = maxUserId.toInt() + 1
             }
 
             //Realmオブジェクトの生成
-            val user = mRealm.createObject(UserProvisional::class.java)
-            user.Id = nextUserId.toString()
+            val user = mRealm.createObject(UserProvisional::class.java,nextUserId)
             user.MailAddress = mailStr
             user.Password = str
             //Realmの登録
@@ -58,7 +57,7 @@ class RealmDAO {
 
         //IDを生成
         // 初期化
-        var nextUserId: Int? = 1
+        var nextUserId = 1
         // userIdの最大値を取得
         val maxUserId = mRealm.where(UserSignUp::class.java).max("Id")
         // 1度もデータが作成されていない場合はNULLが返ってくるため、NULLチェックをする
@@ -68,8 +67,7 @@ class RealmDAO {
 
         mRealm.executeTransaction {
             //Realmオブジェクトの生成
-            val signUpUser = mRealm.createObject(UserSignUp::class.java)
-            signUpUser.Id = nextUserId.toString()
+            val signUpUser = mRealm.createObject(UserSignUp::class.java,nextUserId)
             signUpUser.Password = user.password
             signUpUser.FirstName = user.firstName
             signUpUser.SecondName = user.secondName
@@ -78,7 +76,7 @@ class RealmDAO {
             //Realmの登録
             mRealm.copyToRealm(signUpUser)
         }
-        Log.i("保存された内容：", mRealm.where(UserProvisional::class.java).findAll().toString())
+        Log.i("保存された内容：", mRealm.where(UserSignUp::class.java).findAll().toString())
         mRealm.close()
     }
 
@@ -89,13 +87,13 @@ class RealmDAO {
         val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
         mRealm = Realm.getInstance(realmConfig)
 
-        if (mRealm.where(UserProvisional::class.java)
+        if (mRealm.where(UserSignUp::class.java)
                         .equalTo("MailAddress", loginData.mailAddress)
-                        .equalTo("Password", loginData.password) != null) {
+                        .equalTo("Password", loginData.password).findAll() != null) {
             return 1
-        } else if (mRealm.where(UserSignUp::class.java)
+        } else if (mRealm.where(UserProvisional::class.java)
                         .equalTo("MailAddress", loginData.mailAddress)
-                        .equalTo("Password", loginData.password) != null) {
+                        .equalTo("Password", loginData.password).findAll() != null) {
             return 2
         }
         return 0
