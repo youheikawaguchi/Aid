@@ -90,12 +90,44 @@ class RealmDAO {
         if (mRealm.where(UserSignUp::class.java)
                         .equalTo("MailAddress", loginData.mailAddress)
                         .equalTo("Password", loginData.password).findAll() != null) {
+            mRealm.close()
             return 1
         } else if (mRealm.where(UserProvisional::class.java)
                         .equalTo("MailAddress", loginData.mailAddress)
                         .equalTo("Password", loginData.password).findAll() != null) {
+            mRealm.close()
             return 2
         }
+        mRealm.close()
         return 0
+    }
+
+    fun teamAddRealm(teamData: teamData): Int {
+        lateinit var mRealm: Realm
+
+        //Realmのセットアップ
+        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        mRealm = Realm.getInstance(realmConfig)
+
+        //IDを生成
+        // 初期化
+        var nextUserId = 1
+        // userIdの最大値を取得
+        val maxUserId = mRealm.where(Team::class.java).max("Id")
+        // 1度もデータが作成されていない場合はNULLが返ってくるため、NULLチェックをする
+        if (maxUserId != null) {
+            nextUserId = maxUserId.toInt() + 1
+        }
+
+        val teamAdd = mRealm.createObject(Team::class.java, nextUserId)
+        teamAdd.TeamName = teamData.teamName
+        teamAdd.TeamDetail = teamData.teamDetail
+        teamAdd.TeamLocal = teamData.teamLocal
+        mRealm.copyToRealm(teamAdd)
+
+        Log.i("保存された内容：", mRealm.where(Team::class.java).findAll().toString())
+        mRealm.close()
+
+        return teamAdd.TeamId
     }
 }

@@ -25,3 +25,9 @@ data class CardData(
         val cardTitle: String,
         val cardBody: String
 )
+
+data class teamData(
+        var teamName: String = "",
+        var teamDetail: String = "",
+        var teamLocal: String = ""
+)

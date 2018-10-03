@@ -22,8 +22,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         setContentView(R.layout.activity_top)
         setSupportActionBar(toolbar)
 
-        //val hoges = resources.getStringArray(R.array.hoges).toMutableList()
-
         //カードビューの数(現状:固定値)
         val list = mutableListOf("1", "2", "3", "4")
 
@@ -102,7 +100,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 startActivity(loginIntent)
             }
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

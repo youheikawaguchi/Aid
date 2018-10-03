@@ -18,5 +18,11 @@ open class UserSignUp(
         @Required open var Birthday: String = "",
         @Required open var MailAddress: String = "",
         @Required open var Password: String = ""
+) : RealmObject()
 
+open class Team(
+        @PrimaryKey open var TeamId: Int = 0,
+        @Required open var TeamName: String = "",
+        @Required open var TeamDetail: String = "",
+        @Required open var TeamLocal: String = ""
 ) : RealmObject()
