@@ -1,6 +1,7 @@
 package com.example.g015c1153.aid
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -15,7 +16,10 @@ import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.app_bar_top.*
 import kotlinx.android.synthetic.main.content_top.*
 
-class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecyclerViewHolder.ItemClickListener {
+class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecyclerViewHolder.ItemClickListener,TeamAdd.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +102,22 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             R.id.login -> {
                 val loginIntent = Intent(application, LoginActivity::class.java)
                 startActivity(loginIntent)
+            }
+            R.id.teamAdd -> {
+
+                val teamAddIntent = Intent(this, TeamAddActivity::class.java)
+                startActivity(teamAddIntent)
+
+                //Fragmentに遷移用
+//                val fragmentManager = supportFragmentManager
+//                val fragmentTransaction = fragmentManager.beginTransaction()
+//
+//                // BackStackを設定
+//                fragmentTransaction.addToBackStack(null)
+//
+//                // パラメータを設定
+//                fragmentTransaction.replace(R.Id.container, TeamAdd().newInstance(  "fragment"))
+//                fragmentTransaction.commit()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)

@@ -21,7 +21,7 @@ open class UserSignUp(
 ) : RealmObject()
 
 open class Team(
-        @PrimaryKey open var TeamId: Int = 0,
+        @PrimaryKey open var Id: Int = 0,
         @Required open var TeamName: String = "",
         @Required open var TeamDetail: String = "",
         @Required open var TeamLocal: String = ""

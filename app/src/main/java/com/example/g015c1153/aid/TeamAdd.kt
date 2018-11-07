@@ -4,12 +4,15 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.fragment_team_add.*
 import android.widget.AdapterView
+import android.widget.Spinner
+import android.widget.SpinnerAdapter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,19 +29,25 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class TeamAdd : Fragment(), AdapterView.OnItemSelectedListener {
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class TeamAdd : Fragment(){
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+
+    fun newInstance(str: String): TeamAdd {
+
+        // Fragment01 インスタンス生成
+        val fragment = TeamAdd()
+
+        // Bundle にパラメータを設定
+        val barg = Bundle()
+        barg.putString("Message", str)
+        fragment.arguments = barg
+
+        return fragment
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,34 +57,50 @@ class TeamAdd : Fragment(), AdapterView.OnItemSelectedListener {
         }
 
         //スピナーの設定
-        val spinner = local_spinner
-        val adapter = ArrayAdapter.createFromResource(activity!!.baseContext, R.array.local_list, android.R.layout.simple_spinner_item)
+        /*val spinner = findViewById <Spinner>(R.Id.local_spinner)
+        spinner.adapter = ArrayAdapter(activity, R.layout.support_simple_spinner_dropdown_item, resources.getStringArray(R.array.local_list))
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }*/
+
+        /*val spinner :Spinner = local_spinner
+        //spinner.setOnItemSelectedListener()
+        val adapter = ArrayAdapter.createFromResource(context, R.array.local_list, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
-        spinner.onItemSelectedListener
+        spinner.onItemSelectedListener*/
 
-        teamAddButton.setOnClickListener {
+        /*teamAddButton.setOnClickListener {
             val editTeamName: String = editTeamName.toString()
             val editTeamDetail: String = editTeamDetail.toString()
             val teamLocal: String = local_spinner.toString()
-
-
-            val teamData = teamData(editTeamName, editTeamDetail, teamLocal)
-            val teamID = RealmDAO().teamAddRealm(teamData)
-        }
+            val TeamData = TeamData(editTeamName, editTeamDetail, teamLocal)
+            val teamID = RealmDAO().teamAddRealm(TeamData)
+        }*/
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_team_add, container, false)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val view = inflater.inflate(R.layout.fragment_team_add, container, false) as View
+
+        //リスナーを登録
+        teamAddButton.setOnClickListener {
+            Log.v("button:", "clicked!")
+        }
+
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

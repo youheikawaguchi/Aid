@@ -26,8 +26,14 @@ data class CardData(
         val cardBody: String
 )
 
-data class teamData(
+//Teamのデータ
+data class TeamData(
+        var TeamId: String = "",
         var teamName: String = "",
         var teamDetail: String = "",
         var teamLocal: String = ""
+)
+
+data class Session(
+        var id: String = ""
 )

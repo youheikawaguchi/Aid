@@ -35,6 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TeamAddActivity" />
+        <activity
+            android:name=".TeamPageActivity"
+            android:label="@string/title_activity_team_page"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -102,7 +102,7 @@ class RealmDAO {
         return 0
     }
 
-    fun teamAddRealm(teamData: teamData): Int {
+    fun teamAddRealm(teamDataAdd: TeamData): Int {
         lateinit var mRealm: Realm
 
         //Realmのセットアップ
@@ -111,23 +111,45 @@ class RealmDAO {
 
         //IDを生成
         // 初期化
-        var nextUserId = 1
+        var nextTeamId = 1
         // userIdの最大値を取得
-        val maxUserId = mRealm.where(Team::class.java).max("Id")
+        val maxTeamId = mRealm.where(Team::class.java).max("Id")
         // 1度もデータが作成されていない場合はNULLが返ってくるため、NULLチェックをする
-        if (maxUserId != null) {
-            nextUserId = maxUserId.toInt() + 1
+        if (maxTeamId != null) {
+            nextTeamId = maxTeamId.toInt() + 1
         }
 
-        val teamAdd = mRealm.createObject(Team::class.java, nextUserId)
-        teamAdd.TeamName = teamData.teamName
-        teamAdd.TeamDetail = teamData.teamDetail
-        teamAdd.TeamLocal = teamData.teamLocal
-        mRealm.copyToRealm(teamAdd)
+        mRealm.executeTransaction {
+            //チームデータをRealmに保存
+            val teamAdd = mRealm.createObject(Team::class.java, nextTeamId)
+            teamAdd.TeamName = teamDataAdd.teamName
+            teamAdd.TeamDetail = teamDataAdd.teamDetail
+            teamAdd.TeamLocal = teamDataAdd.teamLocal
+            mRealm.copyToRealm(teamAdd)
+        }
 
         Log.i("保存された内容：", mRealm.where(Team::class.java).findAll().toString())
         mRealm.close()
 
-        return teamAdd.TeamId
+        return nextTeamId
+    }
+
+    fun teamReadRealm(teamId : Int): TeamData {
+        lateinit var mRealm: Realm
+        val teamDataRead = TeamData()
+
+        //Realmのセットアップ
+        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        mRealm = Realm.getInstance(realmConfig)
+
+        val teamDataRealm = mRealm.where(Team::class.java).equalTo("Id", teamId).findAll()
+        if(teamDataRealm != null){
+            teamDataRead.TeamId = teamDataRealm[0]!!.Id.toString()
+            teamDataRead.teamName = teamDataRealm[0]!!.TeamName
+            teamDataRead.teamDetail = teamDataRealm[0]!!.TeamDetail
+            teamDataRead.teamLocal = teamDataRealm[0]!!.TeamLocal
+        }
+        mRealm.close()
+        return teamDataRead
     }
 }
