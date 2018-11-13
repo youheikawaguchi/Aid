@@ -45,7 +45,7 @@ class TeamAddActivity : AppCompatActivity() {
         }
     }
 
-    fun initSpinner(){
+    private fun initSpinner(){
         val labels = resources.getStringArray(R.array.local_list)
         val adapter = ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels)
         local_spinner.adapter = adapter

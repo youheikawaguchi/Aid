@@ -1,6 +1,7 @@
 package com.example.g015c1153.aid
 
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 
 //新規登録用
 data class User(
@@ -21,9 +22,9 @@ data class LoginData(
 
 //TOP画面のチーム情報カード用
 data class CardData(
-        val cardImage: Bitmap,
-        val cardTitle: String,
-        val cardBody: String
+        var cardImage: Drawable,
+        var cardTitle: String,
+        var cardBody: String
 )
 
 //Teamのデータ

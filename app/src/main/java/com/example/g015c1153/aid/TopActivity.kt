@@ -4,34 +4,37 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.app_bar_top.*
 import kotlinx.android.synthetic.main.content_top.*
 
 class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecyclerViewHolder.ItemClickListener,TeamAdd.OnFragmentInteractionListener {
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
+    private var mDataList : ArrayList<CardData> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top)
         setSupportActionBar(toolbar)
 
-        //カードビューの数(現状:固定値)
-        val list = mutableListOf("1", "2", "3", "4")
-
-        //RecyclerViewに対する処理
-        topRecyclerView.adapter = CardAdapter(this, this, list)     //アダプターにカードビューをセット
-        topRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)  //LinerLayout(縦)に指定
+//        //カードビューの数(現状:固定値)
+//        val list = mutableListOf("1", "2", "3", "4")
+//
+//        //RecyclerViewに対する処理
+//        topRecyclerView.adapter = CardAdapter(this, this, list)     //アダプターにカードビューをセット
+//        topRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)  //LinerLayout(縦)に指定
 
         //ログインからのインテントを受け取る(ログインしたかどうか)
         val visible = intent.getBooleanExtra("Switch", false)
@@ -55,6 +58,27 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+//        //カードに対する処理
+//        // データ作成
+//        makeTestData()
+//
+//        // Adapter作成
+//        val adapter = ListAdapter(this,mDataList)
+//
+//        // RecyclerViewにAdapterとLayoutManagerの設定
+//        topRecyclerView.adapter = adapter
+//        topRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+    }
+
+    private fun makeTestData() {
+
+        //20個のテストデータ作成
+        for (i in 1..20){
+            mDataList.add(CardData(ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+                    "ファイル_" + i.toString(),
+                    ""+(i*100).toString()))
+        }
     }
 
     //ドロワーのアイテムを押したときの処理？デフォルトのまま
@@ -75,7 +99,32 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     //今後削除予定
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.top, menu)
+        //menuInflater.inflate(R.menu.top, menu)
+        //検索バーを追加
+        menuInflater.inflate(R.menu.search_view_menu, menu)
+
+        val searchView = menu.findItem(R.id.menu_search).actionView as SearchView
+        // イベント
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            // クエリーを送信
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // アプリタイトルに現在の値を表示する
+                //this@TopActivity.title = query
+                val teamData = TeamData()
+                val teamList: ArrayList<TeamData>
+                teamData.teamName = query
+                teamList = RealmDAO().teamReadRealm(teamData.teamName)
+                //topRecyclerView.adapter = CardAdapter(this, this, teamList)//アダプターにカードビューをセット
+                return false
+            }
+
+            // クエリーを編集中
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+
         return true
     }
 
@@ -122,5 +171,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

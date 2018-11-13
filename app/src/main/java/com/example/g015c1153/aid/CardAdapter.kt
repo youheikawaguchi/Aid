@@ -13,6 +13,7 @@ class CardAdapter(private val context: Context, private val itemClickListener: R
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val layoutInflater = LayoutInflater.from(context)
+
         val mView = layoutInflater.inflate(R.layout.card_view_layout, parent, false)
 
         mView.setOnClickListener { view ->

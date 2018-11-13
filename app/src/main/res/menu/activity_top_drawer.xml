@@ -6,7 +6,6 @@
     <group
         android:id="@+id/menu_main"
         android:checkableBehavior="single">
-
         <item
             android:id="@+id/team1"
             android:title="チーム選択" />

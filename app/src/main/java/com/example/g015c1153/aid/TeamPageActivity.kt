@@ -18,7 +18,7 @@ class TeamPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_team_page)
         setSupportActionBar(toolbar)
 
-        val intent = Intent()
+        val intent = intent
         //intentからJsonデータを取得
         val teamDataJson = intent.getStringExtra("team")
         //Jsonデータからオブジェクトに変換

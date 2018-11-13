@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import kotlinx.android.synthetic.main.activity_send.*
 
 class SendActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -18,18 +19,16 @@ class SendActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         val matcher = Matcher()
-        val edit = findViewById<EditText>(R.id.editText)
-        val edit2 = findViewById<EditText>(R.id.editText2)
-        val getText = edit.text
-        val getText2 = edit2.text
+        val address = editText.text.toString()
+        val domain = editText2.text.toString()
 
-        matcher.address(getText.toString())
-        matcher.domain(getText2.toString())
+        if(matcher.address(address) && matcher.domain(domain)) {
 
-        val intent = Intent(this, SentActivity::class.java)
-        intent.putExtra("data1", getText.toString())
-        intent.putExtra("data2", getText2.toString())
+            val intent = Intent(this, SentActivity::class.java)
+            intent.putExtra("data1", address)
+            intent.putExtra("data2", domain)
 
-        startActivity(intent)
+            startActivity(intent)
+        }
     }
 }

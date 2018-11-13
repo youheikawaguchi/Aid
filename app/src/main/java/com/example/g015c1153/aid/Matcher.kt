@@ -9,7 +9,7 @@ class Matcher : AppCompatActivity() {
     fun address(adress: String): Boolean {
         val addPattern = Pattern.compile("^[0-9]+$")
 
-        return if (adress.isEmpty()) {
+        return if (!adress.isEmpty()) {
             true
         } else addPattern.matcher(adress).find()
     }
@@ -17,7 +17,7 @@ class Matcher : AppCompatActivity() {
     fun domain(domain: String): Boolean {
         val doPattern = Pattern.compile("[0-9]")
 
-        return if (domain.isEmpty()) {
+        return if (!domain.isEmpty()) {
             true
         } else doPattern.matcher(domain).find()
     }

@@ -6,4 +6,5 @@ class ValueResponse {
     val errorNumber = "数値が未入力です"
     val errorPasswordMismatch = "パスワードが不一致です"
     val complete = "コンプリート"
+    val errorMismatch = "入力が不正です"
 }

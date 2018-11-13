@@ -4,6 +4,7 @@ import android.util.Log
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import java.util.*
+import kotlin.collections.ArrayList
 
 class RealmDAO {
 
@@ -151,5 +152,27 @@ class RealmDAO {
         }
         mRealm.close()
         return teamDataRead
+    }
+    fun teamReadRealm(teamName: String):ArrayList<TeamData>{
+        lateinit var mRealm: Realm
+        val teamList = ArrayList<TeamData>()
+
+        //Realmのセットアップ
+        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        mRealm = Realm.getInstance(realmConfig)
+
+        val teamDataRealm = mRealm.where(Team::class.java).equalTo("TeamName", teamName).findAll()
+        if(teamDataRealm != null){
+            for(i in 0..teamDataRealm.size) {
+                val teamDataRead = TeamData()
+                teamDataRead.TeamId = teamDataRealm[i]!!.Id.toString()
+                teamDataRead.teamName = teamDataRealm[i]!!.TeamName
+                teamDataRead.teamDetail = teamDataRealm[i]!!.TeamDetail
+                teamDataRead.teamLocal = teamDataRealm[i]!!.TeamLocal
+                teamList.add(teamDataRead)
+            }
+        }
+        mRealm.close()
+        return teamList
     }
 }
