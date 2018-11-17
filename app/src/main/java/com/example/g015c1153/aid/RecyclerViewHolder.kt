@@ -14,6 +14,7 @@ class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     val itemImageView: ImageView = view.cardImage
     val itemTextView: TextView = view.cardTitle
+    val itemDetailView: TextView = view.cardBody
 
     init {
 

@@ -40,7 +40,7 @@
             android:name=".TeamPageActivity"
             android:label="@string/title_activity_team_page"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MemberAdd"></activity>
+        <activity android:name=".MemberAdd" />
     </application>
 
 </manifest>

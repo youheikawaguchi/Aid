@@ -7,7 +7,7 @@ import android.view.ViewGroup
 
 
 //カードビューに対する処理。現状俺もよくわかってない。
-class CardAdapter(private val context: Context, private val itemClickListener: RecyclerViewHolder.ItemClickListener, private val itemList: List<String>) : RecyclerView.Adapter<RecyclerViewHolder>() {
+class CardAdapter(private val context: Context, private val itemClickListener: RecyclerViewHolder.ItemClickListener, private val itemList: ArrayList<CardData>) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
     private var mRecyclerView: RecyclerView? = null
 
@@ -30,8 +30,9 @@ class CardAdapter(private val context: Context, private val itemClickListener: R
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.let {
-            it.itemImageView.setImageResource(R.mipmap.ic_launcher)
-            it.itemTextView.text = itemList[position]
+            it.itemImageView.setImageResource(R.drawable.no_image)
+            it.itemTextView.text = itemList[position].cardTitle
+            it.itemDetailView.text = itemList[position].cardBody
         }
     }
 

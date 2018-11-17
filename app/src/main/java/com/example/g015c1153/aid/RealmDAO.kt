@@ -135,6 +135,29 @@ class RealmDAO {
         return nextTeamId
     }
 
+    fun teamReadRealm(): ArrayList<TeamData>{
+        lateinit var mRealm: Realm
+        val teamList = ArrayList<TeamData>()
+
+        //Realmのセットアップ
+        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        mRealm = Realm.getInstance(realmConfig)
+
+        val teamDataRealm = mRealm.where(Team::class.java).findAll()
+        if(teamDataRealm != null){
+            for(i in 0 until teamDataRealm.size) {
+                val teamDataRead = TeamData()
+                teamDataRead.TeamId = teamDataRealm[i]!!.Id.toString()
+                teamDataRead.teamName = teamDataRealm[i]!!.TeamName
+                teamDataRead.teamDetail = teamDataRealm[i]!!.TeamDetail
+                teamDataRead.teamLocal = teamDataRealm[i]!!.TeamLocal
+                teamList.add(teamDataRead)
+            }
+        }
+        mRealm.close()
+        return teamList
+    }
+
     fun teamReadRealm(teamId : Int): TeamData {
         lateinit var mRealm: Realm
         val teamDataRead = TeamData()
@@ -163,7 +186,7 @@ class RealmDAO {
 
         val teamDataRealm = mRealm.where(Team::class.java).equalTo("TeamName", teamName).findAll()
         if(teamDataRealm != null){
-            for(i in 0..teamDataRealm.size) {
+            for(i in 0 until teamDataRealm.size) {
                 val teamDataRead = TeamData()
                 teamDataRead.TeamId = teamDataRealm[i]!!.Id.toString()
                 teamDataRead.teamName = teamDataRealm[i]!!.TeamName

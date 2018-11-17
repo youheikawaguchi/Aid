@@ -1,5 +1,6 @@
 package com.example.g015c1153.aid
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -29,13 +30,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         setContentView(R.layout.activity_top)
         setSupportActionBar(toolbar)
 
-//        //カードビューの数(現状:固定値)
-//        val list = mutableListOf("1", "2", "3", "4")
-//
-//        //RecyclerViewに対する処理
-//        topRecyclerView.adapter = CardAdapter(this, this, list)     //アダプターにカードビューをセット
-//        topRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)  //LinerLayout(縦)に指定
-
         //ログインからのインテントを受け取る(ログインしたかどうか)
         val visible = intent.getBooleanExtra("Switch", false)
         when (visible) {
@@ -59,25 +53,35 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         nav_view.setNavigationItemSelectedListener(this)
 
-//        //カードに対する処理
-//        // データ作成
-//        makeTestData()
-//
-//        // Adapter作成
-//        val adapter = ListAdapter(this,mDataList)
-//
-//        // RecyclerViewにAdapterとLayoutManagerの設定
-//        topRecyclerView.adapter = adapter
-//        topRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        //カードに対する処理
+        // データ作成
+        makeTestData()
+
+        // Adapter作成
+        val adapter = CardAdapter(this,this, mDataList)
+
+        // RecyclerViewにAdapterとLayoutManagerの設定
+        topRecyclerView.adapter = adapter
+        topRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
     }
 
+    //表示するカードのデータを生成
     private fun makeTestData() {
-
-        //20個のテストデータ作成
-        for (i in 1..20){
+        val teamDataList = RealmDAO().teamReadRealm()
+        for(i in 0 until teamDataList.size){
             mDataList.add(CardData(ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
-                    "ファイル_" + i.toString(),
-                    ""+(i*100).toString()))
+                    teamDataList[i].teamName,
+                    teamDataList[i].teamDetail))
+        }
+    }
+
+    //表示するカードのデータ(チーム名検索)を生成
+    private fun makeTestData(teamName:String){
+        val teamDataList = RealmDAO().teamReadRealm(teamName)
+        for(i in 0 until teamDataList.size){
+            mDataList.add(CardData(ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+                    teamDataList[i].teamName,
+                    teamDataList[i].teamDetail))
         }
     }
 
@@ -112,10 +116,11 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 // アプリタイトルに現在の値を表示する
                 //this@TopActivity.title = query
                 val teamData = TeamData()
-                val teamList: ArrayList<TeamData>
                 teamData.teamName = query
-                teamList = RealmDAO().teamReadRealm(teamData.teamName)
-                //topRecyclerView.adapter = CardAdapter(this, this, teamList)//アダプターにカードビューをセット
+                mDataList.clear()
+                makeTestData(teamData.teamName)
+
+                topRecyclerView.adapter = CardAdapter(this@TopActivity, this@TopActivity, mDataList)   //アダプターにカードビューをセット
                 return false
             }
 
