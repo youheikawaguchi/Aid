@@ -7,115 +7,133 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.RadioButton
+import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_sign_up_form.*
 import java.util.*
-import java.util.regex.Pattern
 
 class SignUpForm : AppCompatActivity() {
-    private var strPW = ""              //入力PW格納用
-    private var strPWRe = ""            //入力PW再入力格納用
-    private var passMatch = false       //PWとPW再入力の一致判定用
+
     private val valueResponse = ValueResponse()
+    private val matcher = Matcher()
+    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
+    private val userAdapter = moshi.adapter(User::class.java)!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_form)
+
+        var strPW: String              //入力PW格納用
+        var strPWRe: String           //入力PW再入力格納用
+        var passMatch = false       //PWとPW再入力の一致判定用
+        val userData = User()
 
         editPWRe.setOnFocusChangeListener { _, hasFocus ->
             //PW再入力のフォームからフォーカスが外れた時に発動
             if (!hasFocus) {
                 strPW = editPW.text.toString()
                 strPWRe = editPWRe.text.toString()
+                passMatch = passMatcher(strPW,strPWRe)
+            }
+        }
 
-                if (strPW != strPWRe) {     //PWとPW再入力の一致を判定
-                    editPW.error = valueResponse.errorPasswordMismatch  //エラー文の代入
-                    editPW.error = valueResponse.errorPasswordMismatch
-                    passMatch = false
-                } else if (!editPW.equals("") && !editPWRe.equals("")) {    //空文字じゃないかの判定
-                    passMatch = true
+        buttonNextCheck.setOnClickListener {
+            userData.firstName = editFirstName.text.toString()   //姓の格納用
+            userData.secondName = editSecondName.text.toString()  //名の格納用
+            userData.birthDay = editBirthDay.text.toString()    //生年月日の格納用
+            val flag = arrayOf(true, true, true, true, true)    //各項目が正しく入力されているかの判定用
+            var lastFlag = true                        //画面遷移させるかの判断用
+            strPW = editPW.text.toString()
+            strPWRe = editPWRe.text.toString()
+            if (passMatcher(strPW,strPWRe)){
+                userData.password = editPW.text.toString()
+            }
+
+
+            if (userData.password != "" || userData.firstName != "" || userData.secondName != "") {   //空文字判定
+
+                val password = matcher.patternChecker(strPW, 2)
+                val fn = matcher.patternChecker(userData.firstName, 2)
+                val sn = matcher.patternChecker(userData.firstName, 3)
+
+                val id = RadioGroupGender.checkedRadioButtonId     //チェックされたラジオボタンのIDを取得
+                val radioButton = findViewById<View>(id) as RadioButton     //↑のIDをもとにRadioButtonのインスタンス化
+                userData.gender = radioButton.text.toString()                    //ラジオボタンのvalueを取得
+
+                //以下文字列チェックとエラー文の表示
+                if (!passMatch || userData.password == "" || !password) {
+                    flag[0] = false
+                    textPW.setTextColor(Color.RED)
+                    textPWRe.setTextColor(Color.RED)
+                }
+                if (userData.firstName == "" || !fn) {
+                    flag[1] = false
+                    if (userData.firstName == "") {
+                        editFirstName.error = valueResponse.errorNoValue
+                    } else {
+                        editFirstName.error = valueResponse.errorNumber
+                    }
+                }
+                if (userData.secondName == "" || !sn) {
+                    flag[2] = false
+                    if (userData.secondName == "") {
+                        editSecondName.error = valueResponse.errorNoValue
+                    } else {
+                        editSecondName.error = valueResponse.errorNumber
+                    }
+                }
+                if (userData.secondName == "") {
+                    flag[3] = false
+                    editBirthDay.error = valueResponse.errorNoValue
+                }
+                if (userData.gender == "") {
+                    flag[4] = false
+                    radioButton.error = valueResponse.errorNoValue
+                }
+
+                //各項目に間違いがあればフラグをlastFalseに
+                for (i in flag) {
+                    if (!i){
+                        lastFlag = false
+                    }
+                }
+
+                //正しく入力されていれば、画面遷移
+                if (lastFlag) {
+                    //前画面からのメールアドレス情報をuserクラスに格納
+                    val mailIntent = intent
+                    userData.mailAddress = mailIntent.getStringExtra("mailAddress")
+
+                    //Jsonに変換
+                    val userJson = userAdapter.toJson(userData)
+
+                    //インテント生成
+                    val intent = Intent(application, SignUpCheck::class.java)
+                    //EditTextの中身をインテントに格納
+                    intent.putExtra("userData",userJson)
+
+                    //画面遷移
+                    startActivity(intent)
                 }
             }
         }
     }
 
-    fun onClick(v: View) {
-        val strFN = editFirstName.text.toString()   //姓の格納用
-        val strSN = editSecondName.text.toString()  //名の格納用
-        val strBD = editBirthDay.text.toString()    //生年月日の格納用
-        val flag = arrayOf(true, true, true, true, true)    //各項目が正しく入力されているかの判定用
-        var lastFlag = true                        //画面遷移させるかの判断用
+    private fun passMatcher(strPW:String, strPWRe: String):Boolean{
 
-        if (!editPW.equals("") || !editFirstName.equals("") || !editSecondName.equals("")) {   //空文字判定
-            val englishNumber = Pattern.compile("^[0-9a-zA-Z]+$")   //英数文字列のみ
-            val notNumber = Pattern.compile("^[^0-9]+$")            //数字以外
-            val password = englishNumber.matcher(strPW)
-            val fn = notNumber.matcher(strFN)
-            val sn = notNumber.matcher(strSN)
-
-            val id = RadioGroupGender.checkedRadioButtonId     //チェックされたラジオボタンのIDを取得
-            val radioButton = findViewById<View>(id) as RadioButton     //↑のIDをもとにRadioButtonのインスタンス化
-            val strGender = radioButton.text.toString()                    //ラジオボタンのvalueを取得
-
-            //以下文字列チェックとエラー文の表示
-            if (!passMatch || strPW.equals("") || password.equals(false)) {
-                flag[0] = false
-                textPW.setTextColor(Color.RED)
-                textPWRe.setTextColor(Color.RED)
-            }
-            if (strFN.equals("") || fn.equals(false)) {
-                flag[1] = false
-                if (strFN.equals("")) {
-                    editFirstName.error = valueResponse.errorNoValue
-                } else {
-                    editFirstName.error = valueResponse.errorNumber
-                }
-            }
-            if (strSN.equals("") || sn.equals(false)) {
-                flag[2] = false
-                if (strSN.equals("")) {
-                    editSecondName.error = valueResponse.errorNoValue
-                } else {
-                    editSecondName.error = valueResponse.errorNumber
-                }
-            }
-            if (strBD.equals("")) {
-                flag[3] = false
-                editBirthDay.error = valueResponse.errorNoValue
-            }
-            if (strGender.equals("")) {
-                flag[4] = false
-                radioButton.error = valueResponse.errorNoValue
-            }
-
-            //各項目に間違いがあればフラグをlastFalseに
-            for (i in flag) {
-                if (!i){
-                    lastFlag = false
-                }
-            }
-
-            //正しく入力されていれば、画面遷移
-            if (lastFlag) {
-                //インテント生成
-                val mailIntent = intent
-                val intent = Intent(application, SignUpCheck::class.java)
-                //EditTextの中身をインテントに格納
-                intent.putExtra("MailAddress", mailIntent.getStringExtra("MailAddress"))
-                intent.putExtra("PW", strPW)
-                intent.putExtra("PWRe", strPWRe)
-                intent.putExtra("FirstName", strFN)
-                intent.putExtra("SecondName", strSN)
-                intent.putExtra("BirthDay", strBD)
-                intent.putExtra("Gender", strGender)
-                //画面遷移
-                startActivity(intent)
-            }
+        if (strPW != strPWRe) {     //PWとPW再入力の一致を判定
+            editPW.error = valueResponse.errorPasswordMismatch  //エラー文の代入
+            editPW.error = valueResponse.errorPasswordMismatch
+            return false
+        } else if (!editPW.equals("") && !editPWRe.equals("")) {    //空文字じゃないかの判定
+            return true
         }
+        return false
     }
 
     //生年月日入力時のカレンダー入力用メソッド
     //(未修整)カレンダー表示ではなくスピナー表示にしたい
-    fun showDatePickerDialog(v: View) {
+    fun showDatePickerDialog(v:View) {
         //現在の日付を取得
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)

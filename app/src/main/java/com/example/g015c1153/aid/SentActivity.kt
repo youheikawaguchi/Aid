@@ -34,9 +34,8 @@ class SentActivity : AppCompatActivity() {
         val text2 = findViewById<TextView>(R.id.textView4)
         val intent = intent
 
-
-        val address = intent.getStringExtra("data1")
-        val domain = intent.getStringExtra("data2")
+        val address = intent.getStringExtra("address")
+        val domain = intent.getStringExtra("domain")
         text.text = address
         text2.text = domain
 
@@ -47,9 +46,8 @@ class SentActivity : AppCompatActivity() {
             loginData.mailAddress = mailAddress
 
             //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
-            val mailJson = mailAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
-            val url = "https://172.20.10.9/repeater"   //サンプル用URL
-            //172.16.89.--157-- //下岡に送るためのIP(仮)のメモ。４つ目の部分は日によって変わる。
+            val mailJson = mailAdapter.toJson(loginData)    //KotlinオブジェクトをJSONに変換
+            val url = "https://172.20.10.9/repeater"        //サンプル用URL
             val handler = Handler()
             run(url, handler, mailJson)
 
@@ -61,7 +59,6 @@ class SentActivity : AppCompatActivity() {
     }
 
     private fun run(url: String, handler: Handler, json: String) {
-
         val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         val request = Request.Builder()
                 .addHeader("Content-Type", "text/plain; charset=utf-8")

@@ -1,6 +1,5 @@
 package com.example.g015c1153.aid
 
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 
 //新規登録用
@@ -22,6 +21,7 @@ data class LoginData(
 
 //TOP画面のチーム情報カード用
 data class CardData(
+        var cardTeamId: String,
         var cardImage: Drawable,
         var cardTitle: String,
         var cardBody: String
@@ -37,4 +37,12 @@ data class TeamData(
 
 data class Session(
         var id: String = ""
+)
+
+data class member(
+        var id: String = "",
+        var teamid: String = "", //foreign key
+        var Userid: String ="",    //foreign key
+        var number: String = "",
+        var position: String = ""
 )

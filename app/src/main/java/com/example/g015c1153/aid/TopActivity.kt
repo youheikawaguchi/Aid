@@ -16,6 +16,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.app_bar_top.*
 import kotlinx.android.synthetic.main.content_top.*
@@ -23,6 +25,8 @@ import kotlinx.android.synthetic.main.content_top.*
 class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecyclerViewHolder.ItemClickListener,TeamAdd.OnFragmentInteractionListener {
 
     private var mDataList : ArrayList<CardData> = ArrayList()
+    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
+    private val teamAdapter = moshi.adapter(TeamData::class.java)!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,7 +54,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
         nav_view.setNavigationItemSelectedListener(this)
 
         //カードに対する処理
@@ -69,7 +72,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private fun makeTestData() {
         val teamDataList = RealmDAO().teamReadRealm()
         for(i in 0 until teamDataList.size){
-            mDataList.add(CardData(ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+            mDataList.add(CardData(
+                    teamDataList[i].TeamId,
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
                     teamDataList[i].teamName,
                     teamDataList[i].teamDetail))
         }
@@ -79,7 +84,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private fun makeTestData(teamName:String){
         val teamDataList = RealmDAO().teamReadRealm(teamName)
         for(i in 0 until teamDataList.size){
-            mDataList.add(CardData(ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+            mDataList.add(CardData(
+                    teamDataList[i].TeamId,
+                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
                     teamDataList[i].teamName,
                     teamDataList[i].teamDetail))
         }
@@ -87,7 +94,13 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     //ドロワーのアイテムを押したときの処理？デフォルトのまま
     override fun onItemClick(view: View, position: Int) {
-        Toast.makeText(applicationContext, "position $position was tapped", Toast.LENGTH_SHORT).show()
+        val teamIntent = Intent(application, TeamPageActivity::class.java)
+
+        val teamData = RealmDAO().teamReadRealm(Integer.parseInt(mDataList[position].cardTeamId))
+        val teamJson = teamAdapter.toJson(teamData)
+        teamIntent.putExtra("team",teamJson)
+        startActivity(teamIntent)
+
     }
 
     //戻るボタンを押したときのドロワーに対しての処理。デフォルトのまま
