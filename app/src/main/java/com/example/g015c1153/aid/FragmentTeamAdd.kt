@@ -1,18 +1,19 @@
 package com.example.g015c1153.aid
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import kotlinx.android.synthetic.main.fragment_team_add.*
-import android.widget.AdapterView
+import android.widget.Button
 import android.widget.Spinner
-import android.widget.SpinnerAdapter
+import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.squareup.moshi.Moshi
+import kotlinx.android.synthetic.main.fragment_team_add.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,19 +36,8 @@ class TeamAdd : Fragment(){
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-
-    fun newInstance(str: String): TeamAdd {
-
-        // Fragment01 インスタンス生成
-        val fragment = TeamAdd()
-
-        // Bundle にパラメータを設定
-        val barg = Bundle()
-        barg.putString("Message", str)
-        fragment.arguments = barg
-
-        return fragment
-    }
+    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
+    private val teamAdapter = moshi.adapter(TeamData::class.java)!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,46 +45,45 @@ class TeamAdd : Fragment(){
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-        //スピナーの設定
-        /*val spinner = findViewById <Spinner>(R.Id.local_spinner)
-        spinner.adapter = ArrayAdapter(activity, R.layout.support_simple_spinner_dropdown_item, resources.getStringArray(R.array.local_list))
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        }*/
-
-        /*val spinner :Spinner = local_spinner
-        //spinner.setOnItemSelectedListener()
-        val adapter = ArrayAdapter.createFromResource(context, R.array.local_list, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-        spinner.onItemSelectedListener*/
-
-        /*teamAddButton.setOnClickListener {
-            val editTeamName: String = editTeamName.toString()
-            val editTeamDetail: String = editTeamDetail.toString()
-            val teamLocal: String = local_spinner.toString()
-            val TeamData = TeamData(editTeamName, editTeamDetail, teamLocal)
-            val teamID = RealmDAO().teamAddRealm(TeamData)
-        }*/
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_team_add, container, false) as View
 
-        //リスナーを登録
-        teamAddButton.setOnClickListener {
-            Log.v("button:", "clicked!")
-        }
+        initSpinner()
 
+        //チーム作成ボタンを押したときの処理
+        view.findViewById<Button>(R.id.teamAddButton).setOnClickListener{
+            //入力内容の取得
+            val editTeamName: String = editTeamName.text.toString()
+            val editTeamDetail: String = editTeamDetail.text.toString()
+            val editTeamLocal: String = local_spinner.selectedItem.toString()
+
+            //チーム用のデータクラスに登録
+            val teamDataAdd = TeamData()
+            teamDataAdd.teamName = editTeamName
+            teamDataAdd.teamDetail = editTeamDetail
+            teamDataAdd.teamLocal = editTeamLocal
+            //Realmに登録後、チームのIDを取得
+            val teamID = RealmDAO().teamAddRealm(teamDataAdd)
+            //チームをIDをもとに検索し、データベースの登録情報を取得。
+            val team = RealmDAO().teamReadRealm(teamID)
+            //次ページに値を渡せるように、Json文字列に変換
+            val teamJson = teamAdapter.toJson(team)
+
+            //次ページに遷移
+        }
         return view
+    }
+
+    private fun initSpinner(){
+        val adapter = ArrayAdapter.createFromResource(
+                activity!!.baseContext,
+                R.array.local_list,
+                android.R.layout.simple_spinner_item)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -144,8 +133,8 @@ class TeamAdd : Fragment(){
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                Team().apply {
-                    var arguments = Bundle().apply {
+                TeamAdd().apply {
+                    arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }

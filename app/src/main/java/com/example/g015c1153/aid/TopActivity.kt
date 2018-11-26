@@ -172,19 +172,19 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             }
             R.id.teamAdd -> {
 
-                val teamAddIntent = Intent(this, TeamAddActivity::class.java)
-                startActivity(teamAddIntent)
+//                val teamAddIntent = Intent(this, TeamAddActivity::class.java)
+//                startActivity(teamAddIntent)
 
                 //Fragmentに遷移用
-//                val fragmentManager = supportFragmentManager
-//                val fragmentTransaction = fragmentManager.beginTransaction()
-//
-//                // BackStackを設定
-//                fragmentTransaction.addToBackStack(null)
-//
-//                // パラメータを設定
-//                fragmentTransaction.replace(R.Id.container, TeamAdd().newInstance(  "fragment"))
-//                fragmentTransaction.commit()
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+
+                // BackStackを設定
+                fragmentTransaction.addToBackStack(null)
+
+                // パラメータを設定
+                fragmentTransaction.replace(R.id.drawer_layout, TeamAdd.newInstance("fragment","2"))
+                fragmentTransaction.commit()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
