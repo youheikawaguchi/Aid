@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.os.Handler
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_login.*
@@ -28,13 +30,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         // Set up the login form.
         // populateAutoComplete()
-        /*Password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
-            if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
-               attemptLogin()
-                return@OnEditorActionListener true
-            }
-            false
-        })*/
+//        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
+//            if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
+//               attemptLogin()
+//                return@OnEditorActionListener true
+//            }
+//            false
+//        })
 
         //サインインボタン処理
         sign_in_button.setOnClickListener {
@@ -49,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
                 val url = "https://toridge.com/post_json.php"   //サンプル用URL
                 //172.16.89.--157-- //下岡に送るためのIP(仮)のメモ。４つ目の部分は日によって変わる。
                 val handler = Handler()
-                run(url, handler, loginJson)    //HTTP通信を行う
+                CallOkHttp().postRun(url, handler, loginJson)    //HTTP通信を行う
 
                 //(未修整)DBに接続した結果に従って画面遷移の判定を行う
                 if (result == 1) {
@@ -71,30 +73,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //HTTP通信処理用メソッド
-    //現状、POST用URLにアクセスし、JSONコードを送り、URL先にJSONコードが記述されるので
-    //Webページのbody部分(JSONコードしか書いてない)を取得して、取得したJSONコード(文字列)を画面に表示している
-    private fun run(url: String, handler: Handler, json: String) {
-
-        val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
-        val request = Request.Builder()
-                .addHeader("Content-Type", "text/plain; charset=utf-8")
-                .url(url)
-                .post(postBody)
-                .build()
-
-        OkHttpClient().newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {}
-            override fun onResponse(call: Call, response: Response) {
-                val responseText: String? = response.body()?.string()
-                handler.post {
-                    testText.text = responseText
-                }
-            }
-        })
-    }
-
-    /*private fun populateAutoComplete() {
+    /*
+    private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
             return
         }

@@ -1,7 +1,6 @@
 package com.example.g015c1153.aid
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.Spinner
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.fragment_team_add.*
@@ -38,6 +36,7 @@ class TeamAdd : Fragment(){
     private var listener: OnFragmentInteractionListener? = null
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val teamAdapter = moshi.adapter(TeamData::class.java)!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +72,9 @@ class TeamAdd : Fragment(){
             val teamJson = teamAdapter.toJson(team)
 
             //次ページに遷移
+
         }
+
         return view
     }
 

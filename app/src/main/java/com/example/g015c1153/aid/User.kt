@@ -36,7 +36,8 @@ data class TeamData(
 )
 
 data class Session(
-        var id: String = ""
+        var userId: String = "",
+        var teamId: String = ""
 )
 
 data class member(

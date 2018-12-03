@@ -22,7 +22,8 @@ import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.app_bar_top.*
 import kotlinx.android.synthetic.main.content_top.*
 
-class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, RecyclerViewHolder.ItemClickListener,TeamAdd.OnFragmentInteractionListener {
+class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+        RecyclerViewHolder.ItemClickListener,TeamAdd.OnFragmentInteractionListener{
 
     private var mDataList : ArrayList<CardData> = ArrayList()
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
@@ -92,7 +93,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
-    //ドロワーのアイテムを押したときの処理？デフォルトのまま
+    //カードビューを押したときの処理
     override fun onItemClick(view: View, position: Int) {
         val teamIntent = Intent(application, TeamPageActivity::class.java)
 
@@ -100,7 +101,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val teamJson = teamAdapter.toJson(teamData)
         teamIntent.putExtra("team",teamJson)
         startActivity(teamIntent)
-
     }
 
     //戻るボタンを押したときのドロワーに対しての処理。デフォルトのまま
@@ -112,8 +112,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
-    //右上のオプションメニューを表示させる。
-    //今後削除予定
+    //ツールバーのメニュー表示。検索ボタンとか。
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         //menuInflater.inflate(R.menu.top, menu)
@@ -172,19 +171,19 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             }
             R.id.teamAdd -> {
 
-//                val teamAddIntent = Intent(this, TeamAddActivity::class.java)
-//                startActivity(teamAddIntent)
+                val teamAddIntent = Intent(this, TeamAddActivity::class.java)
+                startActivity(teamAddIntent)
 
                 //Fragmentに遷移用
-                val fragmentManager = supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-
-                // BackStackを設定
-                fragmentTransaction.addToBackStack(null)
-
-                // パラメータを設定
-                fragmentTransaction.replace(R.id.drawer_layout, TeamAdd.newInstance("fragment","2"))
-                fragmentTransaction.commit()
+//                val fragmentManager = supportFragmentManager
+//                val fragmentTransaction = fragmentManager.beginTransaction()
+//
+//                // BackStackを設定
+//                fragmentTransaction.addToBackStack(null)
+//
+//                // パラメータを設定
+//                fragmentTransaction.add(R.id.drawer_layout, TeamAdd.newInstance("fragment","2"))
+//                fragmentTransaction.commit()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
