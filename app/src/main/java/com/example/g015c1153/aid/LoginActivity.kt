@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.os.Handler
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.squareup.moshi.KotlinJsonAdapterFactory
@@ -38,31 +39,37 @@ class LoginActivity : AppCompatActivity() {
 //            false
 //        })
 
+//        val uri = intent.data
+//        val id = uri?.getQueryParameter("id")
+//        Log.i("parameter", id)
+
         //サインインボタン処理
         sign_in_button.setOnClickListener {
             loginData.mailAddress = userName.text.toString()
             loginData.password = password.text.toString()
 
             //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
-            val result = RealmDAO().loginRealm(loginData)
-            if (result != 0) {
+            //サーバー通信
+            val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
+            val url = ValueResponse().serverIp + "/reLogin"   //サンプル用URL
+            val loginResult = CallOkHttp().postRun(url, loginJson)    //HTTP通信を行う
 
-                val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
-                val url = "https://toridge.com/post_json.php"   //サンプル用URL
-                //172.16.89.--157-- //下岡に送るためのIP(仮)のメモ。４つ目の部分は日によって変わる。
-                val handler = Handler()
-                CallOkHttp().postRun(url, handler, loginJson)    //HTTP通信を行う
-
-                //(未修整)DBに接続した結果に従って画面遷移の判定を行う
-                if (result == 1) {
-                    val topIntent = Intent(this, TopActivity::class.java)
+            //(未修整)DBに接続した結果に従って画面遷移の判定を行う
+            if (loginResult != null) {
+                if (!loginResult.isEmpty()) {
+                    val topIntent = Intent(application, TopActivity::class.java)
                     topIntent.putExtra("Switch", true)
                     startActivity(topIntent)
-                } else if (result == 2) {
-                    val signUpIntent = Intent(this, SignUpForm::class.java)
-                    signUpIntent.putExtra("MailAddress", loginData.mailAddress)
-                    startActivity(signUpIntent)
                 }
+//                else if (loginJson.isEmpty()) {
+//                    val signUpIntent = Intent(application, SignUpForm::class.java)
+//                    signUpIntent.putExtra("MailAddress", loginData.mailAddress)
+//                    startActivity(signUpIntent)
+
+//                val loginIntent = Intent(application, SignUpForm::class.java)
+//                     loginIntent.putExtra("info",list)
+//                     startActivity(loginIntent)
+//                }
             }
         }
 

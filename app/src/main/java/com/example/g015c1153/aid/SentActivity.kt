@@ -4,15 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sent.*
-import okhttp3.*
-import java.io.IOException
 
 class SentActivity : AppCompatActivity() {
 
@@ -30,14 +26,12 @@ class SentActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
 
         //インテントのテキストを取得して画面に表示
-        val text = findViewById<TextView>(R.id.textView2)
-        val text2 = findViewById<TextView>(R.id.textView4)
         val intent = intent
 
         val address = intent.getStringExtra("address")
         val domain = intent.getStringExtra("domain")
-        text.text = address
-        text2.text = domain
+        sentAddress.text = address
+        sentDomain.text = domain
 
         val mailAddress = "$address@$domain"
 
@@ -47,9 +41,8 @@ class SentActivity : AppCompatActivity() {
 
             //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
             val mailJson = mailAdapter.toJson(loginData)    //KotlinオブジェクトをJSONに変換
-            val url = "https://172.20.10.9/repeater"        //サンプル用URL
-            val handler = Handler()
-            run(url, handler, mailJson)
+            val url = ValueResponse().serverIp+"/re"             //サンプル用URL
+            CallOkHttp().postRun(url, mailJson)
 
             //メールアドレスのアドレスとドメインを一つの文字列に変換
             val signUpIntent = Intent(this, SignUpForm::class.java)
@@ -57,20 +50,4 @@ class SentActivity : AppCompatActivity() {
             startActivity(signUpIntent)
         }
     }
-
-    private fun run(url: String, handler: Handler, json: String) {
-        val postBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
-        val request = Request.Builder()
-                .addHeader("Content-Type", "text/plain; charset=utf-8")
-                .url(url)
-                .post(postBody)
-                .build()
-
-        OkHttpClient().newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {}
-            override fun onResponse(call: Call, response: Response) {
-            }
-        })
-    }
-
 }

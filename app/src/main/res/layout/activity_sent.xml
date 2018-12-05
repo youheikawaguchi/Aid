@@ -7,7 +7,7 @@
     tools:context=".SentActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/sentAddress"
         android:layout_width="150dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
@@ -27,18 +27,18 @@
         android:layout_marginTop="50dp"
         android:text="\@"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/sentAddress"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/sentDomain"
         android:layout_width="150dp"
         android:layout_height="30dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/sentAddress"
         android:layout_marginRight="20dp"
         tools:ignore="RtlCompat" />
 
@@ -55,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/sentAddress"
         tools:ignore="MissingConstraints" />
 
     <Button

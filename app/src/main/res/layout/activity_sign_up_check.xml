@@ -29,7 +29,7 @@
             android:layout_margin="15dp">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/sentAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="希望パスワード"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:text="TextView"
-                app:layout_constraintLeft_toRightOf="@+id/textView2"
+                app:layout_constraintLeft_toRightOf="@+id/sentAddress"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintTop_creator="1" />
@@ -57,7 +57,7 @@
             android:layout_margin="15dp">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/sentDomain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="お名前"

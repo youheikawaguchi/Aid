@@ -7,4 +7,5 @@ class ValueResponse {
     val errorPasswordMismatch = "パスワードが不一致です"
     val complete = "コンプリート"
     val errorMismatch = "入力が不正です"
+    val serverIp = "http://192.168.8.107"
 }

@@ -44,11 +44,11 @@ class SignUpCheck : AppCompatActivity() {
             if (fromJson != null) {
                 RealmDAO().signUpRealmAdd(fromJson)
             }
-            val url = "https://toridge.com/post_json.php"   //サンプル用URL
-            //172.16.89.--157-- //下岡に送るためのIP(仮)のメモ。４つ目の部分は日によって変わる。
-            val handler = Handler()
+
+            //サーバー通信
+            val url = ValueResponse().serverIp + "/re"
             //ユーザーデータをサーバーに送信
-            CallOkHttp().postRun(url, handler, userDataJson)
+            CallOkHttp().postRun(url, userDataJson)
             val loginIntent = Intent(application, LoginActivity::class.java)
             startActivity(loginIntent)
         }
