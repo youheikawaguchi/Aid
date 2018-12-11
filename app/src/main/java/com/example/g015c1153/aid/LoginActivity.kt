@@ -57,54 +57,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             }
             false
         })
-
-//        sign_in_button.setOnClickListener {
-//            if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
-//                attemptLogin()
-//                return@OnEditorActionListener true
-//            }
-//        }
-
-//        val uri = intent.data
-//        val id = uri?.getQueryParameter("id")
-//        Log.i("parameter", id)
-//
-//        //サインインボタン処理
-//        sign_in_button.setOnClickListener {
-//            loginData.mailAddress = email.text.toString()
-//            loginData.password = Password.text.toString()
-//
-//            //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
-//            //サーバー通信
-//            val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
-//            val loginResult = CallOkHttp().postRun(url, loginJson)    //HTTP通信を行う
-//
-//            //(未修整)DBに接続した結果に従って画面遷移の判定を行う
-//            if (loginResult != null) {
-//                if (!loginResult.isEmpty()) {
-//                    val topIntent = Intent(application, TopActivity::class.java)
-//                    topIntent.putExtra("Switch", true)
-//                    startActivity(topIntent)
-//                }
-//                else if (loginJson.isEmpty()) {
-//                    val signUpIntent = Intent(application, SignUpForm::class.java)
-//                    signUpIntent.putExtra("MailAddress", loginData.mailAddress)
-//                    startActivity(signUpIntent)
-//
-////                val loginIntent = Intent(application, SignUpForm::class.java)
-////                     loginIntent.putExtra("info",list)
-////                     startActivity(loginIntent)
-//                }
-//            }
-//        }
-//
-//        //サインアップ(新規登録)ボタン処理
-//        sign_up_button.setOnClickListener {
-//            val formIntent = Intent(this, SignUpForm::class.java)
-//            startActivity(formIntent)
-//        }
     }
-
 
     private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -142,7 +95,6 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             }
         }
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -296,7 +248,8 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
-        private var loginResult: String? = null
+        private var frag: Boolean = false
+
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
@@ -307,20 +260,22 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
                 loginData.mailAddress = mEmail
                 loginData.password = mPassword
                 val toJson = loginAdapter.toJson(loginData)
-                loginResult = CallOkHttp().postRun(url, toJson)
+                val loginResult = CallOkHttp().postRun(url, toJson)
+                Log.i("user", loginResult)
+
+                if(loginResult != null){
+                    if(!loginResult.isEmpty()){
+                        frag = true
+                    }else if(loginResult.isEmpty()){
+                        frag = false
+                    }
+                }
 
             } catch (e: InterruptedException) {
                 return false
             }
 
-            return DUMMY_CREDENTIALS
-                    .map { it.split(":") }
-                    .firstOrNull { it[0] == mEmail }
-                    ?.let {
-                        // Account exists, return true if the Password matches.
-                        it[1] == mPassword
-                    }
-                    ?: true
+            return frag
         }
 
         override fun onPostExecute(success: Boolean?) {

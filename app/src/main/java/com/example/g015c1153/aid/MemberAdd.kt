@@ -37,7 +37,8 @@ class MemberAdd : AppCompatActivity() {
         memberAddButton.setOnClickListener {
             val mMemberNo = memberNo.text.toString()
             val mMemberPosition = memberPosition.text.toString()
-        }
 
+
+        }
     }
 }
