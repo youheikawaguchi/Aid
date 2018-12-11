@@ -1,7 +1,6 @@
 package com.example.g015c1153.aid
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,6 @@ import android.widget.Button
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_login.*
-import okhttp3.*
-import java.io.IOException
 
 class LoginFragment : Fragment() {
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
@@ -28,8 +25,8 @@ class LoginFragment : Fragment() {
 
         //サインアップボタン処理
         view.findViewById<Button>(R.id.sign_up_button).setOnClickListener {
-            loginData.mailAddress = userName.text.toString()
-            loginData.password = password.text.toString()
+            loginData.mailAddress = email.text.toString()
+            loginData.password = Password.text.toString()
             //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
 
             //サーバー通信

@@ -1,86 +1,111 @@
 package com.example.g015c1153.aid
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.annotation.TargetApi
+import android.content.CursorLoader
 import android.content.Intent
-import android.os.Handler
+import android.content.Loader
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.provider.ContactsContract
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_login.*
-import okhttp3.*
-import java.io.IOException
+import android.os.AsyncTask
+
+import java.util.ArrayList
+import android.Manifest.permission.READ_CONTACTS
+import android.app.LoaderManager
+import android.telecom.Call
+import android.widget.Button
 
 /**
  * A login screen that offers login via email/Password.
  */
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    // private var mAuthTask: UserLoginTask? = null
+    private var mAuthTask: UserLoginTask? = null
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val loginAdapter = moshi.adapter(LoginData::class.java)!!
     private var loginData = LoginData()
+    val url = ValueResponse().serverIp + "/reLogin"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
         // populateAutoComplete()
-//        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
+        Password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
+            if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
+               attemptLogin()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+//        sign_in_button.setOnClickListener {
 //            if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
-//               attemptLogin()
+//                attemptLogin()
 //                return@OnEditorActionListener true
 //            }
-//            false
-//        })
+//        }
 
 //        val uri = intent.data
 //        val id = uri?.getQueryParameter("id")
 //        Log.i("parameter", id)
-
-        //サインインボタン処理
-        sign_in_button.setOnClickListener {
-            loginData.mailAddress = userName.text.toString()
-            loginData.password = password.text.toString()
-
-            //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
-            //サーバー通信
-            val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
-            val url = ValueResponse().serverIp + "/reLogin"   //サンプル用URL
-            val loginResult = CallOkHttp().postRun(url, loginJson)    //HTTP通信を行う
-
-            //(未修整)DBに接続した結果に従って画面遷移の判定を行う
-            if (loginResult != null) {
-                if (!loginResult.isEmpty()) {
-                    val topIntent = Intent(application, TopActivity::class.java)
-                    topIntent.putExtra("Switch", true)
-                    startActivity(topIntent)
-                }
+//
+//        //サインインボタン処理
+//        sign_in_button.setOnClickListener {
+//            loginData.mailAddress = email.text.toString()
+//            loginData.password = Password.text.toString()
+//
+//            //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
+//            //サーバー通信
+//            val loginJson = loginAdapter.toJson(loginData)  //KotlinオブジェクトをJSONに変換
+//            val loginResult = CallOkHttp().postRun(url, loginJson)    //HTTP通信を行う
+//
+//            //(未修整)DBに接続した結果に従って画面遷移の判定を行う
+//            if (loginResult != null) {
+//                if (!loginResult.isEmpty()) {
+//                    val topIntent = Intent(application, TopActivity::class.java)
+//                    topIntent.putExtra("Switch", true)
+//                    startActivity(topIntent)
+//                }
 //                else if (loginJson.isEmpty()) {
 //                    val signUpIntent = Intent(application, SignUpForm::class.java)
 //                    signUpIntent.putExtra("MailAddress", loginData.mailAddress)
 //                    startActivity(signUpIntent)
-
-//                val loginIntent = Intent(application, SignUpForm::class.java)
-//                     loginIntent.putExtra("info",list)
-//                     startActivity(loginIntent)
+//
+////                val loginIntent = Intent(application, SignUpForm::class.java)
+////                     loginIntent.putExtra("info",list)
+////                     startActivity(loginIntent)
 //                }
-            }
-        }
-
-        //サインアップ(新規登録)ボタン処理
-        sign_up_button.setOnClickListener {
-            val formIntent = Intent(this, SignUpForm::class.java)
-            startActivity(formIntent)
-        }
+//            }
+//        }
+//
+//        //サインアップ(新規登録)ボタン処理
+//        sign_up_button.setOnClickListener {
+//            val formIntent = Intent(this, SignUpForm::class.java)
+//            startActivity(formIntent)
+//        }
     }
 
-    /*
+
     private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
             return
@@ -98,8 +123,8 @@ class LoginActivity : AppCompatActivity() {
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(email, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok,
-                            { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) })
+                    .setAction(android.R.string.ok
+                    ) { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) }
         } else {
             requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
@@ -269,14 +294,21 @@ class LoginActivity : AppCompatActivity() {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : MyAsyncTask<Void, Void, Boolean>() {
+    inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
+        private var loginResult: String? = null
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
             try {
                 // Simulate network access.
                 Thread.sleep(2000)
+
+                loginData.mailAddress = mEmail
+                loginData.password = mPassword
+                val toJson = loginAdapter.toJson(loginData)
+                loginResult = CallOkHttp().postRun(url, toJson)
+
             } catch (e: InterruptedException) {
                 return false
             }
@@ -296,7 +328,9 @@ class LoginActivity : AppCompatActivity() {
             showProgress(false)
 
             if (success!!) {
-                finish()
+                val topIntent = Intent(application, TopActivity::class.java)
+                topIntent.putExtra("Switch", true)
+                startActivity(topIntent)
             } else {
                 Password.error = getString(R.string.error_incorrect_password)
                 Password.requestFocus()
@@ -321,5 +355,5 @@ class LoginActivity : AppCompatActivity() {
          * TODO: remove after connecting to a real authentication system.
          */
         private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:hello", "bar@example.com:world")
-    }*/
+    }
 }

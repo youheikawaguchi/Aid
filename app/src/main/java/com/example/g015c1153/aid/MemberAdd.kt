@@ -27,14 +27,14 @@ class MemberAdd : AppCompatActivity() {
             val fromJson = memberAddAdapter.fromJson(json)
             if(fromJson != null){
                 user = fromJson
-                textUserName.text = user.firstName + user.secondName
+                val userName: String = user.firstName + user.secondName
+                textUserName.text = userName
             }else{
                 memberMailSearch.error = ValueResponse().errorNoUser
             }
         }
 
         memberAddButton.setOnClickListener {
-            val mMemberMailSearch = memberMailSearch.text.toString()
             val mMemberNo = memberNo.text.toString()
             val mMemberPosition = memberPosition.text.toString()
         }

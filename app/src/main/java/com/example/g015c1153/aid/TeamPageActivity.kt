@@ -68,6 +68,7 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             val memberJoinSubmit = view.findViewById<Button>(R.id.member_join_submit)
 
             memberJoinSubmit.setOnClickListener {
+                
                 popupWindow.dismiss()
             }
 

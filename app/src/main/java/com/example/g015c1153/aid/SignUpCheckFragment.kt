@@ -47,7 +47,7 @@ class SignUpCheckFragment : Fragment() {
             //RealmにUser情報を登録
             RealmDAO().signUpRealmAdd(user)
 
-            val url = "https://toridge.com/post_json.php"   //サンプル用URL
+            val url = ValueResponse().serverIp + ""   //サンプル用URL
             //172.16.89.--157-- //下岡に送るためのIP(仮)のメモ。４つ目の部分は日によって変わる。
             val handler = Handler()
             //ユーザーデータをサーバーに送信
