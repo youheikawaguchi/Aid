@@ -249,6 +249,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         private var frag: Boolean = false
+        private var loginResult : String? = ""
 
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
@@ -260,21 +261,19 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
                 loginData.mailAddress = mEmail
                 loginData.password = mPassword
                 val toJson = loginAdapter.toJson(loginData)
-                val loginResult = CallOkHttp().postRun(url, toJson)
+                loginResult = CallOkHttp().postRun(url, toJson)
                 Log.i("user", loginResult)
 
                 if(loginResult != null){
-                    if(!loginResult.isEmpty()){
+                    if(!loginResult!!.isEmpty()){
                         frag = true
-                    }else if(loginResult.isEmpty()){
+                    }else if(loginResult!!.isEmpty()){
                         frag = false
                     }
                 }
-
             } catch (e: InterruptedException) {
                 return false
             }
-
             return frag
         }
 
@@ -282,10 +281,17 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             mAuthTask = null
             showProgress(false)
 
+            loginData = loginAdapter.fromJson(loginResult)!!
+
             if (success!!) {
-                val topIntent = Intent(application, TopActivity::class.java)
-                topIntent.putExtra("Switch", true)
-                startActivity(topIntent)
+                if(loginData.frag) {
+                    val topIntent = Intent(application, TopActivity::class.java)
+                    topIntent.putExtra("Switch", true)
+                    startActivity(topIntent)
+                }else if(!loginData.frag){
+                    val signUpIntent = Intent(application, SignUpForm::class.java)
+                    startActivity(signUpIntent)
+                }
             } else {
                 Password.error = getString(R.string.error_incorrect_password)
                 Password.requestFocus()

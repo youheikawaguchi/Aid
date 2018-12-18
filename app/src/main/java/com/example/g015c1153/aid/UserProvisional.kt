@@ -26,3 +26,9 @@ open class Team(
         @Required open var TeamDetail: String = "",
         @Required open var TeamLocal: String = ""
 ) : RealmObject()
+
+open class SessionData(
+        @PrimaryKey open var Id: Int = 1,
+        @Required open var UserId: String = "",
+        @Required open var TeamId: String = ""
+) : RealmObject()

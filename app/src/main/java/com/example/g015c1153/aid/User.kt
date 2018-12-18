@@ -16,7 +16,8 @@ data class User(
 //ログイン用
 data class LoginData(
         var mailAddress: String = "",
-        var password: String = ""
+        var password: String = "",
+        var frag: Boolean = false
 )
 
 //TOP画面のチーム情報カード用
@@ -40,7 +41,7 @@ data class Session(
         var teamId: String = ""
 )
 
-data class member(
+data class Member(
         var id: String = "",
         var teamid: String = "", //foreign key
         var Userid: String ="",    //foreign key

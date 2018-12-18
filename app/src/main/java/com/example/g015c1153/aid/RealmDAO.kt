@@ -198,4 +198,41 @@ class RealmDAO {
         mRealm.close()
         return teamList
     }
+
+    fun sessionRead(userId: String): SessionData{
+        lateinit var mRealm: Realm
+
+        //Realmのセットアップ
+        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        mRealm = Realm.getInstance(realmConfig)
+
+        val sessionDataRealm = mRealm.where(SessionData::class.java).equalTo("UserId", userId).findAll()
+        val sessionData = SessionData()
+        if(sessionDataRealm != null) {
+            sessionData.UserId = sessionDataRealm[0]?.UserId.toString()
+            sessionData.TeamId = sessionDataRealm[0]?.TeamId.toString()
+        }
+        mRealm.close()
+        return sessionData
+    }
+
+    //ユーザーIDの登録
+    fun sessionAddUserId(userId: String){
+        lateinit var mRealm: Realm
+
+        //Realmのセットアップ
+        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        mRealm = Realm.getInstance(realmConfig)
+
+        mRealm.executeTransaction {
+            //チームデータをRealmに保存
+            val sessionAdd = mRealm.createObject(SessionData::class.java, 1)
+            sessionAdd.UserId = userId
+
+            mRealm.copyToRealm(sessionAdd)
+        }
+
+        Log.i("保存された内容：", mRealm.where(SessionData::class.java).findAll().toString())
+        mRealm.close()
+    }
 }
