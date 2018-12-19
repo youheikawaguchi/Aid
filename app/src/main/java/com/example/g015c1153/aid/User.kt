@@ -43,8 +43,8 @@ data class Session(
 
 data class Member(
         var id: String = "",
-        var teamid: String = "", //foreign key
-        var Userid: String ="",    //foreign key
+        var teamid: String = "",
+        var Userid: String ="",
         var number: String = "",
         var position: String = ""
 )

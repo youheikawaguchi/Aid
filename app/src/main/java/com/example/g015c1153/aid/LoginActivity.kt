@@ -285,6 +285,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
 
             if (success!!) {
                 if(loginData.frag) {
+
                     val topIntent = Intent(application, TopActivity::class.java)
                     topIntent.putExtra("Switch", true)
                     startActivity(topIntent)
