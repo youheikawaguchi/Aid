@@ -1,5 +1,6 @@
 package com.example.g015c1153.aid
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,8 +14,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.app_bar_top.*
 import kotlinx.android.synthetic.main.content_top.*
@@ -24,7 +27,17 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     private var mDataList : ArrayList<CardData> = ArrayList()
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
-    private val teamAdapter = moshi.adapter(TeamData::class.java)!!
+    private val teamAdapter = moshi.adapter(TeamData::class.java)
+    private val type = Types.newParameterizedType(List::class.java, TeamData::class.java)
+    private val teamListAdapter: JsonAdapter<List<TeamData>> = moshi.adapter(type)
+
+    //サーバー通信は、makeData()でget, makeData(String), onItemClick(View,Int)でpostを行っている
+    //チーム情報 = ID, 名前, チーム概要, 地域
+    //makeData() = DBに登録されてあるチーム情報をすべて。
+    //makeData() = チーム名情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
+    //onItemClick(View,Int) = チームID情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
+    private val url = ValueResponse().serverIp + ""         //サーバーIP
+    //private val pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -33,19 +46,19 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         setSupportActionBar(toolbar)
 
         //ログインからのインテントを受け取る(ログインしたかどうか)
-        val visible = intent.getBooleanExtra("Switch", false)
-        when (visible) {
-            //ログインしていれば、マイページを表示
-            true -> {
-                nav_view.menu.setGroupVisible(R.id.menu_other, false)
-                nav_view.menu.setGroupVisible(R.id.my_page, true)
-            }
-            //ログインしていなければ、新規登録を表示
-            false -> {
-                nav_view.menu.setGroupVisible(R.id.menu_other, true)
-                nav_view.menu.setGroupVisible(R.id.my_page, false)
-            }
-        }
+//        val visible = pref.getBoolean("UserID", false)
+//        when (visible) {
+//            //ログインしていれば、マイページを表示
+//            true -> {
+//                nav_view.menu.setGroupVisible(R.id.menu_other, false)
+//                nav_view.menu.setGroupVisible(R.id.my_page, true)
+//            }
+//            //ログインしていなければ、新規登録を表示
+//            false -> {
+//                nav_view.menu.setGroupVisible(R.id.menu_other, true)
+//                nav_view.menu.setGroupVisible(R.id.my_page, false)
+//            }
+//        }
 
         //ドロワーの処理。デフォルトのまま。
         val toggle = ActionBarDrawerToggle(
@@ -56,7 +69,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         //カードに対する処理
         // データ作成
-        makeTestData()
+        makeData()
 
         // Adapter作成
         val adapter = CardAdapter(this,this, mDataList)
@@ -67,35 +80,69 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     }
 
     //表示するカードのデータを生成
-    private fun makeTestData() {
-        val teamDataList = RealmDAO().teamReadRealm()
-        for(i in 0 until teamDataList.size){
-            mDataList.add(CardData(
-                    teamDataList[i].TeamId,
-                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
-                    teamDataList[i].teamName,
-                    teamDataList[i].teamDetail))
+    private fun makeData() {
+//        val teamDataList = RealmDAO().teamReadRealm()
+        val json = CallOkHttp().getRun(url)
+        if(!json.isEmpty()) {
+            val fromJson = teamListAdapter.fromJson(json)
+            if (fromJson != null) {
+                for (i in 0 until fromJson.size) {
+                    mDataList.add(CardData(
+                            fromJson[i].TeamId,
+                            ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+                            fromJson[i].teamName,
+                            fromJson[i].teamDetail)
+                    )
+                }
+            }
         }
+//        for(i in 0 until teamDataList.size){
+//            mDataList.add(CardData(
+//                    teamDataList[i].TeamId,
+//                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+//                    teamDataList[i].teamName,
+//                    teamDataList[i].teamDetail)
+//            )
+//        }
     }
 
     //表示するカードのデータ(チーム名検索)を生成
-    private fun makeTestData(teamName:String){
-        val teamDataList = RealmDAO().teamReadRealm(teamName)
-        for(i in 0 until teamDataList.size){
-            mDataList.add(CardData(
-                    teamDataList[i].TeamId,
-                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
-                    teamDataList[i].teamName,
-                    teamDataList[i].teamDetail))
+    private fun makeData(teamName:String){
+//        val teamDataList = RealmDAO().teamReadRealm(teamName)
+        val teamData = TeamData(teamName = teamName)
+        val toJson = teamAdapter.toJson(teamData)
+        val json = CallOkHttp().postRun(url, toJson)
+        if(!json.isEmpty()) {
+            val fromJson = teamListAdapter.fromJson(json)
+            if (fromJson != null) {
+                for (i in 0 until fromJson.size) {
+                    mDataList.add(CardData(
+                            fromJson[i].TeamId,
+                            ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+                            fromJson[i].teamName,
+                            fromJson[i].teamDetail)
+                    )
+                }
+            }
         }
+//        for(i in 0 until teamDataList.size){
+//            mDataList.add(CardData(
+//                    teamDataList[i].TeamId,
+//                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+//                    teamDataList[i].teamName,
+//                    teamDataList[i].teamDetail))
+//        }
     }
 
     //カードビューを押したときの処理
     override fun onItemClick(view: View, position: Int) {
         val teamIntent = Intent(application, TeamPageActivity::class.java)
 
-        val teamData = RealmDAO().teamReadRealm(Integer.parseInt(mDataList[position].cardTeamId))
-        val teamJson = teamAdapter.toJson(teamData)
+        //カードのポジションをもとに、カードのID(チーム名)を取得し、サーバーへ検索をかける
+        val teamData = TeamData(TeamId = mDataList[position].cardTeamId)
+        val toJson = teamAdapter.toJson(teamData)
+        val teamJson = CallOkHttp().postRun(url, toJson)    //IDをもとにチーム情報を取得
+//        val teamData = RealmDAO().teamReadRealm(Integer.parseInt(mDataList[position].cardTeamId))
         teamIntent.putExtra("team",teamJson)
         startActivity(teamIntent)
     }
@@ -127,7 +174,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 val teamData = TeamData()
                 teamData.teamName = query
                 mDataList.clear()
-                makeTestData(teamData.teamName)
+                makeData(teamData.teamName)
 
                 topRecyclerView.adapter = CardAdapter(this@TopActivity, this@TopActivity, mDataList)   //アダプターにカードビューをセット
                 return false
@@ -167,11 +214,10 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 startActivity(loginIntent)
             }
             R.id.teamAdd -> {
-
                 val teamAddIntent = Intent(this, TeamAddActivity::class.java)
                 startActivity(teamAddIntent)
 
-                //Fragmentに遷移用
+//                //Fragmentに遷移用
 //                val fragmentManager = supportFragmentManager
 //                val fragmentTransaction = fragmentManager.beginTransaction()
 //

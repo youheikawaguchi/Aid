@@ -28,28 +28,29 @@ import android.os.AsyncTask
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.LoaderManager
+import android.content.Context
 import android.telecom.Call
 import android.widget.Button
 
-/**
- * A login screen that offers login via email/Password.
- */
 class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
+
     private var mAuthTask: UserLoginTask? = null
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val loginAdapter = moshi.adapter(LoginData::class.java)!!
     private var loginData = LoginData()
-    val url = ValueResponse().serverIp + "/reLogin"
+
+    //サーバー通信はdoInBackgroundメソッドで行っている。
+    private val url = ValueResponse().serverIp + "/reLogin"     //サーバーIP
+    //private val pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
         // populateAutoComplete()
+
+
         Password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
             if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
                attemptLogin()
@@ -158,9 +159,6 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
         return Password.length > 4
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private fun showProgress(show: Boolean) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -242,14 +240,10 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
         val IS_PRIMARY = 1
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         private var frag: Boolean = false
-        private var loginResult : String? = ""
+        lateinit var loginResult : String
 
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
@@ -264,12 +258,10 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
                 loginResult = CallOkHttp().postRun(url, toJson)
                 Log.i("user", loginResult)
 
-                if(loginResult != null){
-                    if(!loginResult!!.isEmpty()){
-                        frag = true
-                    }else if(loginResult!!.isEmpty()){
-                        frag = false
-                    }
+                if(!loginResult.isEmpty()){
+                    frag = true
+                }else if(loginResult.isEmpty()){
+                    frag = false
                 }
             } catch (e: InterruptedException) {
                 return false
@@ -286,8 +278,12 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             if (success!!) {
                 if(loginData.frag) {
 
+                    //Preferenceにメールアドレス(ID)の保存
+                    //pref.edit().putString("UserID",loginData.mailAddress).apply()
+
+                    //TOP画面に遷移
                     val topIntent = Intent(application, TopActivity::class.java)
-                    topIntent.putExtra("Switch", true)
+//                    topIntent.putExtra("Switch", true)
                     startActivity(topIntent)
                 }else if(!loginData.frag){
                     val signUpIntent = Intent(application, SignUpForm::class.java)
