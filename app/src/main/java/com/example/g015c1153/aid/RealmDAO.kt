@@ -70,8 +70,8 @@ class RealmDAO {
             //Realmオブジェクトの生成
             val signUpUser = mRealm.createObject(UserSignUp::class.java,nextUserId)
             signUpUser.Password = user.password
-            signUpUser.FirstName = user.firstName
-            signUpUser.SecondName = user.secondName
+            signUpUser.lastName = user.lastName
+            signUpUser.firstName = user.firstName
             signUpUser.Birthday = user.birthDay
             signUpUser.Gender = user.gender
             //Realmの登録

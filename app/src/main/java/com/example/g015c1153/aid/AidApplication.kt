@@ -1,20 +1,17 @@
 package com.example.g015c1153.aid
 
 import android.app.Application
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 class AidApplication : Application() {
-
-    lateinit var session : Session
-    private var userID : String = "UnknownUser"
-    private var teamID : String = "UnknownTeam"
 
     override fun onCreate() {
         super.onCreate()
 
-    }
-
-    fun newInstance(): Session{
-        session.copy(userId = userID, teamId = teamID)
-        return session
+        //Realmの初期化
+        Realm.init(this)
+        val config = RealmConfiguration.Builder().build()
+        Realm.setDefaultConfiguration(config)
     }
 }

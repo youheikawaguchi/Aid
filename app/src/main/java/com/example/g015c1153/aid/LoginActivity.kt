@@ -3,9 +3,6 @@ package com.example.g015c1153.aid
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
-import android.content.CursorLoader
-import android.content.Intent
-import android.content.Loader
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
@@ -28,7 +25,7 @@ import android.os.AsyncTask
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.LoaderManager
-import android.content.Context
+import android.content.*
 import android.telecom.Call
 import android.widget.Button
 
@@ -42,7 +39,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
 
     //サーバー通信はdoInBackgroundメソッドで行っている。
     private val url = ValueResponse().serverIp + "/reLogin"     //サーバーIP
-    //private val pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+    private lateinit var pref : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -276,10 +273,12 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             loginData = loginAdapter.fromJson(loginResult)!!
 
             if (success!!) {
-                if(loginData.frag) {
 
-                    //Preferenceにメールアドレス(ID)の保存
-                    //pref.edit().putString("UserID",loginData.mailAddress).apply()
+                //Preferenceにメールアドレス(ID)の保存
+                pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+                pref.edit().putString("UserID",loginData.mailAddress).apply()
+
+                if(loginData.frag) {
 
                     //TOP画面に遷移
                     val topIntent = Intent(application, TopActivity::class.java)

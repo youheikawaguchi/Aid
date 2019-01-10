@@ -12,6 +12,9 @@ class TeamAddActivity : AppCompatActivity() {
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val teamAdapter = moshi.adapter(TeamData::class.java)!!
+    //46行目辺り。
+    //登録するチームデータを渡し、登録されたチーム情報をすべてもらう。(登録されたかの確認のため)
+    private val url = ValueResponse().serverIp + ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,9 @@ class TeamAddActivity : AppCompatActivity() {
             //次ページに値を渡せるように、Json文字列に変換
             val teamJson = teamAdapter.toJson(team)
 
+            //通信可能になればコメントを外す
+//            val toJson = teamAdapter.toJson(teamDataAdd)
+//            val teamJson2 = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
             //次ページに遷移
             val teamPageIntent = Intent(this, TeamPageActivity::class.java)
             teamPageIntent.putExtra("team", teamJson)

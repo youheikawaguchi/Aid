@@ -1,7 +1,9 @@
 package com.example.g015c1153.aid
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.telecom.Call
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import io.realm.Realm
@@ -10,32 +12,35 @@ import kotlinx.android.synthetic.main.activity_member_add.*
 
 class MemberAdd : AppCompatActivity() {
 
-    private lateinit var mRealm: Realm
+//    private lateinit var mRealm: Realm
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
-    private val memberAddAdapter = moshi.adapter(User::class.java)!!
+    private val userAdapter = moshi.adapter(User::class.java)
+    private val memberAdapter = moshi.adapter(Member::class.java)
     var user = User()
+    private lateinit var pref : SharedPreferences
+    //onCreate()のmemberMailSearchリスナー内。Userのメールアドレスを渡して、ユーザー情報を取得
+    //onCreate()のmemberAddButtonリスナー内。メンバー情報を渡して、データを追加する。送信のみ。
+    val url = ValueResponse().serverIp + ""     //サーバーIPアドレス
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_member_add)
 
         //Realmのセットアップ
-        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
-        mRealm = Realm.getInstance(realmConfig)
+//        val realmConfig = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+//        mRealm = Realm.getInstance(realmConfig)
         var frag = false
 
-        memberMailSearch.setOnClickListener {
+        memberMailSearch.setOnClickListener {       //ユーザー検索ボタンが押されたとき
 
             user.mailAddress = memberMailSearch.text.toString()
 
-            var json = memberAddAdapter.toJson(user)
-            val url = ValueResponse().serverIp + ""
-
-            json = CallOkHttp().postRun(url, json)
-            val fromJson = memberAddAdapter.fromJson(json)
+            var json = userAdapter.toJson(user)
+            json = CallOkHttp().postRun(url, json)      //メールアドレスを渡す
+            val fromJson = userAdapter.fromJson(json)
             if(fromJson != null){
                 user = fromJson
-                val userName: String = user.firstName + user.secondName
+                val userName: String = user.lastName + user.firstName
                 textUserName.text = userName
                 frag = true
             }else{
@@ -49,12 +54,18 @@ class MemberAdd : AppCompatActivity() {
                 val mMemberPosition = memberPosition.text.toString()
 
                 val memberData = Member()
+                memberData.teamid = pref.getString("TeamID", "Unknown")
                 memberData.Userid = user.id
                 memberData.number = mMemberNo
                 memberData.position = mMemberPosition
 
+                val toJson = memberAdapter.toJson(memberData)
+                CallOkHttp().postRun(url, toJson)
+
                 //Sessionに登録されているチームIDを取得してくる。
-                val teamData = RealmDAO().sessionRead(memberData.Userid) //チームIDが取得できていない
+//                val teamData = RealmDAO().sessionRead(memberData.Userid) //チームIDが取得できていない
+
+                finish()
             }
         }
     }

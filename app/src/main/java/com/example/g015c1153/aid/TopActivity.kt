@@ -1,7 +1,7 @@
 package com.example.g015c1153.aid
 
-import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -30,6 +30,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private val teamAdapter = moshi.adapter(TeamData::class.java)
     private val type = Types.newParameterizedType(List::class.java, TeamData::class.java)
     private val teamListAdapter: JsonAdapter<List<TeamData>> = moshi.adapter(type)
+    private lateinit var pref : SharedPreferences
 
     //サーバー通信は、makeData()でget, makeData(String), onItemClick(View,Int)でpostを行っている
     //チーム情報 = ID, 名前, チーム概要, 地域
@@ -37,7 +38,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     //makeData() = チーム名情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
     //onItemClick(View,Int) = チームID情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
     private val url = ValueResponse().serverIp + ""         //サーバーIP
-    //private val pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -46,19 +46,19 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         setSupportActionBar(toolbar)
 
         //ログインからのインテントを受け取る(ログインしたかどうか)
-//        val visible = pref.getBoolean("UserID", false)
-//        when (visible) {
-//            //ログインしていれば、マイページを表示
-//            true -> {
-//                nav_view.menu.setGroupVisible(R.id.menu_other, false)
-//                nav_view.menu.setGroupVisible(R.id.my_page, true)
-//            }
-//            //ログインしていなければ、新規登録を表示
-//            false -> {
-//                nav_view.menu.setGroupVisible(R.id.menu_other, true)
-//                nav_view.menu.setGroupVisible(R.id.my_page, false)
-//            }
-//        }
+        val visible = pref.getBoolean("UserID", false)
+        when (visible) {
+            //ログインしていれば、マイページを表示
+            true -> {
+                nav_view.menu.setGroupVisible(R.id.menu_other, false)
+                nav_view.menu.setGroupVisible(R.id.my_page, true)
+            }
+            //ログインしていなければ、新規登録を表示
+            false -> {
+                nav_view.menu.setGroupVisible(R.id.menu_other, true)
+                nav_view.menu.setGroupVisible(R.id.my_page, false)
+            }
+        }
 
         //ドロワーの処理。デフォルトのまま。
         val toggle = ActionBarDrawerToggle(

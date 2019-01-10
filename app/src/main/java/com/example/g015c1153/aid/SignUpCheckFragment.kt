@@ -23,7 +23,7 @@ class SignUpCheckFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         //intentから値を取り出す用にリストの作成。
-        val textViews = arrayOf<TextView>(textPW, textFirstName, textSecondName, textBirthDay, textGender)   //各テキストビューをリストで取得
+        val textViews = arrayOf<TextView>(textPW, textlastName, textfirstName, textBirthDay, textGender)   //各テキストビューをリストで取得
 
         //前画面からのJsonデータを受け取り、オブジェクトに変換
 //        val intent = intent
@@ -35,8 +35,8 @@ class SignUpCheckFragment : Fragment() {
 //        for (i in textViews.indices) {
 //            when (textViews[i]) {
 //                textPW -> textViews[i].text = fromJson.password
-//                textFirstName -> textViews[i].text = fromJson.firstName
-//                textSecondName -> textViews[i].text = fromJson.secondName
+//                textlastName -> textViews[i].text = fromJson.lastName
+//                textfirstName -> textViews[i].text = fromJson.firstName
 //                textBirthDay -> textViews[i].text = fromJson.birthDay
 //                textGender -> textViews[i].text = fromJson.gender
 //            }

@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable
 //新規登録用
 data class User(
         var id: String = "",
+        var lastName: String = "",
         var firstName: String = "",
-        var secondName: String = "",
         var birthDay: String = "",
         var gender: String = "",
         var mailAddress: String = "",
@@ -42,7 +42,6 @@ data class Session(
 )
 
 data class Member(
-        var id: String = "",
         var teamid: String = "",
         var Userid: String ="",
         var number: String = "",

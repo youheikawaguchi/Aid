@@ -19,7 +19,7 @@ class SignUpCheck : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up_check)
 
         //intentから値を取り出す用にリストの作成。
-        val textViews = arrayOf<TextView>(textPW, textFirstName, textSecondName, textBirthDay, textGender)   //各テキストビューをリストで取得
+        val textViews = arrayOf<TextView>(textPW, textlastName, textfirstName, textBirthDay, textGender)   //各テキストビューをリストで取得
 
         val intent = intent
         val userDataJson = intent.getStringExtra("userData")
@@ -30,8 +30,8 @@ class SignUpCheck : AppCompatActivity() {
             for (i in textViews.indices) {
                 when (textViews[i]) {
                     textPW -> textViews[i].text = fromJson.password
-                    textFirstName -> textViews[i].text = fromJson.firstName
-                    textSecondName -> textViews[i].text = fromJson.secondName
+                    textlastName -> textViews[i].text = fromJson.lastName
+                    textfirstName -> textViews[i].text = fromJson.firstName
                     textBirthDay -> textViews[i].text = fromJson.birthDay
                     textGender -> textViews[i].text = fromJson.gender
                 }

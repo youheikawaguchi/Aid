@@ -12,8 +12,8 @@ open class UserProvisional(
 
 open class UserSignUp(
         @PrimaryKey open var Id: Int = 0,
-        @Required open var FirstName: String = "",
-        @Required open var SecondName: String = "",
+        @Required open var lastName: String = "",
+        @Required open var firstName: String = "",
         @Required open var Gender: String = "",
         @Required open var Birthday: String = "",
         @Required open var MailAddress: String = "",

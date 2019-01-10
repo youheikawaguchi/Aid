@@ -47,8 +47,8 @@ class SignUpFormFragment : Fragment() {
         //確認ボタンが押された時の処理
         view!!.findViewById<Button>(R.id.buttonNextCheck).setOnClickListener {
 
-            userData.firstName = editFirstName.text.toString()   //姓の格納用
-            userData.secondName = editSecondName.text.toString()  //名の格納用
+            userData.lastName = editLastName.text.toString()   //姓の格納用
+            userData.firstName = editFirstName.text.toString()  //名の格納用
             userData.birthDay = editBirthDay.text.toString()    //生年月日の格納用
 
             val flag = arrayOf(true, true, true, true, true)    //各項目が正しく入力されているかの判定用
@@ -60,11 +60,11 @@ class SignUpFormFragment : Fragment() {
                 userData.password = editPW.text.toString()
             }
 
-            if (userData.password != "" || userData.firstName != "" || userData.secondName != "") {   //空文字判定
+            if (userData.password != "" || userData.lastName != "" || userData.firstName != "") {   //空文字判定
 
                 val password = matcher.patternChecker(strPW, 2)
-                val fn = matcher.patternChecker(userData.firstName, 2)
-                val sn = matcher.patternChecker(userData.firstName, 3)
+                val fn = matcher.patternChecker(userData.lastName, 2)
+                val sn = matcher.patternChecker(userData.lastName, 3)
 
                 val id = RadioGroupGender.checkedRadioButtonId     //チェックされたラジオボタンのIDを取得
                 val radioButton = view!!.findViewById<View>(id) as RadioButton     //↑のIDをもとにRadioButtonのインスタンス化
@@ -78,21 +78,21 @@ class SignUpFormFragment : Fragment() {
                     textPWRe.setTextColor(Color.RED)
                 }
                 //苗字
-                if (userData.firstName == "" || !fn) {
+                if (userData.lastName == "" || !fn) {
                     flag[1] = false
+                    if (userData.lastName == "") {
+                        editLastName.error = valueResponse.errorNoValue
+                    } else {
+                        editLastName.error = valueResponse.errorNumber
+                    }
+                }
+                //名前
+                if (userData.firstName == "" || !sn) {
+                    flag[2] = false
                     if (userData.firstName == "") {
                         editFirstName.error = valueResponse.errorNoValue
                     } else {
                         editFirstName.error = valueResponse.errorNumber
-                    }
-                }
-                //名前
-                if (userData.secondName == "" || !sn) {
-                    flag[2] = false
-                    if (userData.secondName == "") {
-                        editSecondName.error = valueResponse.errorNoValue
-                    } else {
-                        editSecondName.error = valueResponse.errorNumber
                     }
                 }
                 //誕生日

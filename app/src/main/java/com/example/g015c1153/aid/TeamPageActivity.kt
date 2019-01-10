@@ -1,6 +1,7 @@
 package com.example.g015c1153.aid
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,18 +12,22 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.Toast
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_team_page.*
 import kotlinx.android.synthetic.main.content_team_page.*
 
 class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragmentInteractionListener {
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val teamAdapter = moshi.adapter(TeamData::class.java)!!
+    private val sessionAdapter = moshi.adapter(Session::class.java)!!
+    private lateinit var pref :SharedPreferences
+
+    //onCreate()のmemberJoinSubmitリスナー内
+    //userIDとteamIDを渡してデータを追加する。送信のみ。
+    private val url = ValueResponse().serverIp + ""     //サーバーIPアドレス
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +39,16 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
         val teamDataJson = intent.getStringExtra("team")
         //Jsonデータからオブジェクトに変換
         val fromJson = teamAdapter.fromJson(teamDataJson)
-        val teamDataPage = TeamData()
+
         if (fromJson != null) {
-            //JsonオブジェクトからTeamDataクラスに変換
-            teamDataPage.TeamId = fromJson.TeamId
-            teamDataPage.teamName = fromJson.teamName
-            teamDataPage.teamDetail = fromJson.teamDetail
-            teamDataPage.teamLocal = fromJson.teamLocal
+            //PreferenceにチームのIDを登録
+            pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+            pref.edit().putString("TeamID", fromJson.TeamId).apply()
 
             //TextViewにチームデータを書き換え
-            teamNameView.text = teamDataPage.teamName
-            teamDetailView.text = teamDataPage.teamDetail
-            teamLocalView.text = teamDataPage.teamLocal
+            teamNameView.text = fromJson.teamName
+            teamDetailView.text = fromJson.teamDetail
+            teamLocalView.text = fromJson.teamLocal
         }
 
         fab.setOnClickListener {
@@ -54,7 +57,6 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
         memberJoin.setOnClickListener {
             val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = inflater.inflate(R.layout.fragment_member_join_popup,null)
-
             val popupWindow = PopupWindow(
                     view,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -68,7 +70,15 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             val memberJoinSubmit = view.findViewById<Button>(R.id.member_join_submit)
 
             memberJoinSubmit.setOnClickListener {
-                
+                val userID = pref.getString("UserID", "Unknown")
+                val teamID = pref.getString("TeamID", "Unknown")
+                if(userID != "Unknown" && teamID != "Unknown") {
+                    val session = Session(userID, teamID)
+                    val toJson = sessionAdapter.toJson(session)
+                    CallOkHttp().postRun(url, toJson)           //UserIDとTeamIDをサーバーに渡して、データを追加する
+                }else{
+                    Toast.makeText(this, "登録できませんでした", Toast.LENGTH_LONG).show()
+                }
                 popupWindow.dismiss()
             }
 
@@ -80,5 +90,9 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
                     0
             )
         }
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
