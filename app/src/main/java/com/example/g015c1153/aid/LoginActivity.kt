@@ -26,8 +26,6 @@ import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.LoaderManager
 import android.content.*
-import android.telecom.Call
-import android.widget.Button
 
 class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -48,7 +46,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
         // populateAutoComplete()
 
 
-        Password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
+        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, mailAddress, _ ->
             if (mailAddress == EditorInfo.IME_ACTION_DONE || mailAddress == EditorInfo.IME_NULL) {
                attemptLogin()
                 return@OnEditorActionListener true
@@ -106,19 +104,19 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
 
         // Reset errors.
         email.error = null
-        Password.error = null
+        password.error = null
 
         // Store values at the time of the login attempt.
         val emailStr = email.text.toString()
-        val passwordStr = Password.text.toString()
+        val passwordStr = password.text.toString()
 
         var cancel = false
         var focusView: View? = null
 
         // Check for a valid Password, if the user entered one.
         if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            Password.error = getString(R.string.error_invalid_password)
-            focusView = Password
+            password.error = getString(R.string.error_invalid_password)
+            focusView = password
             cancel = true
         }
 
@@ -289,8 +287,8 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
                     startActivity(signUpIntent)
                 }
             } else {
-                Password.error = getString(R.string.error_incorrect_password)
-                Password.requestFocus()
+                password.error = getString(R.string.error_incorrect_password)
+                password.requestFocus()
             }
         }
 

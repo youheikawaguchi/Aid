@@ -25,6 +25,9 @@
         <activity android:name=".SentActivity" />
         <activity android:name=".SignUpForm" />
         <activity android:name=".SignUpCheck" />
+        <activity android:name=".MemberAdd" />
+        <activity android:name=".TeamAddActivity" />
+        <activity android:name=".MemberList" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">
@@ -43,21 +46,20 @@
             android:name=".TopActivity"
             android:label="@string/title_activity_top"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".TeamPageActivity"
+            android:label="@string/title_activity_team_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TeamAddActivity" />
-        <activity
-            android:name=".TeamPageActivity"
-            android:label="@string/title_activity_team_page"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MemberAdd" />
-        <activity
-            android:name=".LoginActivity2"
-            android:label="@string/title_activity_login2"></activity>
     </application>
 
 </manifest>

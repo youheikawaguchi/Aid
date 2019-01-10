@@ -93,6 +93,11 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
                     0
             )
         }
+
+        memberButton.setOnClickListener {
+            val memberListIntent = Intent(this, MemberList::class.java)
+            startActivity(memberListIntent)
+        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {

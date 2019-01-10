@@ -1,6 +1,7 @@
 package com.example.g015c1153.aid
 
 import android.app.Application
+import com.beardedhen.androidbootstrap.TypefaceProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -13,5 +14,6 @@ class AidApplication : Application() {
         Realm.init(this)
         val config = RealmConfiguration.Builder().build()
         Realm.setDefaultConfiguration(config)
+        TypefaceProvider.registerDefaultIconSets()
     }
 }

@@ -26,7 +26,7 @@ class LoginFragment : Fragment() {
         //サインアップボタン処理
         view.findViewById<Button>(R.id.sign_up_button).setOnClickListener {
             loginData.mailAddress = email.text.toString()
-            loginData.password = Password.text.toString()
+            loginData.password = password.text.toString()
             //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
 
             //サーバー通信

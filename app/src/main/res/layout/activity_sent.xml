@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sentAddress"
         tools:ignore="MissingConstraints" />
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapLabel
         android:id="@+id/signUpFormButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,5 +68,8 @@
         android:text="入力画面へ"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:bootstrapBrand="primary"
+        app:bootstrapHeading="h4"
+        app:roundedCorners="true"/>
 </android.support.constraint.ConstraintLayout>

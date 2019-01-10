@@ -22,7 +22,7 @@ data class LoginData(
 
 //TOP画面のチーム情報カード用
 data class CardData(
-        var cardTeamId: String,
+        var cardUserId: String,
         var cardImage: Drawable,
         var cardTitle: String,
         var cardBody: String

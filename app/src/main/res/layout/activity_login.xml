@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity">
 
     <!-- Matcher progress -->
@@ -23,7 +24,8 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -51,7 +53,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/Password"
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -64,21 +66,27 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
+            <com.beardedhen.androidbootstrap.BootstrapLabel
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in_short"
-                android:textStyle="bold" />
+                android:text="ログイン"
+                android:textStyle="bold"
+                app:bootstrapBrand="primary"
+                app:bootstrapHeading="h4"
+                app:roundedCorners="true" />
 
-            <Button
+            <com.beardedhen.androidbootstrap.BootstrapLabel
                 android:id="@+id/sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="SIGN UP"
-                android:textStyle="bold" />
+                android:text="新規登録"
+                android:textStyle="bold"
+                app:bootstrapBrand="warning"
+                app:bootstrapHeading="h4"
+                app:roundedCorners="true" />
 
         </LinearLayout>
     </ScrollView>
