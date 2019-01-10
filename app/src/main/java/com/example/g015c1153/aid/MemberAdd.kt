@@ -31,7 +31,7 @@ class MemberAdd : AppCompatActivity() {
 //        mRealm = Realm.getInstance(realmConfig)
         var frag = false
 
-        memberMailSearch.setOnClickListener {       //ユーザー検索ボタンが押されたとき
+        memberSearchButton.setOnClickListener {       //ユーザー検索ボタンが押されたとき
 
             user.mailAddress = memberMailSearch.text.toString()
 

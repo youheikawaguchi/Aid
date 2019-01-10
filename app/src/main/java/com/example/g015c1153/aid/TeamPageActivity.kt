@@ -1,6 +1,7 @@
 package com.example.g015c1153.aid
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
@@ -52,6 +53,8 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
         }
 
         fab.setOnClickListener {
+            val memberAddIntent = Intent(this, MemberAdd::class.java)
+            startActivity(memberAddIntent)
         }
 
         memberJoin.setOnClickListener {

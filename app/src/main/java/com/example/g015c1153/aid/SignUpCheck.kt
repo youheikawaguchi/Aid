@@ -2,12 +2,10 @@ package com.example.g015c1153.aid
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
-import kotlinx.android.synthetic.main.activity_send.*
 import kotlinx.android.synthetic.main.activity_sign_up_check.*
 
 class SignUpCheck : AppCompatActivity() {
@@ -19,7 +17,7 @@ class SignUpCheck : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up_check)
 
         //intentから値を取り出す用にリストの作成。
-        val textViews = arrayOf<TextView>(textPW, textlastName, textfirstName, textBirthDay, textGender)   //各テキストビューをリストで取得
+        val textViews = arrayOf<TextView>(textPW, textLastName, textFirstName, textBirthDay, textGender)   //各テキストビューをリストで取得
 
         val intent = intent
         val userDataJson = intent.getStringExtra("userData")
@@ -30,8 +28,8 @@ class SignUpCheck : AppCompatActivity() {
             for (i in textViews.indices) {
                 when (textViews[i]) {
                     textPW -> textViews[i].text = fromJson.password
-                    textlastName -> textViews[i].text = fromJson.lastName
-                    textfirstName -> textViews[i].text = fromJson.firstName
+                    textLastName -> textViews[i].text = fromJson.lastName
+                    textFirstName -> textViews[i].text = fromJson.firstName
                     textBirthDay -> textViews[i].text = fromJson.birthDay
                     textGender -> textViews[i].text = fromJson.gender
                 }

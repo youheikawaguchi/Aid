@@ -1,5 +1,6 @@
 package com.example.g015c1153.aid
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -46,8 +47,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         setSupportActionBar(toolbar)
 
         //ログインからのインテントを受け取る(ログインしたかどうか)
-        val visible = pref.getBoolean("UserID", false)
-        when (visible) {
+        pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+        val str = pref.getString("UserID", "Unknown")
+        when (str != "Unknown") {
             //ログインしていれば、マイページを表示
             true -> {
                 nav_view.menu.setGroupVisible(R.id.menu_other, false)

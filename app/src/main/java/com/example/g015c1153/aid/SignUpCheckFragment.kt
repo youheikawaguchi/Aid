@@ -1,18 +1,12 @@
 package com.example.g015c1153.aid
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.g015c1153.aid.R
-import com.example.g015c1153.aid.User
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.activity_sign_up_check.*
 
 class SignUpCheckFragment : Fragment() {
@@ -23,7 +17,7 @@ class SignUpCheckFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         //intentから値を取り出す用にリストの作成。
-        val textViews = arrayOf<TextView>(textPW, textlastName, textfirstName, textBirthDay, textGender)   //各テキストビューをリストで取得
+        val textViews = arrayOf<TextView>(textPW, textLastName, textFirstName, textBirthDay, textGender)   //各テキストビューをリストで取得
 
         //前画面からのJsonデータを受け取り、オブジェクトに変換
 //        val intent = intent
