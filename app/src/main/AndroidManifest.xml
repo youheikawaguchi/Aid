@@ -40,6 +40,8 @@
             android:label="@string/title_activity_team_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MemberAdd" />
+        <activity android:name=".TeamCalendar" />
+        <activity android:name=".UserCalendar"></activity>
     </application>
 
 </manifest>
