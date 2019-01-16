@@ -1,5 +1,6 @@
 package com.example.g015c1153.aid
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -54,6 +55,7 @@ class MemberAdd : AppCompatActivity() {
                 val mMemberPosition = memberPosition.text.toString()
 
                 val memberData = Member()
+                pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
                 memberData.teamid = pref.getString("TeamID", "Unknown")
                 memberData.Userid = user.id
                 memberData.number = mMemberNo

@@ -73,6 +73,7 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             val memberJoinSubmit = view.findViewById<Button>(R.id.member_join_submit)
 
             memberJoinSubmit.setOnClickListener {
+                pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
                 val userID = pref.getString("UserID", "Unknown")
                 val teamID = pref.getString("TeamID", "Unknown")
                 if(userID != "Unknown" && teamID != "Unknown") {
