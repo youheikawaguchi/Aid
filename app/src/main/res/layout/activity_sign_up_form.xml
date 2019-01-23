@@ -155,12 +155,12 @@
                 android:id="@+id/editBirthDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner"
                 android:ems="10"
                 android:focusable="false"
                 android:hint="yyyy/MM/dd"
                 android:inputType="date"
                 android:onClick="showDatePickerDialog"
+                android:datePickerMode="spinner"
                 app:bootstrapBrand="info"
                 app:bootstrapSize="lg" />
         </TableRow>

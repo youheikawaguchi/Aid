@@ -28,6 +28,31 @@ data class CardData(
         var cardBody: String
 )
 
+//メンバー表用のカードビュー
+data class MemberCard(
+        var cardId: String,
+        var cardMemberName: String,
+        var cardMemberNumber: String,
+        var cardMemberPosition: String
+)
+
+//チームカレンダー用のカードビュー
+data class TeamCalendarCard(
+        var cardId: String,
+        var cardDate: String,
+        var cardTitle: String,
+        var cardBody: String
+)
+
+//ユーザーカレンダー用のカードビュー
+data class UserCalendarCard(
+        var cardId: String,
+        var cardDate: String,
+        var cardTeamName: String,
+        var cardTitle: String,
+        var cardBody: String
+)
+
 //Teamのデータ
 data class TeamData(
         var TeamId: String = "",
@@ -36,14 +61,31 @@ data class TeamData(
         var teamLocal: String = ""
 )
 
+//内部処理：値保持用
 data class Session(
         var userId: String = "",
         var teamId: String = ""
 )
 
+//メンバー表取得用
 data class Member(
         var teamid: String = "",
-        var Userid: String ="",
-        var number: String = "",
-        var position: String = ""
+        var Userid: String =""
+)
+
+//練習登録・表示用
+data class Practice(
+        var startDate: String = "",
+        var endDate: String = "",
+        var place: String = "",
+        var memo: String = ""
+)
+
+//試合登録・表示用
+data class Game(
+        var startDate: String = "",
+        var endDate: String = "",
+        var place: String = "",
+        var memo: String = "",
+        var gameText: String = ""
 )

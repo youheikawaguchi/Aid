@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.card_view_layout.view.*
+import kotlinx.android.synthetic.main.user_card_view.view.*
 
 class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -13,6 +14,7 @@ class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     val itemImageView: ImageView = view.cardImage
+    val itemTeamTitle: TextView = view.teamTitle
     val itemTextView: TextView = view.cardTitle
     val itemDetailView: TextView = view.cardBody
 

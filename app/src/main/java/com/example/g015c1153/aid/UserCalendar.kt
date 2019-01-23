@@ -8,38 +8,39 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import kotlinx.android.synthetic.main.activity_member_list.*
+import kotlinx.android.synthetic.main.activity_user_calendar.*
 
-class MemberList : AppCompatActivity(),MemberRVHolder.ItemClickListener {
+class UserCalendar : AppCompatActivity(),UCRVHolder.ItemClickListener {
 
-    private var mDataList: ArrayList<MemberCard> = ArrayList()
+    private var mDataList: ArrayList<UserCalendarCard> = ArrayList()
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
-    private val type = Types.newParameterizedType(List::class.java, MemberCard::class.java)
-    private val memberListAdapter: JsonAdapter<List<MemberCard>> = moshi.adapter(type)
+    private val type = Types.newParameterizedType(List::class.java, UserCalendarCard::class.java)
+    private val userListAdapter: JsonAdapter<List<UserCalendarCard>> = moshi.adapter(type)
     private val url = ValueResponse().serverIp + ""     //サーバーIP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_member_list)
+        setContentView(R.layout.activity_user_calendar)
 
         makeData()
 
-        val adapter = MemberCardAdapter(this,this, mDataList)
-        memberListRec.adapter = adapter
-        memberListRec.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        val adapter = UCCardAdapter(this,this, mDataList)
+        UCRec.adapter = adapter
+        UCRec.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
     }
 
     private fun makeData() {
         val json = CallOkHttp().getRun(url)
         if (!json.isEmpty()) {
-            val fromJson = memberListAdapter.fromJson(json)
+            val fromJson = userListAdapter.fromJson(json)
             if (fromJson != null) {
                 for (i in 0 until fromJson.size) {
-                    mDataList.add(MemberCard(
+                    mDataList.add(UserCalendarCard(
                             fromJson[i].cardId,
-                            fromJson[i].cardMemberName,
-                            fromJson[i].cardMemberNumber,
-                            fromJson[i].cardMemberPosition)
+                            fromJson[i].cardDate,
+                            fromJson[i].cardTeamName,
+                            fromJson[i].cardTitle,
+                            fromJson[i].cardBody)
                     )
                 }
             }

@@ -98,14 +98,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 }
             }
         }
-//        for(i in 0 until teamDataList.size){
-//            mDataList.add(CardData(
-//                    teamDataList[i].TeamId,
-//                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
-//                    teamDataList[i].teamName,
-//                    teamDataList[i].teamDetail)
-//            )
-//        }
     }
 
     //表示するカードのデータ(チーム名検索)を生成

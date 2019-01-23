@@ -42,8 +42,8 @@ class TeamAddActivity : AppCompatActivity() {
             val teamJson = teamAdapter.toJson(team)
 
             //通信可能になればコメントを外す
-//            val toJson = teamAdapter.toJson(teamDataAdd)
-//            val teamJson2 = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
+            val toJson = teamAdapter.toJson(teamDataAdd)
+            val teamJson2 = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
             //次ページに遷移
             val teamPageIntent = Intent(this, TeamPageActivity::class.java)
             teamPageIntent.putExtra("team", teamJson)
