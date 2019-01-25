@@ -35,18 +35,18 @@ class TeamAddActivity : AppCompatActivity() {
             teamDataAdd.teamDetail = editTeamDetail
             teamDataAdd.teamLocal = editTeamLocal
             //Realmに登録後、チームのIDを取得
-            val teamID = RealmDAO().teamAddRealm(teamDataAdd)
-            //チームをIDをもとに検索し、データベースの登録情報を取得。
-            val team = RealmDAO().teamReadRealm(teamID)
-            //次ページに値を渡せるように、Json文字列に変換
-            val teamJson = teamAdapter.toJson(team)
+//            val teamID = RealmDAO().teamAddRealm(teamDataAdd)
+//            //チームをIDをもとに検索し、データベースの登録情報を取得。
+//            val team = RealmDAO().teamReadRealm(teamID)
+//            //次ページに値を渡せるように、Json文字列に変換
+//            val teamJson = teamAdapter.toJson(team)
 
             //通信可能になればコメントを外す
             val toJson = teamAdapter.toJson(teamDataAdd)
-            val teamJson2 = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
+            val teamID = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
             //次ページに遷移
             val teamPageIntent = Intent(this, TeamPageActivity::class.java)
-            teamPageIntent.putExtra("team", teamJson)
+            teamPageIntent.putExtra("teamID", teamID)
             startActivity(teamPageIntent)
         }
     }

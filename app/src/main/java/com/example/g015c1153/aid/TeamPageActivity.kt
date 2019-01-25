@@ -37,7 +37,10 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
 
         val intent = intent
         //intentからJsonデータを取得
-        val teamDataJson = intent.getStringExtra("team")
+        val teamID = intent.getStringExtra("teamID")
+        val teamData = TeamData(TeamId = teamID)
+        val toJson = teamAdapter.toJson(teamData)
+        val teamDataJson = CallOkHttp().postRun(url, toJson)    //チームIDを元にチーム情報の取得
         //Jsonデータからオブジェクトに変換
         val fromJson = teamAdapter.fromJson(teamDataJson)
 

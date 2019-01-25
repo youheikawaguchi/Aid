@@ -9,8 +9,8 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -26,10 +26,161 @@
             android:layout_margin="15dp">
 
             <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="お名前"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="35dp"
+                tools:layout_editor_absoluteY="225dp" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="姓"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="TextViewEdits"
+                    tools:layout_editor_absoluteX="162dp"
+                    tools:layout_editor_absoluteY="225dp" />
+
+                <com.beardedhen.androidbootstrap.BootstrapEditText
+                    android:id="@+id/editLastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="4"
+                    android:hint="河愚痴"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    app:bootstrapBrand="info"
+                    app:bootstrapSize="lg" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="名"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="269dp"
+                    tools:layout_editor_absoluteY="225dp" />
+
+                <com.beardedhen.androidbootstrap.BootstrapEditText
+                    android:id="@+id/editFirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="4"
+                    android:hint="傭兵"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    app:bootstrapBrand="info"
+                    app:bootstrapSize="lg" />
+
+            </TableRow>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生年月日"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="35dp"
+                tools:layout_editor_absoluteY="276dp" />
+
+            <com.beardedhen.androidbootstrap.BootstrapEditText
+                android:id="@+id/editBirthDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:datePickerMode="spinner"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="yyyy/MM/dd"
+                android:inputType="date"
+                android:onClick="showDatePickerDialog"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="lg" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="性別"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="35dp"
+                tools:layout_editor_absoluteY="329dp" />
+
+            <RadioGroup
+                android:id="@+id/RadioGroupGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="176dp"
+                tools:layout_editor_absoluteY="323dp">
+
+                <RadioButton
+                    android:id="@+id/radioMan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:checked="true"
+                    android:text="男"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="159dp"
+                    tools:layout_editor_absoluteY="322dp" />
+
+                <RadioButton
+                    android:id="@+id/radioWoman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:text="女"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="264dp"
+                    tools:layout_editor_absoluteY="322dp" />
+
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            tools:layout_editor_absoluteX="25dp"
+            tools:layout_editor_absoluteY="280dp">
+
+            <TextView
                 android:id="@+id/textPW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="希望パスワード"
+                android:text="パスワード"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
                 tools:layout_editor_absoluteY="110dp" />
 
@@ -59,7 +210,8 @@
                 android:id="@+id/textPWRe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="パスワード再入力"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="37dp"
                 tools:layout_editor_absoluteY="162dp" />
 
@@ -79,169 +231,24 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="お名前"
-                tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="225dp" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="姓"
-                    tools:ignore="TextViewEdits"
-                    tools:layout_editor_absoluteX="162dp"
-                    tools:layout_editor_absoluteY="225dp" />
-
-                <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/editLastName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="4"
-                    android:hint="山田"
-                    android:inputType="textPersonName"
-                    android:maxLines="1"
-                    app:bootstrapBrand="info"
-                    app:bootstrapSize="lg" />
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="名"
-                    tools:layout_editor_absoluteX="269dp"
-                    tools:layout_editor_absoluteY="225dp" />
-
-                <com.beardedhen.androidbootstrap.BootstrapEditText
-                    android:id="@+id/editFirstName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="4"
-                    android:hint="太郎"
-                    android:inputType="textPersonName"
-                    android:maxLines="1"
-                    app:bootstrapBrand="info"
-                    app:bootstrapSize="lg" />
-
-            </TableRow>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="生年月日"
-                tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="276dp" />
-
-            <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:id="@+id/editBirthDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="yyyy/MM/dd"
-                android:inputType="date"
-                android:onClick="showDatePickerDialog"
-                android:datePickerMode="spinner"
-                app:bootstrapBrand="info"
-                app:bootstrapSize="lg" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_margin="15dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="性別"
-                tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="329dp" />
-
-            <RadioGroup
-                android:id="@+id/RadioGroupGender"
-                android:layout_width="wrap_content"
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/buttonNextCheck"
+                android:layout_width="121dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:layout_editor_absoluteX="176dp"
-                tools:layout_editor_absoluteY="323dp">
-
-                <RadioButton
-                    android:id="@+id/radioMan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:width="100dp"
-                    android:checked="true"
-                    android:text="男"
-                    tools:layout_editor_absoluteX="159dp"
-                    tools:layout_editor_absoluteY="322dp" />
-
-                <RadioButton
-                    android:id="@+id/radioWoman"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:width="100dp"
-                    android:text="女"
-                    tools:layout_editor_absoluteX="264dp"
-                    tools:layout_editor_absoluteY="322dp" />
-
-            </RadioGroup>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right">
-
-                <com.beardedhen.androidbootstrap.BootstrapButton
-                    android:id="@+id/buttonNextCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="確認"
-                    android:textAppearance="@style/TextAppearance.AppCompat"
-                    app:bootstrapBrand="success"
-                    app:bootstrapSize="lg"
-                    app:buttonMode="regular"
-                    app:roundedCorners="true"
-                    app:showOutline="false"
-                    tools:layout_editor_absoluteX="280dp"
-                    tools:layout_editor_absoluteY="447dp" />
-
-            </TableRow>
+                android:baselineAligned="false"
+                android:text="確認"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+                app:showOutline="false"
+                tools:layout_editor_absoluteX="280dp"
+                tools:layout_editor_absoluteY="447dp" />
 
         </TableRow>
     </TableLayout>

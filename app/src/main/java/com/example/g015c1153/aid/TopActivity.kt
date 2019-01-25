@@ -133,11 +133,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val teamIntent = Intent(application, TeamPageActivity::class.java)
 
         //カードのポジションをもとに、カードのID(チーム名)を取得し、サーバーへ検索をかける
-        val teamData = TeamData(TeamId = mDataList[position].cardUserId)
-        val toJson = teamAdapter.toJson(teamData)
-        val teamJson = CallOkHttp().postRun(url, toJson)    //IDをもとにチーム情報を取得
+        val teamID = mDataList[position].cardUserId
 //        val teamData = RealmDAO().teamReadRealm(Integer.parseInt(mDataList[position].cardUserId))
-        teamIntent.putExtra("team",teamJson)
+        teamIntent.putExtra("teamID",teamID)
         startActivity(teamIntent)
     }
 
