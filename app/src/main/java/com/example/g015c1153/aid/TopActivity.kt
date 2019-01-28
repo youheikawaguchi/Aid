@@ -3,7 +3,6 @@ package com.example.g015c1153.aid
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.content.res.ResourcesCompat
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.app_bar_top.*
 import kotlinx.android.synthetic.main.content_top.*
 
 class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-        RecyclerViewHolder.ItemClickListener,TeamAdd.OnFragmentInteractionListener{
+        RecyclerViewHolder.ItemClickListener{
 
     private var mDataList : ArrayList<CardData> = ArrayList()
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
@@ -32,6 +31,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private val type = Types.newParameterizedType(List::class.java, TeamData::class.java)
     private val teamListAdapter: JsonAdapter<List<TeamData>> = moshi.adapter(type)
     private lateinit var pref : SharedPreferences
+    private var teamID: String? = ""
 
     //サーバー通信は、makeData()でget, makeData(String), onItemClick(View,Int)でpostを行っている
     //チーム情報 = ID, 名前, チーム概要, 地域
@@ -48,8 +48,8 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         //ログインからのインテントを受け取る(ログインしたかどうか)
         pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
-        val str = pref.getString("UserID", "Unknown")
-        when (str != "Unknown") {
+        val loginID = pref.getString("UserID", "Unknown")
+        when (loginID != "Unknown") {
             //ログインしていれば、マイページを表示
             true -> {
                 nav_view.menu.setGroupVisible(R.id.menu_other, false)
@@ -119,13 +119,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 }
             }
         }
-//        for(i in 0 until teamDataList.size){
-//            mDataList.add(CardData(
-//                    teamDataList[i].TeamId,
-//                    ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
-//                    teamDataList[i].teamName,
-//                    teamDataList[i].teamDetail))
-//        }
     }
 
     //カードビューを押したときの処理
@@ -133,9 +126,10 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val teamIntent = Intent(application, TeamPageActivity::class.java)
 
         //カードのポジションをもとに、カードのID(チーム名)を取得し、サーバーへ検索をかける
-        val teamID = mDataList[position].cardUserId
+        teamID = mDataList[position].cardUserId
 //        val teamData = RealmDAO().teamReadRealm(Integer.parseInt(mDataList[position].cardUserId))
-        teamIntent.putExtra("teamID",teamID)
+        pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+        pref.edit().putString("TeamID", teamID).apply()
         startActivity(teamIntent)
     }
 
@@ -177,7 +171,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 return false
             }
         })
-
         return true
     }
 
@@ -208,24 +201,9 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             R.id.teamAdd -> {
                 val teamAddIntent = Intent(this, TeamAddActivity::class.java)
                 startActivity(teamAddIntent)
-
-//                //Fragmentに遷移用
-//                val fragmentManager = supportFragmentManager
-//                val fragmentTransaction = fragmentManager.beginTransaction()
-//
-//                // BackStackを設定
-//                fragmentTransaction.addToBackStack(null)
-//
-//                // パラメータを設定
-//                fragmentTransaction.add(R.id.drawer_layout, TeamAdd.newInstance("fragment","2"))
-//                fragmentTransaction.commit()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

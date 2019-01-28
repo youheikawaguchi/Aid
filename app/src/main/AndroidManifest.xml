@@ -33,6 +33,8 @@
         <activity android:name=".TeamCalendar"/>
         <activity android:name=".GameRegistration"/>
         <activity android:name=".PracticeRegistration"/>
+        <activity android:name=".DataGame"/>
+        <activity android:name=".GameResult"/>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">

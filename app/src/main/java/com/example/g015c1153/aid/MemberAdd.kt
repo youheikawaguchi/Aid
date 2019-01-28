@@ -56,7 +56,7 @@ class MemberAdd : AppCompatActivity() {
 
                 val memberData = Member()
                 pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
-                memberData.teamid = pref.getString("TeamID", "Unknown")
+                memberData.teamid = pref.getString("TeamID", "Unknown")!!
                 memberData.Userid = user.id
                 memberData.number = mMemberNo
                 memberData.position = mMemberPosition

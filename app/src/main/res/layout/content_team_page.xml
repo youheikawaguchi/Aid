@@ -98,5 +98,11 @@
                 app:showOutline="false" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/teamCalendarButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="カレンダーを表示" />
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

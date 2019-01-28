@@ -25,22 +25,25 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
     private val teamAdapter = moshi.adapter(TeamData::class.java)!!
     private val sessionAdapter = moshi.adapter(Session::class.java)!!
     private lateinit var pref :SharedPreferences
-
     //onCreate()のmemberJoinSubmitリスナー内
     //userIDとteamIDを渡してデータを追加する。送信のみ。
     private val url = ValueResponse().serverIp + ""     //サーバーIPアドレス
+
+    private var userID: String = ""
+    private var teamID: String = ""
+    private var toJson: String = ""     //teamData(IDのみ)をJson化したもの
+    private var teamDataJson: String = ""   //サーバーからチーム情報を受け取る(JSON形式)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_page)
         setSupportActionBar(toolbar)
 
-        val intent = intent
         //intentからJsonデータを取得
-        val teamID = intent.getStringExtra("teamID")
+        teamID = pref.getString("teamID", "Unknown")!!
         val teamData = TeamData(TeamId = teamID)
-        val toJson = teamAdapter.toJson(teamData)
-        val teamDataJson = CallOkHttp().postRun(url, toJson)    //チームIDを元にチーム情報の取得
+        toJson = teamAdapter.toJson(teamData)
+        teamDataJson = CallOkHttp().postRun(url, toJson)    //チームIDを元にチーム情報の取得
         //Jsonデータからオブジェクトに変換
         val fromJson = teamAdapter.fromJson(teamDataJson)
 
@@ -77,8 +80,8 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
 
             memberJoinSubmit.setOnClickListener {
                 pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
-                val userID = pref.getString("UserID", "Unknown")
-                val teamID = pref.getString("TeamID", "Unknown")
+                userID = pref.getString("UserID", "Unknown")!!
+                teamID = pref.getString("TeamID", "Unknown")!!
                 if(userID != "Unknown" && teamID != "Unknown") {
                     val session = Session(userID, teamID)
                     val toJson = sessionAdapter.toJson(session)
@@ -102,8 +105,12 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             val memberListIntent = Intent(this, MemberList::class.java)
             startActivity(memberListIntent)
         }
-    }
 
+        teamCalendarButton.setOnClickListener {
+            val teamCalendarIntent = Intent(this, TeamCalendar::class.java)
+            teamCalendarIntent.putExtra("teamData", teamDataJson)
+        }
+    }
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

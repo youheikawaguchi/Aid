@@ -41,7 +41,8 @@ data class TeamCalendarCard(
         var cardId: String,
         var cardDate: String,
         var cardTitle: String,
-        var cardBody: String
+        var cardBody: String,
+        var resultID: String
 )
 
 //ユーザーカレンダー用のカードビュー
@@ -67,10 +68,12 @@ data class Session(
         var teamId: String = ""
 )
 
-//メンバー表取得用
+//メンバー表登録(01/26:追加)取得用
 data class Member(
         var teamid: String = "",
-        var Userid: String =""
+        var Userid: String ="",
+        var number: String = "",    // 01/26:追加
+        var position: String = ""   // 01/26:追加
 )
 
 //練習登録・表示用
@@ -87,5 +90,19 @@ data class Game(
         var endDate: String = "",
         var place: String = "",
         var memo: String = "",
-        var gameText: String = ""
+        var otherTeam: String = ""
+)
+
+data class GameData(
+        var id: String = "",
+        var teamID: String = "",
+        var planID: String = "",
+        var myTeam: String = "",
+        var otherTeam: String = "",
+        var myPoint: String = "",
+        var otherPoint: String = "",
+        var myFirstHalf: String = "",
+        var otherFirstHalf: String = "",
+        var myLatterHalf: String = "",
+        var otherLatterHalf: String = ""
 )

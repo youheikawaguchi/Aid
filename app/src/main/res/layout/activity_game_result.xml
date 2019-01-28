@@ -75,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="ー"
                 android:textSize="30sp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="177dp"
                 tools:layout_editor_absoluteY="215dp" />
 
@@ -114,7 +115,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="前半"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/point2"
@@ -145,7 +147,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="後半"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/point4"
@@ -167,29 +170,39 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
+            <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/ChangeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="変更"
                 tools:layout_editor_absoluteX="230dp"
-                tools:layout_editor_absoluteY="421dp" />
+                tools:layout_editor_absoluteY="421dp"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+                app:showOutline="false"/>
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
+            <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/buckButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="戻る"
                 tools:layout_editor_absoluteX="64dp"
-                tools:layout_editor_absoluteY="413dp" />
+                tools:layout_editor_absoluteY="413dp"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:roundedCorners="true"
+                app:showOutline="false"/>
 
             <Space
                 android:layout_width="wrap_content"

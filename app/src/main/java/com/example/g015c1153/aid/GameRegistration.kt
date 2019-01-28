@@ -20,21 +20,13 @@ class GameRegistration : AppCompatActivity  () {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_registration)
 
-//        dayText2.setOnClickListener {
-//            showDatePickerDialog()
-//        }
-//
-//        timeText2.setOnClickListener {
-//            showDatePickerDialog()
-//        }
-
         registrationBotton2.setOnClickListener {
             val game = Game()
             game.startDate = dayText2.toString()
             game.endDate = timeText2.toString()
             game.place = placeText2.toString()
             game.memo = editText.toString()
-            game.gameText = gameText.toString()
+            game.otherTeam = otherTeam.toString()
 
             val toJson = gameAdapter.toJson(game)
             CallOkHttp().postRun(url, toJson)
