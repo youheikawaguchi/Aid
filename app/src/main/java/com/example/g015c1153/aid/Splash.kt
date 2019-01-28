@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_splash.*
 
 
 class Splash : AppCompatActivity() {
@@ -15,6 +17,13 @@ class Splash : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         mHandler.postDelayed(mSplashTask, 1000)
+
+        val gifMovie: Int = R.drawable.lode
+        //val orugaMovi: Int = R.drawable.oruga
+
+        // gif画像のセット
+        Glide.with(this).load(gifMovie).into(gifView)
+//Glide.with(this).load(orugaMovi).into(orugaView)
     }
 
     override fun onStop() {
