@@ -58,11 +58,13 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             teamLocalView.text = fromJson.teamLocal
         }
 
+        //fabボタン、メンバー追加
         fab.setOnClickListener {
             val memberAddIntent = Intent(this, MemberAdd::class.java)
             startActivity(memberAddIntent)
         }
 
+        //チーム参加ボタン
         memberJoin.setOnClickListener {
             val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = inflater.inflate(R.layout.fragment_member_join_popup,null)
@@ -78,6 +80,7 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
 
             val memberJoinSubmit = view.findViewById<Button>(R.id.member_join_submit)
 
+            //チームに参加ボタン
             memberJoinSubmit.setOnClickListener {
                 pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
                 userID = pref.getString("UserID", "Unknown")!!
@@ -86,7 +89,7 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
                     val session = Session(userID, teamID)
                     val toJson = sessionAdapter.toJson(session)
                     CallOkHttp().postRun(url, toJson)           //UserIDとTeamIDをサーバーに渡して、データを追加する
-                }else{
+                } else {
                     Toast.makeText(this, "登録できませんでした", Toast.LENGTH_LONG).show()
                 }
                 popupWindow.dismiss()
@@ -101,16 +104,19 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             )
         }
 
-        memberButton.setOnClickListener {
+        //メンバーリストボタン
+        memberListButton.setOnClickListener {
             val memberListIntent = Intent(this, MemberList::class.java)
             startActivity(memberListIntent)
         }
 
+        //チームカレンダーボタン
         teamCalendarButton.setOnClickListener {
             val teamCalendarIntent = Intent(this, TeamCalendar::class.java)
             teamCalendarIntent.putExtra("teamData", teamDataJson)
         }
     }
+
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

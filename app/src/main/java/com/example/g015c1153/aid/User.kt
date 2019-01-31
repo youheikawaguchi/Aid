@@ -1,6 +1,8 @@
 package com.example.g015c1153.aid
 
-import android.graphics.drawable.Drawable
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 
 //新規登録用
 data class User(
@@ -23,7 +25,7 @@ data class LoginData(
 //TOP画面のチーム情報カード用
 data class CardData(
         var cardUserId: String,
-        var cardImage: Drawable,
+        var cardImage: Bitmap = BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.no_image),
         var cardTitle: String,
         var cardBody: String
 )
@@ -58,6 +60,7 @@ data class UserCalendarCard(
 data class TeamData(
         var TeamId: String = "",
         var teamName: String = "",
+        var teamLogo: String = "",
         var teamDetail: String = "",
         var teamLocal: String = ""
 )

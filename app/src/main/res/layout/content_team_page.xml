@@ -73,7 +73,7 @@
             android:orientation="horizontal">
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/memberButton"
+                android:id="@+id/memberListButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bootstrap_h5_hori_padding"

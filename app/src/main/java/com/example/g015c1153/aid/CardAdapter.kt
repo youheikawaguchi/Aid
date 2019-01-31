@@ -30,7 +30,7 @@ class CardAdapter(private val context: Context, private val itemClickListener: R
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.let {
-            it.itemImageView.setImageResource(R.drawable.no_image)
+            it.itemImageView.setImageBitmap(itemList[position].cardImage)
             it.itemTextView.text = itemList[position].cardTitle
             it.itemDetailView.text = itemList[position].cardBody
         }

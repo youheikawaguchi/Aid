@@ -53,6 +53,17 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             }
             false
         })
+
+        sign_in_button.setOnClickListener {
+            attemptLogin()
+        }
+
+        sign_up_button.setOnClickListener {
+            val signUpIntent = Intent(this, SignUpForm::class.java)
+            startActivity(signUpIntent)
+        }
+
+
     }
 
     private fun populateAutoComplete() {

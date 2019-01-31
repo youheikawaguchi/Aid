@@ -7,9 +7,6 @@
         android:id="@+id/menu_main"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/team1"
-            android:title="チーム選択" />
-        <item
             android:id="@+id/teamAdd"
             android:title="＋　チーム作成" />
     </group>

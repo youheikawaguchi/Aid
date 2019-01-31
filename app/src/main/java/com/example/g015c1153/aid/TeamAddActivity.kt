@@ -1,6 +1,8 @@
 package com.example.g015c1153.aid
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -12,7 +14,8 @@ class TeamAddActivity : AppCompatActivity() {
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val teamAdapter = moshi.adapter(TeamData::class.java)!!
-    //46行目辺り。
+    lateinit var pref: SharedPreferences
+    //onCreate()の最後辺り
     //登録するチームデータを渡し、登録されたチーム情報をすべてもらう。(登録されたかの確認のため)
     private val url = ValueResponse().serverIp + ""
 
@@ -41,12 +44,12 @@ class TeamAddActivity : AppCompatActivity() {
 //            //次ページに値を渡せるように、Json文字列に変換
 //            val teamJson = teamAdapter.toJson(team)
 
-            //通信可能になればコメントを外す
             val toJson = teamAdapter.toJson(teamDataAdd)
             val teamID = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
             //次ページに遷移
             val teamPageIntent = Intent(this, TeamPageActivity::class.java)
-            teamPageIntent.putExtra("teamID", teamID)
+            pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+            pref.edit().putString("teamID", teamID).apply()
             startActivity(teamPageIntent)
         }
     }

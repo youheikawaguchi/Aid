@@ -76,7 +76,6 @@ class TeamCalendar : AppCompatActivity(),TCRVHolder.ItemClickListener {
             dataGameIntent.putExtra("teamData", teamDataJson)
             dataGameIntent.putExtra("planID", mDataList[position].cardId)
             startActivity(dataGameIntent)
-
         }else{
             //resultIDがあればGameResultへ。チーム情報とresultIDを渡す。
             val gameResultIntent = Intent(this, GameResult::class.java)
