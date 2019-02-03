@@ -3,6 +3,7 @@ package com.example.g015c1153.aid
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -35,15 +36,15 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     private val teamListAdapter: JsonAdapter<List<TeamData>> = moshi.adapter(type)
     private lateinit var pref : SharedPreferences
     private var teamID: String? = ""
+    private var teamDataList: List<TeamData>? = null
 
     //サーバー通信は、makeData()でget, makeData(String), onItemClick(View,Int)でpostを行っている
     //チーム情報 = ID, 名前, チーム概要, 地域
     //makeData() = DBに登録されてあるチーム情報をすべて。
     //makeData() = チーム名情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
-    //onItemClick(View,Int) = チームID情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
-    //onCreate()内冒頭、when式内で使用。UserIDをもとに、所属チーム情報を取得
-    private val url = ValueResponse().serverIp + ""         //サーバーIP
-    private val joinTeamURL = ValueResponse().serverIp + ""     //サーバーIP。ユーザーIDを元に所属チーム情報を取得
+    //onCreate()内冒頭、when式内で使用。UserIDをもとに、所属チーム情報を取得。
+    private val makeDataURL = ValueResponse().serverIp + ""         //パス。makeData用
+    private val joinTeamURL = ValueResponse().serverIp + ""     //パス。ユーザーIDを元に所属チーム情報を取得
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -51,26 +52,24 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         setContentView(R.layout.activity_top)
         setSupportActionBar(toolbar)
 
-        addNewItem()
-
         //ログインからのインテントを受け取る(ログインしたかどうか)
         pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
         val loginID = pref.getString("UserID", "Unknown")
         when (loginID != "Unknown") {
-            //ログインしていれば、マイページを表示
+            //ログインしていれば、チーム作成、所属チームを表示
             true -> {
                 val user = User(id = loginID!!)
                 val toJson = userAdapter.toJson(user)
                 val teamDataJson = CallOkHttp().postRun(joinTeamURL, toJson)
-                val teamDataList = teamListAdapter.fromJson(teamDataJson)
-//                addNewItem(teamDataList)
+                teamDataList = teamListAdapter.fromJson(teamDataJson)
+                addNewItem(teamDataList)
                 nav_view.menu.setGroupVisible(R.id.menu_other, false)
-                nav_view.menu.setGroupVisible(R.id.my_page, true)
+                nav_view.menu.setGroupVisible(R.id.menu_main, true)
             }
             //ログインしていなければ、新規登録を表示
             false -> {
                 nav_view.menu.setGroupVisible(R.id.menu_other, true)
-                nav_view.menu.setGroupVisible(R.id.my_page, false)
+                nav_view.menu.setGroupVisible(R.id.menu_main, false)
             }
         }
 
@@ -109,20 +108,30 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     //表示するカードのデータを生成
     private fun makeData() {
 //        val teamDataList = RealmDAO().teamReadRealm()
-        val json = CallOkHttp().getRun(url)
+        val json = CallOkHttp().getRun(makeDataURL)
         if(!json.isEmpty()) {
             val fromJson = teamListAdapter.fromJson(json)
             if (fromJson != null) {
                 for (i in 0 until fromJson.size) {
-                    val imageURL = URL(fromJson[i].teamLogo)
-                    val stream = imageURL.openStream()
-                    val bmp = BitmapFactory.decodeStream(stream)
-                    mDataList.add(CardData(
-                            fromJson[i].TeamId,
-                            bmp,
-                            fromJson[i].teamName,
-                            fromJson[i].teamDetail)
-                    )
+                    var bmp :Bitmap
+                    if(!fromJson[i].teamLogo.isEmpty()) {
+                        val imageURL = URL(fromJson[i].teamLogo)
+                        val stream = imageURL.openStream()
+                        bmp = BitmapFactory.decodeStream(stream)
+
+                        mDataList.add(CardData(
+                                fromJson[i].TeamId,
+                                bmp,
+                                fromJson[i].teamName,
+                                fromJson[i].teamDetail)
+                        )
+                    }else{
+                        mDataList.add(CardData(
+                                cardUserId = fromJson[i].TeamId,
+                                cardTitle = fromJson[i].teamName,
+                                cardBody = fromJson[i].teamDetail)
+                        )
+                    }
                 }
             }
         }
@@ -133,20 +142,30 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 //        val teamDataList = RealmDAO().teamReadRealm(teamName)
         val teamData = TeamData(teamName = teamName)
         val toJson = teamAdapter.toJson(teamData)
-        val json = CallOkHttp().postRun(url, toJson)
+        val json = CallOkHttp().postRun(makeDataURL, toJson)
         if(!json.isEmpty()) {
             val fromJson = teamListAdapter.fromJson(json)
             if (fromJson != null) {
                 for (i in 0 until fromJson.size) {
-                    val imageURL = URL(fromJson[i].teamLogo)
-                    val stream = imageURL.openStream()
-                    val bmp = BitmapFactory.decodeStream(stream)
-                    mDataList.add(CardData(
-                            fromJson[i].TeamId,
-                            bmp,
-                            fromJson[i].teamName,
-                            fromJson[i].teamDetail)
-                    )
+                    var bmp :Bitmap
+                    if(!fromJson[i].teamLogo.isEmpty()) {
+                        val imageURL = URL(fromJson[i].teamLogo)
+                        val stream = imageURL.openStream()
+                        bmp = BitmapFactory.decodeStream(stream)
+
+                        mDataList.add(CardData(
+                                fromJson[i].TeamId,
+                                bmp,
+                                fromJson[i].teamName,
+                                fromJson[i].teamDetail)
+                        )
+                    }else{
+                        mDataList.add(CardData(
+                                cardUserId = fromJson[i].TeamId,
+                                cardTitle = fromJson[i].teamName,
+                                cardBody = fromJson[i].teamDetail)
+                        )
+                    }
                 }
             }
         }
@@ -158,7 +177,6 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         //カードのポジションをもとに、カードのID(チーム名)を取得し、サーバーへ検索をかける
         teamID = mDataList[position].cardUserId
-//        val teamData = RealmDAO().teamReadRealm(Integer.parseInt(mDataList[position].cardUserId))
         pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
         pref.edit().putString("TeamID", teamID).apply()
         startActivity(teamIntent)
@@ -234,29 +252,25 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 startActivity(teamAddIntent)
             }
             else -> {
-                Toast.makeText(applicationContext, "${item.itemId}", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "${item.title}", Toast.LENGTH_LONG).show()
+                pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+                pref.edit().putString("TeamID", teamDataList!![item.itemId].TeamId).apply()
+                val teamPageIntent = Intent(this, TeamPageActivity::class.java)
+                startActivity(teamPageIntent)
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
-//    private fun addNewItem(teamDataList: List<TeamData>?): Boolean{
-//
-//
-//        val menu = nav_view.menu
-//        if (teamDataList != null) {
-//            for(i in 1.. teamDataList.size){
-//                val resID = resources.getIdentifier()
-//                menu.add(R.id.menu_main, , Menu.NONE, teamDataList[i].teamName)
-//            }
-//        }
-//        return true
-//    }
-    private fun addNewItem(): Boolean{
+    private fun addNewItem(teamDataList: List<TeamData>?): Boolean{
+
+
         val menu = nav_view.menu
-        for ( i in 1 .. 3) {
-            menu.add(R.id.menu_main, i, Menu.NONE, "Test$i")
+        if (teamDataList != null) {
+            for(i in 1.. teamDataList.size){
+                menu.add(R.id.menu_main, i, Menu.NONE, teamDataList[i].teamName)
+            }
         }
         return true
     }

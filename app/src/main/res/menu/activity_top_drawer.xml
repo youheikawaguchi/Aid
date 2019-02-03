@@ -3,13 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group
-        android:id="@+id/menu_main"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/teamAdd"
-            android:title="＋　チーム作成" />
-    </group>
+
 
     <group
         android:id="@+id/menu_other"
@@ -23,15 +17,13 @@
             android:id="@+id/login"
             android:title="ログイン" />
     </group>
+
     <group
-        android:id="@+id/my_page"
-        android:visible="false"
+        android:id="@+id/menu_main"
         android:checkableBehavior="single">
-
         <item
-            android:id="@+id/myPage"
-            android:title="マイページ" />
-
+            android:id="@+id/teamAdd"
+            android:visible="false"
+            android:title="＋　チーム作成" />
     </group>
-
 </menu>
