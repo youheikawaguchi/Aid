@@ -10,6 +10,7 @@ import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -39,6 +40,9 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
         setContentView(R.layout.activity_team_page)
         setSupportActionBar(toolbar)
 
+        pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+        userID = pref.getString("UserID", "Unknown")!!
+
         //intentからJsonデータを取得
         teamID = pref.getString("teamID", "Unknown")!!
         val teamData = TeamData(TeamId = teamID)
@@ -56,6 +60,17 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             teamNameView.text = fromJson.teamName
             teamDetailView.text = fromJson.teamDetail
             teamLocalView.text = fromJson.teamLocal
+        }
+
+
+        if(userID != "Unknown"){        //ログインしていれば表示する
+            memberJoin.visibility = View.VISIBLE
+            teamCalendarButton.visibility = View.VISIBLE
+            fab.show()
+        }else {                         //ログインしていなければ隠す
+            memberJoin.visibility = View.GONE
+            teamCalendarButton.visibility = View.GONE
+            fab.hide()
         }
 
         //fabボタン、メンバー追加

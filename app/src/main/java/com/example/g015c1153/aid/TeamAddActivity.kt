@@ -17,7 +17,7 @@ class TeamAddActivity : AppCompatActivity() {
     lateinit var pref: SharedPreferences
     //onCreate()の最後辺り
     //登録するチームデータを渡し、登録されたチーム情報をすべてもらう。(登録されたかの確認のため)
-    private val url = ValueResponse().serverIp + ""
+    private val url = ValueResponse().serverIp + "/mTeam"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

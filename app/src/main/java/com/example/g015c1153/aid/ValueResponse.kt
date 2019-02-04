@@ -8,5 +8,5 @@ class ValueResponse {
     val errorNoUser = "ユーザーが見つかりませんでした"
     val complete = "コンプリート"
     val errorMismatch = "入力が不正です"
-    val serverIp = "http://192.168.8.102"   //サーバーIPの指定
+    val serverIp = "http://192.168.0.6"   //サーバーIPの指定
 }

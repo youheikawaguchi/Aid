@@ -16,6 +16,7 @@ class SentActivity : AppCompatActivity() {
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val mailAdapter = moshi.adapter(LoginData::class.java)!!
     private val loginData = LoginData()
+    private val url = ValueResponse().serverIp+"/re"             //サンプル用URL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +42,7 @@ class SentActivity : AppCompatActivity() {
 
             //ログインIDとパスワード(現状:固定値)を参照して画面遷移させる
             val mailJson = mailAdapter.toJson(loginData)    //KotlinオブジェクトをJSONに変換
-            val url = ValueResponse().serverIp+"/re"             //サンプル用URL
+
             CallOkHttp().postRun(url, mailJson)
 
             //メールアドレスのアドレスとドメインを一つの文字列に変換
