@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sky_background2"
     tools:context=".Splash">
 
     <ImageView
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/gifView"
+        app:layout_constraintBottom_toTopOf="@+id/aidView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
         app:srcCompat="@drawable/aid_logo" />
 
     <ImageView
-        android:id="@+id/gifView"
+        android:id="@+id/aidView"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="32dp"
@@ -36,7 +37,3 @@
         app:srcCompat="@drawable/lode" />
 
 </android.support.constraint.ConstraintLayout>
-
-<!--
-android:background="#cae8f1"
--->

@@ -19,6 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <activity android:name=".SendActivity" >
         </activity>
         <activity android:name=".SentActivity" />
@@ -27,11 +29,7 @@
         <activity android:name=".MemberAdd" />
         <activity
             android:name=".TeamAddActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".MemberList" />
         <activity android:name=".UserCalendar"/>
@@ -66,6 +64,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
     </application>

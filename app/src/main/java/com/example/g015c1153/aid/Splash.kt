@@ -22,7 +22,7 @@ class Splash : AppCompatActivity() {
         //val orugaMovi: Int = R.drawable.oruga
 
         // gif画像のセット
-        Glide.with(this).load(gifMovie).into(gifView)
+        Glide.with(this).load(gifMovie).into(aidView)
 //Glide.with(this).load(orugaMovi).into(orugaView)
     }
 
