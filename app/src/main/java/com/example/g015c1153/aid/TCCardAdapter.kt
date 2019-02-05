@@ -28,7 +28,7 @@ class TCCardAdapter(private val context: Context, private val itemClickListener:
 
     override fun onBindViewHolder(holder: TCRVHolder, position: Int) {
         holder.let {
-            it.itemTCDate.text = itemList[position].cardDate
+            it.itemTCDate.text = itemList[position].cardStartDate
             it.itemTCTitle.text = itemList[position].cardTitle
             it.itemTCOverView.text = itemList[position].cardBody
         }

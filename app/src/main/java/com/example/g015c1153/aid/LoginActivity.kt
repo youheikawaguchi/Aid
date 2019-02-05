@@ -249,7 +249,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
         private var frag: Boolean = false
-        lateinit var loginResult : String
+        private var loginResult : String = ""
 
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
@@ -262,7 +262,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
                 loginData.password = mPassword
                 val toJson = loginAdapter.toJson(loginData)
                 loginResult = CallOkHttp().postRun(url, toJson)
-                Log.i("user", loginResult)
+                Log.i("user1", loginResult)
 
                 if(!loginResult.isEmpty()){
                     frag = true
@@ -279,6 +279,7 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             mAuthTask = null
             showProgress(false)
 
+            Log.i("user2", loginResult)
             loginData = loginAdapter.fromJson(loginResult)!!
 
             if (success!!) {

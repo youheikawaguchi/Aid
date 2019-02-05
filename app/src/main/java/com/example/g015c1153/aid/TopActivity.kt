@@ -41,10 +41,11 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     //サーバー通信は、makeData()でget, makeData(String), onItemClick(View,Int)でpostを行っている
     //チーム情報 = ID, 名前, チーム概要, 地域
     //makeData() = DBに登録されてあるチーム情報をすべて。
-    //makeData() = チーム名情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
+    //makeData(String) = チーム名情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
     //onCreate()内冒頭、when式内で使用。UserIDをもとに、所属チーム情報を取得。
-    private val makeDataURL = ValueResponse().serverIp + ""         //パス。makeData用
-    private val joinTeamURL = ValueResponse().serverIp + ""     //パス。ユーザーIDを元に所属チーム情報を取得
+    private val makeDataURL = ValueResponse().serverIp + ""     //makeData()用パス、
+    private val makeDataSearchURL = ValueResponse().serverIp + ""   //makeData(String)用パス。
+    private val joinTeamURL = ValueResponse().serverIp + ""     //ユーザーIDを元に所属チーム情報を取得用パス
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -142,7 +143,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 //        val teamDataList = RealmDAO().teamReadRealm(teamName)
         val teamData = TeamData(teamName = teamName)
         val toJson = teamAdapter.toJson(teamData)
-        val json = CallOkHttp().postRun(makeDataURL, toJson)
+        val json = CallOkHttp().postRun(makeDataSearchURL, toJson)
         if(!json.isEmpty()) {
             val fromJson = teamListAdapter.fromJson(json)
             if (fromJson != null) {

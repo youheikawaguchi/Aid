@@ -28,7 +28,8 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
     private lateinit var pref :SharedPreferences
     //onCreate()のmemberJoinSubmitリスナー内
     //userIDとteamIDを渡してデータを追加する。送信のみ。
-    private val url = ValueResponse().serverIp + ""     //サーバーIPアドレス
+    private val teamSearchURL = ValueResponse().serverIp + ""     //チームID検索用パス
+    private val sessionURL = ValueResponse().serverIp + ""  //チーム参加用パス
 
     private var userID: String = ""
     private var teamID: String = ""
@@ -47,7 +48,7 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
         teamID = pref.getString("teamID", "Unknown")!!
         val teamData = TeamData(TeamId = teamID)
         toJson = teamAdapter.toJson(teamData)
-        teamDataJson = CallOkHttp().postRun(url, toJson)    //チームIDを元にチーム情報の取得
+        teamDataJson = CallOkHttp().postRun(teamSearchURL, toJson)    //チームIDを元にチーム情報の取得
         //Jsonデータからオブジェクトに変換
         val fromJson = teamAdapter.fromJson(teamDataJson)
 
@@ -103,7 +104,7 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
                 if(userID != "Unknown" && teamID != "Unknown") {
                     val session = Session(userID, teamID)
                     val toJson = sessionAdapter.toJson(session)
-                    CallOkHttp().postRun(url, toJson)           //UserIDとTeamIDをサーバーに渡して、データを追加する
+                    CallOkHttp().postRun(sessionURL, toJson)           //UserIDとTeamIDをサーバーに渡して、データを追加する
                 } else {
                     Toast.makeText(this, "登録できませんでした", Toast.LENGTH_LONG).show()
                 }

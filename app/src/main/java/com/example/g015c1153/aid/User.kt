@@ -6,20 +6,20 @@ import android.graphics.BitmapFactory
 
 //新規登録用
 data class User(
-        var id: String = "",
-        var lastName: String = "",
-        var firstName: String = "",
-        var birthDay: String = "",
-        var gender: String = "",
-        var mailAddress: String = "",
-        var password: String = ""
+        var id: String = "",        //UserID
+        var lastName: String = "",  //名前(姓)
+        var firstName: String = "", //名前(名)
+        var birthDay: String = "",  //誕生日
+        var gender: String = "",    //性別
+        var mailAddress: String = "",   //メールアドレス
+        var password: String = ""   //パスワード
 )
 
 //ログイン用
 data class LoginData(
-        var mailAddress: String = "",
-        var password: String = "",
-        var frag: Boolean = false
+        var mailAddress: String = "",   //メールアドレス
+        var password: String = "",      //パスワード
+        var frag: Boolean = false       //仮・本ログインフラグ
 )
 
 //TOP画面のチーム情報カード用
@@ -41,7 +41,8 @@ data class MemberCard(
 //チームカレンダー用のカードビュー
 data class TeamCalendarCard(
         var cardId: String,
-        var cardDate: String,
+        var cardStartDate: String,
+        var cardEndDate: String,
         var cardTitle: String,
         var cardBody: String,
         var resultID: String
@@ -58,11 +59,11 @@ data class UserCalendarCard(
 
 //Teamのデータ
 data class TeamData(
-        var TeamId: String = "",
-        var teamName: String = "",
-        var teamLogo: String = "",
-        var teamDetail: String = "",
-        var teamLocal: String = ""
+        var TeamId: String = "",        //チームID
+        var teamName: String = "",      //チーム名
+        var teamLogo: String = "",      //チーム画像
+        var teamDetail: String = "",    //チーム詳細
+        var teamLocal: String = ""      //チーム活動地域
 )
 
 //内部処理：値保持用

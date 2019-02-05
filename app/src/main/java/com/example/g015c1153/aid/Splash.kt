@@ -23,7 +23,7 @@ class Splash : AppCompatActivity() {
 
         // gif画像のセット
         Glide.with(this).load(gifMovie).into(aidView)
-//Glide.with(this).load(orugaMovi).into(orugaView)
+        //Glide.with(this).load(orugaMovi).into(orugaView)
     }
 
     override fun onStop() {
@@ -34,6 +34,6 @@ class Splash : AppCompatActivity() {
     private val mSplashTask = Runnable {
         val intent = Intent(this, TopActivity::class.java)//画面遷移のためのIntentを準備
         startActivity(intent)//実際の画面遷移を開始
-        finish()//現在のActivityを削除
+        onDestroy()//現在のActivityを削除
     }
 }

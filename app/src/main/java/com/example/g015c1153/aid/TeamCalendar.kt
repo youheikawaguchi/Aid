@@ -57,7 +57,8 @@ class TeamCalendar : AppCompatActivity(),TCRVHolder.ItemClickListener {
                 for (i in 0 until fromJson.size) {
                     mDataList.add(TeamCalendarCard(
                             fromJson[i].cardId,
-                            fromJson[i].cardDate,
+                            fromJson[i].cardStartDate,
+                            fromJson[i].cardEndDate,
                             fromJson[i].cardTitle,
                             fromJson[i].cardBody,
                             fromJson[i].resultID)
