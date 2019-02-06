@@ -1,6 +1,5 @@
 package com.example.g015c1153.aid
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -19,11 +18,9 @@ class Splash : AppCompatActivity() {
         mHandler.postDelayed(mSplashTask, 1000)
 
         val gifMovie: Int = R.drawable.lode
-        //val orugaMovi: Int = R.drawable.oruga
 
-        // gif画像のセット
+        //gif画像のセット
         Glide.with(this).load(gifMovie).into(aidView)
-        //Glide.with(this).load(orugaMovi).into(orugaView)
     }
 
     override fun onStop() {
@@ -34,6 +31,6 @@ class Splash : AppCompatActivity() {
     private val mSplashTask = Runnable {
         val intent = Intent(this, TopActivity::class.java)//画面遷移のためのIntentを準備
         startActivity(intent)//実際の画面遷移を開始
-        onDestroy()//現在のActivityを削除
+        finish()//現在のActivityを削除
     }
 }

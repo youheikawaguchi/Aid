@@ -56,25 +56,21 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         //ログインからのインテントを受け取る(ログインしたかどうか)
         pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
         val loginID = pref.getString("UserID", "Unknown")
-        when (loginID != "Unknown") {
-            //ログインしていれば、チーム作成、所属チームを表示
-            true -> {
-                val user = User(id = loginID!!)
-                val toJson = userAdapter.toJson(user)
-                val teamDataJson = CallOkHttp().postRun(joinTeamURL, toJson)
-                teamDataList = teamListAdapter.fromJson(teamDataJson)
-                addNewItem(teamDataList)
-                nav_view.menu.setGroupVisible(R.id.menu_other, false)
-                nav_view.menu.setGroupVisible(R.id.menu_main, true)
-            }
-            //ログインしていなければ、新規登録を表示
-            false -> {
-                nav_view.menu.setGroupVisible(R.id.menu_other, true)
-                nav_view.menu.setGroupVisible(R.id.menu_main, false)
-            }
+        if (loginID != "" ) {
+        //ログインしていれば、チーム作成、所属チームを表示
+            val user = User(id = loginID!!)
+            val toJson = userAdapter.toJson(user)
+            val teamDataJson = CallOkHttp().postRun(joinTeamURL, toJson)
+            teamDataList = teamListAdapter.fromJson(teamDataJson)
+            addNewItem(teamDataList)
+            nav_view.menu.setGroupVisible(R.id.menu_other, false)
+            nav_view.menu.setGroupVisible(R.id.menu_main, true)
         }
-
-
+        //ログインしていなければ、新規登録を表示
+        else {
+            nav_view.menu.setGroupVisible(R.id.menu_other, true)
+            nav_view.menu.setGroupVisible(R.id.menu_main, false)
+        }
 
         //ドロワーの処理。デフォルトのまま。
         val toggle = ActionBarDrawerToggle(
