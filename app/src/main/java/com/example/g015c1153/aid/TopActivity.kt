@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -14,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import com.squareup.moshi.JsonAdapter
@@ -43,7 +45,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     //makeData() = DBに登録されてあるチーム情報をすべて。
     //makeData(String) = チーム名情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
     //onCreate()内冒頭、when式内で使用。UserIDをもとに、所属チーム情報を取得。
-    private val makeDataURL = ValueResponse().serverIp + ""     //makeData()用パス、
+    private val makeDataURL = ValueResponse().serverIp + "/mTop2"     //makeData()用パス、
     private val makeDataSearchURL = ValueResponse().serverIp + ""   //makeData(String)用パス。
     private val joinTeamURL = ValueResponse().serverIp + ""     //ユーザーIDを元に所属チーム情報を取得用パス
 
@@ -56,13 +58,13 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         //ログインからのインテントを受け取る(ログインしたかどうか)
         pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
         val loginID = pref.getString("UserID", "Unknown")
-        if (loginID != "" ) {
+        if (loginID != "Unknown" && loginID != "") {
         //ログインしていれば、チーム作成、所属チームを表示
-            val user = User(id = loginID!!)
-            val toJson = userAdapter.toJson(user)
-            val teamDataJson = CallOkHttp().postRun(joinTeamURL, toJson)
-            teamDataList = teamListAdapter.fromJson(teamDataJson)
-            addNewItem(teamDataList)
+//            val user = User(id = loginID!!)
+//            val toJson = userAdapter.toJson(user)
+//            val teamDataJson = CallOkHttp().postRun(joinTeamURL, toJson)
+//            teamDataList = teamListAdapter.fromJson(teamDataJson)
+//            addNewItem(teamDataList)
             nav_view.menu.setGroupVisible(R.id.menu_other, false)
             nav_view.menu.setGroupVisible(R.id.menu_main, true)
         }
@@ -111,22 +113,23 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             if (fromJson != null) {
                 for (i in 0 until fromJson.size) {
                     var bmp :Bitmap
-                    if(!fromJson[i].teamLogo.isEmpty()) {
-                        val imageURL = URL(fromJson[i].teamLogo)
-                        val stream = imageURL.openStream()
-                        bmp = BitmapFactory.decodeStream(stream)
-
-                        mDataList.add(CardData(
-                                fromJson[i].TeamId,
-                                bmp,
-                                fromJson[i].teamName,
-                                fromJson[i].teamDetail)
-                        )
+                    if(fromJson[i].teamLogo != "no_image") {
+//                        val imageURL = URL(fromJson[i].teamLogo)
+//                        val stream = imageURL.openStream()
+//                        bmp = BitmapFactory.decodeStream(stream)
+//
+//                        mDataList.add(CardData(
+//                                fromJson[i].TeamId,
+//                                bmp,
+//                                fromJson[i].teamName,
+//                                fromJson[i].teamDetail)
+//                        )
                     }else{
                         mDataList.add(CardData(
-                                cardUserId = fromJson[i].TeamId,
-                                cardTitle = fromJson[i].teamName,
-                                cardBody = fromJson[i].teamDetail)
+                                fromJson[i].TeamId,
+                                ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+                                fromJson[i].teamName,
+                                fromJson[i].teamDetail)
                         )
                     }
                 }
@@ -146,21 +149,22 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 for (i in 0 until fromJson.size) {
                     var bmp :Bitmap
                     if(!fromJson[i].teamLogo.isEmpty()) {
-                        val imageURL = URL(fromJson[i].teamLogo)
-                        val stream = imageURL.openStream()
-                        bmp = BitmapFactory.decodeStream(stream)
-
-                        mDataList.add(CardData(
-                                fromJson[i].TeamId,
-                                bmp,
-                                fromJson[i].teamName,
-                                fromJson[i].teamDetail)
-                        )
+//                        val imageURL = URL(fromJson[i].teamLogo)
+//                        val stream = imageURL.openStream()
+//                        bmp = BitmapFactory.decodeStream(stream)
+//
+//                        mDataList.add(CardData(
+//                                fromJson[i].TeamId,
+//                                bmp,
+//                                fromJson[i].teamName,
+//                                fromJson[i].teamDetail)
+//                        )
                     }else{
                         mDataList.add(CardData(
-                                cardUserId = fromJson[i].TeamId,
-                                cardTitle = fromJson[i].teamName,
-                                cardBody = fromJson[i].teamDetail)
+                                fromJson[i].TeamId,
+                                ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_background, null)!!,
+                                fromJson[i].teamName,
+                                fromJson[i].teamDetail)
                         )
                     }
                 }

@@ -3,6 +3,7 @@ package com.example.g015c1153.aid
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 
 //新規登録用
 data class User(
@@ -19,13 +20,13 @@ data class User(
 data class LoginData(
         var mailAddress: String = "",   //メールアドレス
         var password: String = "",      //パスワード
-        var frag: Boolean = false       //仮・本ログインフラグ
+        var flag: Boolean = false       //仮・本ログインフラグ
 )
 
 //TOP画面のチーム情報カード用
 data class CardData(
         var cardUserId: String,
-        var cardImage: Bitmap = BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.no_image),
+        var cardImage: Drawable,
         var cardTitle: String,
         var cardBody: String
 )

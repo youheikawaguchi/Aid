@@ -262,7 +262,6 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
                 loginData.password = mPassword
                 val toJson = loginAdapter.toJson(loginData)
                 loginResult = CallOkHttp().postRun(url, toJson)
-                Log.i("user1", loginResult)
 
                 if(!loginResult.isEmpty()){
                     frag = true
@@ -279,22 +278,19 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
             mAuthTask = null
             showProgress(false)
 
-            Log.i("user2", loginResult)
             loginData = loginAdapter.fromJson(loginResult)!!
 
             if (success!!) {
-
                 //Preferenceにメールアドレス(ID)の保存
                 pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
                 pref.edit().putString("UserID",loginData.mailAddress).apply()
 
-                if(loginData.frag) {
-
+                if(!loginData.flag) {
                     //TOP画面に遷移
                     val topIntent = Intent(application, TopActivity::class.java)
 //                    topIntent.putExtra("Switch", true)
                     startActivity(topIntent)
-                }else if(!loginData.frag){
+                }else{
                     val signUpIntent = Intent(application, SignUpForm::class.java)
                     startActivity(signUpIntent)
                 }

@@ -46,9 +46,8 @@ class SentActivity : AppCompatActivity() {
             CallOkHttp().postRun(url, mailJson)
 
             //メールアドレスのアドレスとドメインを一つの文字列に変換
-            val signUpIntent = Intent(this, SignUpForm::class.java)
-            signUpIntent.putExtra("mailAddress", mailAddress)
-            startActivity(signUpIntent)
+            val loginIntent = Intent(this, LoginActivity::class.java)
+            startActivity(loginIntent)
         }
     }
 }

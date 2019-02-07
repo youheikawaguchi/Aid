@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
@@ -24,6 +25,8 @@ class TeamAddActivity : AppCompatActivity() {
         setContentView(R.layout.activity_team_add)
 
         initSpinner()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //チーム作成ボタンを押したときの処理
         teamAddButton.setOnClickListener {
@@ -45,13 +48,22 @@ class TeamAddActivity : AppCompatActivity() {
 //            val teamJson = teamAdapter.toJson(team)
 
             val toJson = teamAdapter.toJson(teamDataAdd)
-            val teamID = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
+            val json = CallOkHttp().postRun(url, toJson)   //サーバー通信、登録されたデータをもらう
+            val fromJson = teamAdapter.fromJson(json)
             //次ページに遷移
             val teamPageIntent = Intent(this, TeamPageActivity::class.java)
             pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
-            pref.edit().putString("teamID", teamID).apply()
-            startActivity(teamPageIntent)
+            if (fromJson != null) {
+                pref.edit().putString("teamID", fromJson.TeamId).apply()
+                startActivity(teamPageIntent)
+                finish()
+            }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 
     private fun initSpinner(){

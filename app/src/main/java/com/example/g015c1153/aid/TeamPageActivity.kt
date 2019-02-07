@@ -28,7 +28,7 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
     private lateinit var pref :SharedPreferences
     //onCreate()のmemberJoinSubmitリスナー内
     //userIDとteamIDを渡してデータを追加する。送信のみ。
-    private val teamSearchURL = ValueResponse().serverIp + ""     //チームID検索用パス
+    private val teamSearchURL = ValueResponse().serverIp + "/mTeamPage"     //チームID検索用パス
     private val sessionURL = ValueResponse().serverIp + ""  //チーム参加用パス
 
     private var userID: String = ""
@@ -40,6 +40,8 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_page)
         setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
         userID = pref.getString("UserID", "Unknown")!!
@@ -62,7 +64,6 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             teamDetailView.text = fromJson.teamDetail
             teamLocalView.text = fromJson.teamLocal
         }
-
 
         if(userID != "Unknown"){        //ログインしていれば表示する
             memberJoin.visibility = View.VISIBLE
@@ -131,6 +132,11 @@ class TeamPageActivity : AppCompatActivity(), FragmentMemberJoinPopup.OnFragment
             val teamCalendarIntent = Intent(this, TeamCalendar::class.java)
             teamCalendarIntent.putExtra("teamData", teamDataJson)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 
     override fun onFragmentInteraction(uri: Uri) {

@@ -1,7 +1,9 @@
 package com.example.g015c1153.aid
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -18,6 +20,7 @@ class SignUpForm : AppCompatActivity() {
     private val matcher = Matcher()
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val userAdapter = moshi.adapter(User::class.java)!!
+    private lateinit var pref : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,13 +103,12 @@ class SignUpForm : AppCompatActivity() {
 
                 //正しく入力されていれば、画面遷移
                 if (lastFlag) {
-                    //前画面からのメールアドレス情報をuserクラスに格納
-                    val mailIntent = intent
-                    userData.mailAddress = mailIntent.getStringExtra("mailAddress")
+
+                    pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
+                    userData.mailAddress = pref.getString("UserID", "Unknown")!!
 
                     //Jsonに変換
                     val userJson = userAdapter.toJson(userData)
-
                     //インテント生成
                     val intent = Intent(application, SignUpCheck::class.java)
                     //EditTextの中身をインテントに格納

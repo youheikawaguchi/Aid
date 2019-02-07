@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_sign_up_check.*
 class SignUpCheck : AppCompatActivity() {
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val userAdapter = moshi.adapter(User::class.java)!!
+    private val url = ValueResponse().serverIp + "/mUserDetail"  //パス
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +39,7 @@ class SignUpCheck : AppCompatActivity() {
 
         //画面遷移
         nextFinish.setOnClickListener {
-            //RealmにUser情報を登録
-            if (fromJson != null) {
-                RealmDAO().signUpRealmAdd(fromJson)
-            }
 
-            //サーバー通信
-            val url = ValueResponse().serverIp + "/re"
             //ユーザーデータをサーバーに送信
             CallOkHttp().postRun(url, userDataJson)
             val loginIntent = Intent(application, LoginActivity::class.java)
