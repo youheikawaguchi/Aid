@@ -107,6 +107,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     //表示するカードのデータを生成
     private fun makeData() {
 //        val teamDataList = RealmDAO().teamReadRealm()
+        mDataList.clear()
         val json = CallOkHttp().getRun(makeDataURL)
         if(!json.isEmpty()) {
             val fromJson = teamListAdapter.fromJson(json)

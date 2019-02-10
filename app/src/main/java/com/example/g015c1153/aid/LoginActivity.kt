@@ -285,14 +285,21 @@ class LoginActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor>
                 pref = getSharedPreferences("Aid_Session", Context.MODE_PRIVATE)
                 pref.edit().putString("UserID",loginData.mailAddress).apply()
 
-                if(!loginData.flag) {
-                    //TOP画面に遷移
-                    val topIntent = Intent(application, TopActivity::class.java)
-//                    topIntent.putExtra("Switch", true)
-                    startActivity(topIntent)
-                }else{
-                    val signUpIntent = Intent(application, SignUpForm::class.java)
-                    startActivity(signUpIntent)
+                when(loginData.flag) {
+                    0 -> {
+                        //TOP画面に遷移
+                        val topIntent = Intent(application, TopActivity::class.java)
+        //                    topIntent.putExtra("Switch", true)
+                        startActivity(topIntent)
+                    }
+                    1 ->{
+                        //登録してない人へのメッセージ。エラーメッセージ
+                        email.error = getString(R.string.login_error)
+                    }
+                    2 -> {
+                        val signUpIntent = Intent(application, SignUpForm::class.java)
+                        startActivity(signUpIntent)
+                    }
                 }
             } else {
                 password.error = getString(R.string.error_incorrect_password)

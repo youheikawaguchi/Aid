@@ -21,7 +21,9 @@ class MemberAdd : AppCompatActivity() {
     private lateinit var pref : SharedPreferences
     //onCreate()のmemberMailSearchリスナー内。Userのメールアドレスを渡して、ユーザー情報を取得
     //onCreate()のmemberAddButtonリスナー内。メンバー情報を渡して、データを追加する。送信のみ。
-    val url = ValueResponse().serverIp + ""     //サーバーIPアドレス
+    val mailSearchURL = ValueResponse().serverIp + ""     //ユーザーをメンバーで探す用パス。
+    val memberAddURL = ValueResponse().serverIp + ""        //メンバー追加用パス。
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,7 @@ class MemberAdd : AppCompatActivity() {
             user.mailAddress = memberMailSearch.text.toString()
 
             var json = userAdapter.toJson(user)
-            json = CallOkHttp().postRun(url, json)      //メールアドレスを渡す
+            json = CallOkHttp().postRun(mailSearchURL, json)      //メールアドレスを渡す
             val fromJson = userAdapter.fromJson(json)
             if(fromJson != null){
                 user = fromJson
@@ -62,7 +64,7 @@ class MemberAdd : AppCompatActivity() {
                 memberData.position = mMemberPosition
 
                 val toJson = memberAdapter.toJson(memberData)
-                CallOkHttp().postRun(url, toJson)
+                CallOkHttp().postRun(memberAddURL, toJson)
 
                 //Sessionに登録されているチームIDを取得してくる。
 //                val teamData = RealmDAO().sessionRead(memberData.Userid) //チームIDが取得できていない

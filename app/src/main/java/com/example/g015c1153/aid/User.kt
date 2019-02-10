@@ -20,7 +20,7 @@ data class User(
 data class LoginData(
         var mailAddress: String = "",   //メールアドレス
         var password: String = "",      //パスワード
-        var flag: Boolean = false       //仮・本ログインフラグ
+        var flag: Int = 1       //0:本登録済, 1:未登録, 2:仮登録済
 )
 
 //TOP画面のチーム情報カード用
