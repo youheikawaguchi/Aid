@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpCheck">
+    tools:context=".SignUpCheck"
+    android:background="@color/whiteBlue">
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -40,7 +41,8 @@
                 app:layout_constraintTop_toTopOf="@+id/textView15"
                 tools:layout_constraintBottom_creator="1"
                 tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintTop_creator="1" />
+                tools:layout_constraintTop_creator="1"
+                android:textColor="@color/black"/>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -55,7 +57,8 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="162dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    tools:layout_editor_absoluteY="0dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/textLastName"
@@ -65,7 +68,8 @@
                     android:text="TextView"
                     android:textSize="18sp"
                     tools:layout_editor_absoluteX="184dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    tools:layout_editor_absoluteY="0dp"
+                    android:textColor="@color/black"/>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -82,7 +86,8 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         tools:layout_editor_absoluteX="269dp"
-                        tools:layout_editor_absoluteY="0dp" />
+                        tools:layout_editor_absoluteY="0dp"
+                        android:textColor="@color/black"/>
 
                     <TextView
                         android:id="@+id/textFirstName"
@@ -93,7 +98,8 @@
                         android:text="TextView"
                         android:textSize="18sp"
                         tools:layout_editor_absoluteX="294dp"
-                        tools:layout_editor_absoluteY="0dp" />
+                        tools:layout_editor_absoluteY="0dp"
+                        android:textColor="@color/black"/>
                 </TableRow>
 
             </TableRow>
@@ -113,7 +119,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textBirthDay"
@@ -125,7 +132,8 @@
                 android:text="TextView"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="163dp"
-                tools:layout_editor_absoluteY="52dp" />
+                tools:layout_editor_absoluteY="52dp"
+                android:textColor="@color/black"/>
 
         </TableRow>
 
@@ -144,7 +152,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="53dp" />
+                tools:layout_editor_absoluteY="53dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textGender"
@@ -154,7 +163,8 @@
                 android:text="TextView"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="163dp"
-                tools:layout_editor_absoluteY="104dp" />
+                tools:layout_editor_absoluteY="104dp"
+                android:textColor="@color/black"/>
         </TableRow>
 
         <TableRow
@@ -172,7 +182,8 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/textPW"
                 app:layout_constraintLeft_toLeftOf="parent"
                 tools:layout_constraintBaseline_creator="1"
-                tools:layout_constraintLeft_creator="1" />
+                tools:layout_constraintLeft_creator="1"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textPW"
@@ -184,7 +195,8 @@
                 app:layout_constraintLeft_toRightOf="@+id/sentAddress"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintTop_creator="1" />
+                tools:layout_constraintTop_creator="1"
+                android:textColor="@color/black"/>
 
         </TableRow>
 
