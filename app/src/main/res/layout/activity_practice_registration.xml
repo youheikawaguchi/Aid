@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PracticeRegistration">
+    tools:context=".PracticeRegistration"
+    android:background="@color/whiteBlue">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -44,7 +45,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/placeText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/date" />
+                app:layout_constraintTop_toBottomOf="@+id/date"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/placeText"
@@ -57,7 +59,8 @@
                 android:hint="施設名・住所など"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timeText" />
+                app:layout_constraintTop_toBottomOf="@+id/timeText"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -81,7 +84,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/dayText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/dayText"
@@ -94,7 +98,8 @@
                 android:hint="2020/10/23"
                 android:inputType="date"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -119,7 +124,8 @@
                 android:hint="2020/10/25"
                 android:inputType="time"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dayText" />
+                app:layout_constraintTop_toBottomOf="@+id/dayText"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
         <LinearLayout
@@ -142,7 +148,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/memoText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/place" />
+                app:layout_constraintTop_toBottomOf="@+id/place"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/memoText"
@@ -155,7 +162,8 @@
                 android:hint="メモ欄"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/placeText" />
+                app:layout_constraintTop_toBottomOf="@+id/placeText"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
         <LinearLayout
