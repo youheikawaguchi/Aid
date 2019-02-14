@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MemberList">
+    tools:context=".MemberList"
+    android:background="@color/whiteBlue">
 
     <TextView
         android:id="@+id/textView26"
@@ -16,7 +17,8 @@
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/memberListRec"
@@ -25,5 +27,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        android:textColor="@color/black"/>
 </android.support.constraint.ConstraintLayout>
