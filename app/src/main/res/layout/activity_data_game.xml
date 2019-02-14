@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".DataGame">
+    tools:context=".DataGame"
+    android:background="@color/whiteBlue">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -27,14 +28,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <EditText
                 android:id="@+id/myTeam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/otherTeam"
@@ -45,7 +47,8 @@
                 android:gravity="center_vertical|center_horizontal|center"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="85dp"
-                tools:layout_editor_absoluteY="217dp" />
+                tools:layout_editor_absoluteY="217dp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -65,7 +68,8 @@
                 android:hint="15"
                 android:inputType="number"
                 tools:layout_editor_absoluteX="20dp"
-                tools:layout_editor_absoluteY="236dp" />
+                tools:layout_editor_absoluteY="236dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/hyphen"
@@ -75,7 +79,8 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="177dp"
-                tools:layout_editor_absoluteY="215dp" />
+                tools:layout_editor_absoluteY="215dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/otherPoint"
@@ -87,7 +92,8 @@
                 android:hint="15"
                 android:inputType="number"
                 tools:layout_editor_absoluteX="100dp"
-                tools:layout_editor_absoluteY="236dp" />
+                tools:layout_editor_absoluteY="236dp"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
         <TableLayout
@@ -106,7 +112,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/first"
@@ -115,7 +122,8 @@
                     android:gravity="center"
                     android:text="前半"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <EditText
                     android:id="@+id/otherFirstHalf"
@@ -125,7 +133,8 @@
                     android:ems="10"
                     android:gravity="right"
                     android:hint="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
 
             </TableRow>
 
@@ -140,7 +149,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="5"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/last"
@@ -149,7 +159,8 @@
                     android:gravity="center"
                     android:text="後半"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <EditText
                     android:id="@+id/otherLatterHalf"
@@ -159,7 +170,8 @@
                     android:ems="10"
                     android:gravity="right"
                     android:hint="5"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
             </TableRow>
 
         </TableLayout>

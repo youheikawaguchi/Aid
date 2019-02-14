@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameRegistration">
+    tools:context=".GameRegistration"
+    android:background="@color/whiteBlue">
 
     <TextView
         android:id="@+id/date2"
@@ -20,7 +21,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/dayText2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/dayText2"
@@ -34,7 +36,8 @@
         android:inputType="date"
         android:onClick="showDatePickerDialog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/timeText2"
@@ -47,7 +50,8 @@
         android:hint="2020/10/24"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dayText2" />
+        app:layout_constraintTop_toBottomOf="@+id/dayText2"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/place2"
@@ -63,7 +67,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/placeText2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeText2" />
+        app:layout_constraintTop_toBottomOf="@+id/timeText2"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/placeText2"
@@ -76,7 +81,8 @@
         android:hint="グラウンド名"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeText2" />
+        app:layout_constraintTop_toBottomOf="@+id/timeText2"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/overview2"
@@ -92,7 +98,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/editText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/place2" />
+        app:layout_constraintTop_toBottomOf="@+id/place2"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/editText"
@@ -105,7 +112,8 @@
         android:hint="メモ欄"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeText2" />
+        app:layout_constraintTop_toBottomOf="@+id/placeText2"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/game"
@@ -118,7 +126,8 @@
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overview2" />
+        app:layout_constraintTop_toBottomOf="@+id/overview2"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/vs"
@@ -131,7 +140,8 @@
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/otherTeam"
-        app:layout_constraintTop_toBottomOf="@+id/game" />
+        app:layout_constraintTop_toBottomOf="@+id/game"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/otherTeam"
@@ -144,7 +154,8 @@
         android:hint="敵チーム名"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game" />
+        app:layout_constraintTop_toBottomOf="@+id/game"
+        android:textColor="@color/black"/>
 
     <LinearLayout
         android:layout_width="0dp"

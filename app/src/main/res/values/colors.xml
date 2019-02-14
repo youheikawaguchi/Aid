@@ -3,18 +3,12 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <!--ボタン-->
-    <color name="royalBlue"> #44aeea</color>
-    <color name="darkBlue">#6490cd</color>
 
     <!--文字の色-->
     <color name="black">#222222</color>
 
     <!--背景-->
     <color name="whiteBlue">#e4f0fc</color>
-
-    <!--ボタン文字-->
-    <color name="white">#eeeeee</color>
 
     <!--アクションバー-->
     <color name="thinBlue">#afd0ef</color>
