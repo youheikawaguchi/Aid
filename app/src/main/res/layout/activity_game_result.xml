@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".GameResult">
+    tools:context=".GameResult"
+    android:background="@color/whiteBlue">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -37,7 +38,8 @@
                 android:gravity="center_horizontal"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="46dp"
-                tools:layout_editor_absoluteY="171dp" />
+                tools:layout_editor_absoluteY="171dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/otherTeam"
@@ -48,7 +50,8 @@
                 android:gravity="center_vertical|center_horizontal|center"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="85dp"
-                tools:layout_editor_absoluteY="217dp" />
+                tools:layout_editor_absoluteY="217dp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -67,7 +70,8 @@
                 android:ems="10"
                 android:inputType="number"
                 tools:layout_editor_absoluteX="20dp"
-                tools:layout_editor_absoluteY="236dp" />
+                tools:layout_editor_absoluteY="236dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/hyphen"
@@ -77,7 +81,8 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="177dp"
-                tools:layout_editor_absoluteY="215dp" />
+                tools:layout_editor_absoluteY="215dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/otherPoint"
@@ -88,7 +93,8 @@
                 android:gravity="right"
                 android:inputType="number"
                 tools:layout_editor_absoluteX="100dp"
-                tools:layout_editor_absoluteY="236dp" />
+                tools:layout_editor_absoluteY="236dp"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
         <TableLayout
@@ -107,7 +113,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/first"
@@ -116,7 +123,8 @@
                     android:gravity="center"
                     android:text="前半"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/point2"
@@ -125,7 +133,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:gravity="right"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
 
             </TableRow>
 
@@ -139,7 +148,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/last"
@@ -148,7 +158,8 @@
                     android:gravity="center"
                     android:text="後半"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/point4"
@@ -157,7 +168,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:gravity="right"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
             </TableRow>
 
         </TableLayout>
