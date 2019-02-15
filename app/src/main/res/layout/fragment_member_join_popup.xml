@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     tools:context=".TeamPageActivity"
-    android:background="#FFF">
+    android:background="@color/whiteBlue">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -46,7 +46,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textView22_2"
@@ -63,7 +64,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black"/>
 
             <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/member_join_submit"
