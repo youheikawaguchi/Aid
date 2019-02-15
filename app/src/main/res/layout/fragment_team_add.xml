@@ -11,7 +11,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light">
+        android:background="@color/whiteBlue">
 
         <TextView
             android:id="@+id/textView6"
@@ -24,7 +24,8 @@
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -44,14 +45,16 @@
                 android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="チーム名" />
+                android:text="チーム名"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/editTeamName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColor="@color/black"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -61,7 +64,8 @@
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="チームの詳細" />
+                android:text="チームの詳細"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/editTeamDetail"
@@ -71,7 +75,8 @@
                 android:hint="どんなチームか、全体への共有事項など"
                 android:inputType="textMultiLine"
                 android:selectAllOnFocus="false"
-                android:singleLine="false" />
+                android:singleLine="false"
+                android:textColor="@color/black"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -81,7 +86,8 @@
                 android:id="@+id/textView21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="活動地域" />
+                android:text="活動地域"
+                android:textColor="@color/black"/>
 
             <Spinner
                 android:id="@+id/local_spinner"
@@ -97,7 +103,8 @@
                 android:id="@+id/teamAddButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="作成" />
+                android:text="作成"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
