@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpForm">
+    tools:context=".SignUpForm"
+    android:background="@color/whiteBlue">
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -34,7 +35,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="225dp" />
+                tools:layout_editor_absoluteY="225dp"
+                android:textColor="@color/black"/>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -50,7 +52,8 @@
                     android:textStyle="bold"
                     tools:ignore="TextViewEdits"
                     tools:layout_editor_absoluteX="162dp"
-                    tools:layout_editor_absoluteY="225dp" />
+                    tools:layout_editor_absoluteY="225dp"
+                    android:textColor="@color/black"/>
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
                     android:id="@+id/editLastName"
@@ -61,7 +64,8 @@
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     app:bootstrapBrand="info"
-                    app:bootstrapSize="lg" />
+                    app:bootstrapSize="lg"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/textView12"
@@ -71,7 +75,8 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="269dp"
-                    tools:layout_editor_absoluteY="225dp" />
+                    tools:layout_editor_absoluteY="225dp"
+                    android:textColor="@color/black"/>
 
                 <com.beardedhen.androidbootstrap.BootstrapEditText
                     android:id="@+id/editFirstName"
@@ -82,7 +87,8 @@
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     app:bootstrapBrand="info"
-                    app:bootstrapSize="lg" />
+                    app:bootstrapSize="lg"
+                    android:textColor="@color/black"/>
 
             </TableRow>
 
@@ -101,7 +107,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="276dp" />
+                tools:layout_editor_absoluteY="276dp"
+                android:textColor="@color/black"/>
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:id="@+id/editBirthDay"
@@ -114,7 +121,8 @@
                 android:inputType="date"
                 android:onClick="showDatePickerDialog"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg" />
+                app:bootstrapSize="lg"
+                android:textColor="@color/black"/>
         </TableRow>
 
         <TableRow
@@ -132,7 +140,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="329dp" />
+                tools:layout_editor_absoluteY="329dp"
+                android:textColor="@color/black"/>
 
             <RadioGroup
                 android:id="@+id/RadioGroupGender"
@@ -140,7 +149,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:layout_editor_absoluteX="176dp"
-                tools:layout_editor_absoluteY="323dp">
+                tools:layout_editor_absoluteY="323dp"
+                android:textColor="@color/black">
 
                 <RadioButton
                     android:id="@+id/radioMan"
@@ -182,7 +192,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="110dp" />
+                tools:layout_editor_absoluteY="110dp"
+                android:textColor="@color/black"/>
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:id="@+id/editPW"
@@ -194,7 +205,8 @@
                 android:maxLength="16"
                 android:maxLines="1"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg" />
+                app:bootstrapSize="lg"
+                android:textColor="@color/black"/>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -213,7 +225,8 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="37dp"
-                tools:layout_editor_absoluteY="162dp" />
+                tools:layout_editor_absoluteY="162dp"
+                android:textColor="@color/black"/>
 
             <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:id="@+id/editPWRe"
@@ -225,7 +238,8 @@
                 android:maxLength="16"
                 android:maxLines="1"
                 app:bootstrapBrand="info"
-                app:bootstrapSize="lg" />
+                app:bootstrapSize="lg"
+                android:textColor="@color/black"/>
         </TableRow>
 
         <TableRow
