@@ -6,15 +6,11 @@
 
     <!--文字の色-->
     <color name="black">#222222</color>
-
     <!--背景-->
     <color name="whiteBlue">#e4f0fc</color>
-
     <!--アクションバー-->
     <color name="thinBlue">#afd0ef</color>
     <color name="skyBlue">#0168b3</color>
-
     <!--カードビュー-->
     <color name="lightBlue">#44aeea</color>
-
 </resources>
