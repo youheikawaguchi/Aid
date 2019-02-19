@@ -41,12 +41,12 @@ data class MemberCard(
 
 //チームカレンダー用のカードビュー
 data class TeamCalendarCard(
-        var cardId: String,
-        var cardStartDate: String,
-        var cardEndDate: String,
-        var cardTitle: String,
-        var cardBody: String,
-        var resultID: String
+        var cardId: String = "",
+        var cardStartDate: String = "",
+        var cardEndDate: String = "",
+        var cardTitle: String = "",
+        var cardBody: String = "",
+        var resultID: String = ""
 )
 
 //ユーザーカレンダー用のカードビュー

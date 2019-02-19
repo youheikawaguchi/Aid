@@ -204,17 +204,17 @@
                 android:layout_weight="1" />
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/buckButton"
+                android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="戻る"
-                tools:layout_editor_absoluteX="64dp"
-                tools:layout_editor_absoluteY="413dp"
                 app:bootstrapBrand="primary"
                 app:bootstrapSize="lg"
                 app:buttonMode="regular"
                 app:roundedCorners="true"
-                app:showOutline="false"/>
+                app:showOutline="false"
+                tools:layout_editor_absoluteX="64dp"
+                tools:layout_editor_absoluteY="413dp" />
 
             <Space
                 android:layout_width="wrap_content"
