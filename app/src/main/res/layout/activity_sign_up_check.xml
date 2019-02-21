@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpCheck">
+    tools:context=".SignUpCheck"
+    android:background="@color/whiteBlue">
 
     <TableLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/tableLayout"
+        android:layout_width="389dp"
+        android:layout_height="267dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -29,44 +30,19 @@
             android:layout_margin="15dp">
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="希望パスワード"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textPW"
-                app:layout_constraintLeft_toLeftOf="parent"
-                tools:layout_constraintBaseline_creator="1"
-                tools:layout_constraintLeft_creator="1" />
-
-            <TextView
-                android:id="@+id/textPW"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="TextView"
-                app:layout_constraintLeft_toRightOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintTop_creator="1" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp">
-
-            <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/sentDomain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="お名前"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView15"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView15"
                 tools:layout_constraintBottom_creator="1"
                 tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintTop_creator="1" />
+                tools:layout_constraintTop_creator="1"
+                android:textColor="@color/black"/>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -78,17 +54,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="姓"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     tools:layout_editor_absoluteX="162dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    tools:layout_editor_absoluteY="0dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
-                    android:id="@+id/textFirstName"
+                    android:id="@+id/textLastName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     tools:layout_editor_absoluteX="184dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    tools:layout_editor_absoluteY="0dp"
+                    android:textColor="@color/black"/>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -100,20 +81,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="11dp"
+                        android:layout_marginRight="11dp"
                         android:text="名"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
                         tools:layout_editor_absoluteX="269dp"
                         tools:layout_editor_absoluteY="0dp"
-                        android:layout_marginRight="11dp" />
+                        android:textColor="@color/black"/>
 
                     <TextView
-                        android:id="@+id/textSecondName"
+                        android:id="@+id/textFirstName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
+                        android:layout_marginRight="32dp"
                         android:text="TextView"
+                        android:textSize="18sp"
                         tools:layout_editor_absoluteX="294dp"
                         tools:layout_editor_absoluteY="0dp"
-                        android:layout_marginRight="32dp" />
+                        android:textColor="@color/black"/>
                 </TableRow>
 
             </TableRow>
@@ -130,19 +116,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="生年月日"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="0dp" />
+                tools:layout_editor_absoluteY="0dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textBirthDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
                 android:paddingLeft="20dp"
                 android:text="TextView"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="163dp"
                 tools:layout_editor_absoluteY="52dp"
-                android:layout_marginLeft="1dp" />
+                android:textColor="@color/black"/>
 
         </TableRow>
 
@@ -158,8 +149,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="性別"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="35dp"
-                tools:layout_editor_absoluteY="53dp" />
+                tools:layout_editor_absoluteY="53dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textGender"
@@ -167,32 +161,74 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:text="TextView"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="163dp"
-                tools:layout_editor_absoluteY="104dp" />
+                tools:layout_editor_absoluteY="104dp"
+                android:textColor="@color/black"/>
         </TableRow>
 
         <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right">
+            <TextView
+                android:id="@+id/sentAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="パスワード"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textPW"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_constraintBaseline_creator="1"
+                tools:layout_constraintLeft_creator="1"
+                android:textColor="@color/black"/>
 
-                <Button
-                    android:id="@+id/nextFinish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="完了"
-                    tools:layout_editor_absoluteX="280dp"
-                    tools:layout_editor_absoluteY="447dp" />
-            </TableRow>
+            <TextView
+                android:id="@+id/textPW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="TextView"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toRightOf="@+id/sentAddress"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintTop_creator="1"
+                android:textColor="@color/black"/>
 
         </TableRow>
+
     </TableLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/nextFinish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="完了"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:roundedCorners="true"
+            app:showOutline="false"
+            tools:layout_editor_absoluteX="280dp"
+            tools:layout_editor_absoluteY="447dp" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

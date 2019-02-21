@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MemberAdd">
+    tools:context=".MemberAdd"
+    android:background="@color/whiteBlue">
 
     <TextView
         android:id="@+id/textView17"
@@ -12,9 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="メンバー追加"
+        android:textSize="28sp"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +38,10 @@
             android:id="@+id/textView24"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="検索するメンバーのメールアドレス" />
+            android:text="検索するメンバーのメールアドレス"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,57 +52,54 @@
                 android:id="@+id/memberMailSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="@integer/google_play_services_version"
                 android:ems="10"
                 android:hint="メールアドレスを入力"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColor="@color/black" />
 
-            <!--
-            <Button
+            <ImageButton
                 android:id="@+id/memberSearchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="検索" />
-            -->
-
-            <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/memberSearchButton"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/bootstrap_h5_hori_padding"
-                android:text="検索"
-                app:bootstrapBrand="regular"
-                app:bootstrapSize="lg"
-                app:buttonMode="regular"
-                app:roundedCorners="true"
-                app:showOutline="false" />
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:background="#00000000"
+                app:srcCompat="@drawable/searchblack" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/textUserName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
-            android:text="No" />
+            android:text="No"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/memberNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/textView25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="ポジション" />
+            android:text="ポジション"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/memberPosition"
@@ -103,19 +107,20 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="ポジション名を入力(例:フォワード)"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/black"/>
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/memberAddButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="追加する"
-            app:bootstrapBrand="regular"
+            app:bootstrapBrand="primary"
             app:bootstrapSize="lg"
             app:buttonMode="regular"
             app:roundedCorners="true"
-            app:showOutline="false" />
+            app:showOutline="false"
+            android:text="追加する" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
