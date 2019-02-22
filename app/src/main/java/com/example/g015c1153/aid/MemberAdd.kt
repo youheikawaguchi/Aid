@@ -21,8 +21,8 @@ class MemberAdd : AppCompatActivity() {
     private lateinit var pref : SharedPreferences
     //onCreate()のmemberMailSearchリスナー内。Userのメールアドレスを渡して、ユーザー情報を取得
     //onCreate()のmemberAddButtonリスナー内。メンバー情報を渡して、データを追加する。送信のみ。
-    val mailSearchURL = ValueResponse().serverIp + ""     //ユーザーをメンバーで探す用パス。
-    val memberAddURL = ValueResponse().serverIp + ""        //メンバー追加用パス。
+    private val mailSearchURL = ValueResponse().serverIp + "/mMemberSearch"     //ユーザーをメンバーで探す用パス。
+    private val memberAddURL = ValueResponse().serverIp + "/mMemberAdd"        //メンバー追加用パス。
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class MemberAdd : AppCompatActivity() {
             val fromJson = userAdapter.fromJson(json)
             if(fromJson != null){
                 user = fromJson
-                val userName: String = user.lastName + user.firstName
+                val userName: String = user.firstName + user.lastName
                 textUserName.text = userName
                 frag = true
             }else{

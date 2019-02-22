@@ -14,7 +14,7 @@ class DataGame : AppCompatActivity() {
     private val gameDataAdapter = moshi.adapter(GameData::class.java)
     private var teamData = TeamData()
     private var teamDataJson = ""
-    private var url = ValueResponse().serverIp + ""     //サーバーIP
+    private var url = ValueResponse().serverIp + "/mGameDataAdd"     //サーバーIP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

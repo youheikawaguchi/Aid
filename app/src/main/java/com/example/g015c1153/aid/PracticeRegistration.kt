@@ -14,7 +14,7 @@ class PracticeRegistration : AppCompatActivity() {
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val practiceAdapter = moshi.adapter(Practice::class.java)!!
     private val practice = Practice()
-    private val url = ValueResponse().serverIp + ""     //サーバーIP
+    private val url = ValueResponse().serverIp + "/mScheduleAdd"     //サーバーIP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

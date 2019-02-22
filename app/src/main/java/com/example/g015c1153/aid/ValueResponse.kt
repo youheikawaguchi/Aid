@@ -6,7 +6,5 @@ class ValueResponse {
     val errorNumber = "数値が未入力です"
     val errorPasswordMismatch = "パスワードが不一致です"
     val errorNoUser = "ユーザーが見つかりませんでした"
-    val complete = "コンプリート"
-    val errorMismatch = "入力が不正です"
-    val serverIp = "http://192.168.0.8"   //サーバーIPの指定
+    val serverIp = "http://172.20.10.9"   //サーバーIPの指定
 }

@@ -46,8 +46,8 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     //makeData(String) = チーム名情報のみのJsonデータをもとに、マッチするチーム情報をすべて。
     //onCreate()内冒頭、when式内で使用。UserIDをもとに、所属チーム情報を取得。
     private val makeDataURL = ValueResponse().serverIp + "/mTop2"     //makeData()用パス、
-    private val makeDataSearchURL = ValueResponse().serverIp + ""   //makeData(String)用パス。
-    private val joinTeamURL = ValueResponse().serverIp + ""     //ユーザーIDを元に所属チーム情報を取得用パス
+    private val makeDataSearchURL = ValueResponse().serverIp + "/mTopTeam"   //makeData(String)用パス。
+    private val joinTeamURL = ValueResponse().serverIp + "/mTopUser"     //ユーザーIDを元に所属チーム情報を取得用パス
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -149,7 +149,7 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             if (fromJson != null) {
                 for (i in 0 until fromJson.size) {
                     var bmp :Bitmap
-                    if(!fromJson[i].teamLogo.isEmpty()) {
+                    if(fromJson[i].teamLogo != "no_image") {
 //                        val imageURL = URL(fromJson[i].teamLogo)
 //                        val stream = imageURL.openStream()
 //                        bmp = BitmapFactory.decodeStream(stream)
@@ -211,7 +211,11 @@ class TopActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 val teamData = TeamData()
                 teamData.teamName = query
                 mDataList.clear()
-                makeData(teamData.teamName)
+                if(!teamData.teamName.isEmpty()){
+                    makeData(teamData.teamName)
+                }else {
+                    makeData()
+                }
 
                 topRecyclerView.adapter = CardAdapter(this@TopActivity, this@TopActivity, mDataList)   //アダプターにカードビューをセット
                 return false

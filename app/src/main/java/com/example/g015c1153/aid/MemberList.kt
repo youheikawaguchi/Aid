@@ -19,7 +19,7 @@ class MemberList : AppCompatActivity(),MemberRVHolder.ItemClickListener {
     private val teamDataAdapter = moshi.adapter(TeamData::class.java)
     private val type = Types.newParameterizedType(List::class.java, MemberCard::class.java)
     private val memberListAdapter: JsonAdapter<List<MemberCard>> = moshi.adapter(type)
-    private val url = ValueResponse().serverIp + ""     //サーバーIP
+    private val url = ValueResponse().serverIp + "/mMemberList"     //サーバーIP
     lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -12,7 +12,7 @@ class GameResult : AppCompatActivity() {
     private val moshi  = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val tccAdapter = moshi.adapter(TeamCalendarCard::class.java)
     private val gameResultAdapter = moshi.adapter(GameData::class.java)
-    private val url = ValueResponse().serverIp + ""     //パス
+    private val url = ValueResponse().serverIp + "/mGameResult"     //パス
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

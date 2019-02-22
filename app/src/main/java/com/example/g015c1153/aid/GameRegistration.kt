@@ -14,7 +14,7 @@ class GameRegistration : AppCompatActivity  () {
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()!!
     private val gameAdapter = moshi.adapter(Game::class.java)!!
-    private val url = ValueResponse().serverIp + ""     //サーバーIP
+    private val url = ValueResponse().serverIp + "/mGameScheduleAdd"     //サーバーIP
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
